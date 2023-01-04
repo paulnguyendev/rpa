@@ -23,6 +23,10 @@ class HomeController extends Controller
     private $controllerName         = "home";
     private $model;
     private $params                 = [];
+    private $supplierModel;
+    private $taxonomyModel;
+    private $productGroupModel;
+    private $productModel;
     function __construct()
     {
         $this->model = new UserModel();
@@ -38,6 +42,7 @@ class HomeController extends Controller
         $product_groups =  $this->productGroupModel->listItems([],['task' => 'list_home']);
         $categories = $this->taxonomyModel::withDepth()->get()->toFlatTree();
         $suppliers =  $this->supplierModel->listItems([],['task' => 'list']);
+        $templatePart = "{$this->pathViewController}.{$this->controllerName}.";
         
         return view(
             "{$this->pathViewController}index",
@@ -46,6 +51,7 @@ class HomeController extends Controller
                 'product_groups' => $product_groups,
                 'categories' => $categories,
                 'suppliers' => $suppliers,
+                'templatePart' => $templatePart,
             ]
         );
     }

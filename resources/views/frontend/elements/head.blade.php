@@ -1,88 +1,49 @@
-@php
-    use App\Helpers\User;
-@endphp
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<base href="https://skills.kynaenglish.vn/">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="cart-data" content="{{ route('fe_cart/data') }}" />
-<meta name="cart-add" content="{{ route('fe_cart/add') }}" />
-<meta name="cart-update" content="{{ route('fe_cart/update') }}" />
-<meta name="cart-remove" content="{{ route('fe_cart/remove') }}" />
-<meta name="cart-order" content="{{ route('fe_cart/order') }}" />
-<meta name="user-id" content="{{User::getAffInfo()}}" />
-<meta name="cart-province" content="{{ url('public/data/province.json') }}" />
-<title>@yield('title', 'Nền tảng kinh doanh 0 đ')</title>
-<link rel="shortcut icon" type="image/png" href="{{asset('obn-dashboard/img/favicon.png')}}" />
-
-<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700&amp;amp;subset=vietnamese"
-    rel="stylesheet">
-<link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet"
-    href="https://static.loveitopcdn.com/backend/plugins/mCustomScrollbar/jquery.mCustomScrollbar.css">
-<link rel="stylesheet" href="https://static.loveitopcdn.com/backend/dist/css/plugin.css?id=a8f96327b6c3773821a1">
-<link rel="stylesheet" href="https://static.loveitopcdn.com/backend/dist/css/style.css?id=fca89b87486ea1f07891">
-<link rel="stylesheet" href="{{ asset('obn-dashboard/plugin/slick.css') }}">
-<link rel="stylesheet" href="{{ asset('obn-dashboard/plugin/fancybox.css') }}">
-<link rel="stylesheet" href="{{ asset('obn-dashboard/css/obn.css') }}?ver={{ time() }}">
-<link rel="stylesheet" href="{{ asset('home/css/app.css') }}?ver={{ time() }}">
-<link media="all" type="text/css" rel="stylesheet"
-    href="https://static.loveitopcdn.com/backend/css/custom_new.css?v=1.0.2">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://static.loveitopcdn.com/backend/dist/js/loading.js?id=7e97bd818d6bd28c3dc8"></script>
-<script src="{{asset('obn-dashboard/js/core/cart.js')}}"></script>
-<style>
-    .language-switch {
-        display: none !important;
-    }
-    @media (min-width: 1024px) and (max-width: 1350px) {
-        .hiden_1024_1350 {
-            display: none;
-        }
-    }
-    @media (min-width: 768px) and (max-width: 1023px) {
-        .hiden_768_1023 {
-            display: none !important;
-        }
-    }
-    .media-preview {
-        max-height: 50px;
-        width: 83px;
-    }
-</style>
-<script>
-    var _token = 'NN2qLcQhx0Cv4lMh5Wl8yaKE7XXEdhqtl2VyI22q';
-    var base_domain = 'https://dainghiagroup.com';
-    var assets_url = 'https://static.loveitopcdn.com';
-    var cke_conf_path = assets_url + '/backend/plugins/ckeditor';
-    var default_currency = 'đ';
-    var default_weight_unit = "kg";
-    var storage_url = 'https://media.loveitopcdn.com/34798/';
-    var products = {};
-    var shoppingCart = {
-        'products': [],
-        'subtotal': 0,
-        'total_weight': 0,
-        'shipping': {
-            'fee': 0,
-            'discount': 0,
-            'message': '',
-            'method_id': 0,
-            'method_title': '',
-        },
-        'coupons': {},
-        'discount': 0,
-        'total': 0,
-        'info_order': {},
-        'info_shipping': {},
-        'note': '',
-        'payment': {
-            'method_id': 0,
-            'method_title': '',
-            'status': 0,
-        },
-        'user_id' : $(`meta[name="user-id"]`).attr("content"),
-    };
-    checkCart();
+<meta name="msvalidate.01" content="E04DEE146525196629F6E1FB54D0A9CD" />
+<script src="https://apis.google.com/js/api:client.js"></script>
+<script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.2&appId=138701140812940&autoLogAppEvents=1">
 </script>
+<meta name="csrf-param" content="_csrf">
+<meta name="csrf-token" content="eGV1NE5FdUstBCVNIX0WfDAKKkwkASoMPjpHYTsHImYSUgQCPXISMQ==">
+<title>Kyna.vn - Học online cùng chuyên gia</title>
+<meta name="keywords" content="Kyna.vn, kina, Kyna, lớp đào tạo trực tuyến, khóa học online">
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+<link rel="icon" href="/favo_ico.png">
+<link rel=preconnect href="https://script.hotjar.com">
+<link rel=preconnect href="https://pro.fontawesome.com">
+<link rel=preconnect href="https://scontent-xsp1-2.xx.fbcdn.net">
+<link rel=preconnect href="https://webchat.caresoft.vn:8090">
+<link rel=preconnect href="https://apis.google.com">
+<meta name="google-site-verification" content="IXZ0pX_bDQZC3gSDnb7AfY6x2Xkj3ta63mrnNqq3VGQ">
+<meta name="description"
+    content="Kyna học online với hơn 700 khóa học trực tuyến thuộc nhiều lĩnh vực như kỹ năng quản trị, ngoại ngữ, tài chính, bất động sản, bảo hiểm, chứng khoán, tiếp thị bán hàng">
+<meta name="robots" content="index,follow">
+<meta property="fb:app_id" content="191634267692814">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kyna.vn - Học online cùng chuyên gia">
+<meta property="og:description"
+    content="Kyna học online với hơn 700 khóa học trực tuyến thuộc nhiều lĩnh vực như kỹ năng quản trị, ngoại ngữ, tài chính, bất động sản, bảo hiểm, chứng khoán, tiếp thị bán hàng">
+<meta property="og:image" content="https://skills.kynaenglish.vn/img/kyna-power-by-vietnamworks.png">
+<meta property="og:url" content="https://kyna.vn">
+<link href="https://skills.kynaenglish.vn/" rel="canonical">
+<link type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;900&amp;display=swap"
+    rel="stylesheet">
+<link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/video/videojs.min.css?v=15217955218005"
+    rel="stylesheet">
+<link type="text/css" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet">
+<link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/slick-theme.min.css?v=15217955218005"
+    rel="stylesheet">
+<link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/slick.min.css?v=15217955218005" rel="stylesheet">
+<link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/main.css?v=15217955218005" rel="stylesheet">
+<link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/app.css?v=15217955218005" rel="stylesheet">
+<link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/sweetalert2.min.css?v=15217955218005"
+    rel="stylesheet">
+<link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/home-page.css?v=15217955218005" rel="stylesheet">
+<link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/select2.min.css?v=15217955218005" rel="stylesheet">
+<link type="text/css" href="{{asset('kyna/css/obn.css')}}?ver={{time()}}" rel="stylesheet">
+<script src="/assets/7431fa9e/jquery/dist/jquery.min.js"></script>
+<script src="/assets/35de618e/yii.js"></script>
+<script src="/assets/7431fa9e/bootbox.js/bootbox.js"></script>
