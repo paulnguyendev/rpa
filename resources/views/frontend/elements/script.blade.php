@@ -49,6 +49,7 @@
     });
 </script>
 <script src="https://cdn-skill.kynaenglish.vn/src/js/popup-get-user-info.js"></script>
+<script src="https://cdn-skill.kynaenglish.vn/src/js/add-to-cart.js?v=15039938496"></script>
 <script src="https://cdn-skill.kynaenglish.vn/src/js/jquery-ui.js"></script>
 <script src="https://cdn-skill.kynaenglish.vn/src/js/autocomplete.js?v=1"></script>
 <script src="https://cdn-skill.kynaenglish.vn/js/video/videojs.min.js?v=15217955218005"></script>
@@ -61,6 +62,9 @@
 <script src="https://cdn-skill.kynaenglish.vn/dist/js/app.min.js?v=15217955218005"></script>
 <script src="https://cdn-skill.kynaenglish.vn/dist/js/header.min.js?v=15217955218005"></script>
 <script src="{{asset('kyna/js/home-page.min.js')}}?ver={{time()}}"></script>
+{{-- Course --}}
+<script src="https://cdn-skill.kynaenglish.vn/dist/js/course-detail.min.js?v=15217955218005"></script>
+<script src="https://cdn-skill.kynaenglish.vn/js/widget/course-card.js?v=15217955218005"></script>
 <script src="https://cdn-skill.kynaenglish.vn/src/js/select2.min.js?v=15217955218005"></script>
 <script src="https://cdn-skill.kynaenglish.vn/src/js/tether.min.js?v=15217955218005"></script>
 <script src="https://cdn-skill.kynaenglish.vn/src/js/bootstrap.min.js?v=15217955218005"></script>

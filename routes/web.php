@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\AuthAdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\FrontEnd\AffiliateController;
 use App\Http\Controllers\FrontEnd\CartController as FrontEndCartController;
+use App\Http\Controllers\FrontEnd\CourseController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\FrontEnd\HomeController;
 use App\Http\Controllers\FrontEnd\ProductController as FrontEndProductController;
@@ -53,6 +54,7 @@ Route::prefix($prefix)->group(function () {
             Route::get('/removeAll', 'removeAll')->name($routeName . '/removeAll');
             Route::get('/test', 'test')->name($routeName . '/test');
             Route::post('/order', 'order')->name($routeName . '/order');
+            Route::get('/thanh-toan', 'checkout')->name($routeName . '/checkout');
             Route::get('/order_success/{code?}', 'order_success')->name($routeName . '/order_success');
         });
     });
@@ -61,6 +63,14 @@ Route::prefix($prefix)->group(function () {
         Route::controller(FrontEndProductController::class)->group(function () use ($routeName) {
             Route::get('/{id?}', 'detail')->name($routeName . '/detail');
             Route::get('/category/{id?}', 'category')->name($routeName . '/category');
+            Route::get('/supplier/{id?}', 'supplier')->name($routeName . '/supplier');
+        });
+    });
+    Route::prefix('course')->group(function () {
+        $routeName = "fe_course";
+        Route::controller(CourseController::class)->group(function () use ($routeName) {
+            Route::get('/{slug?}', 'detail')->name($routeName . '/detail');
+            Route::get('/category/{slug?}', 'category')->name($routeName . '/category');
             Route::get('/supplier/{id?}', 'supplier')->name($routeName . '/supplier');
         });
     });

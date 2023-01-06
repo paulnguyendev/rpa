@@ -8,7 +8,7 @@
 </script>
 <meta name="csrf-param" content="_csrf">
 <meta name="csrf-token" content="eGV1NE5FdUstBCVNIX0WfDAKKkwkASoMPjpHYTsHImYSUgQCPXISMQ==">
-<title>Kyna.vn - Học online cùng chuyên gia</title>
+<title>RPA - Web Demo</title>
 <meta name="keywords" content="Kyna.vn, kina, Kyna, lớp đào tạo trực tuyến, khóa học online">
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 <link rel="icon" href="/favo_ico.png">
@@ -17,7 +17,6 @@
 <link rel=preconnect href="https://scontent-xsp1-2.xx.fbcdn.net">
 <link rel=preconnect href="https://webchat.caresoft.vn:8090">
 <link rel=preconnect href="https://apis.google.com">
-<meta name="google-site-verification" content="IXZ0pX_bDQZC3gSDnb7AfY6x2Xkj3ta63mrnNqq3VGQ">
 <meta name="description"
     content="Kyna học online với hơn 700 khóa học trực tuyến thuộc nhiều lĩnh vực như kỹ năng quản trị, ngoại ngữ, tài chính, bất động sản, bảo hiểm, chứng khoán, tiếp thị bán hàng">
 <meta name="robots" content="index,follow">
@@ -42,6 +41,9 @@
 <link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/sweetalert2.min.css?v=15217955218005"
     rel="stylesheet">
 <link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/home-page.css?v=15217955218005" rel="stylesheet">
+{{-- Course --}}
+<link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/course-detail.css?v=15217955218005" rel="stylesheet">
+<link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/course-card.css?v=15217955218005" rel="stylesheet">
 <link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/select2.min.css?v=15217955218005" rel="stylesheet">
 <link type="text/css" href="{{asset('kyna/css/obn.css')}}?ver={{time()}}" rel="stylesheet">
 <script src="/assets/7431fa9e/jquery/dist/jquery.min.js"></script>

@@ -273,4 +273,13 @@ class CartController extends Controller
             ]
         );
     }
+    public function checkout(Request $request) {
+       
+        return view(
+            "{$this->pathViewController}/checkout",
+            [
+               
+            ]
+        );
+    }
 }

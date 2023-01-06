@@ -2,423 +2,611 @@
 @section('navbar_title', 'Giỏ hàng')
 @section('title','Giỏ hàng')
 @section('content')
-    <style>
-        #product_item input.quantity {
-            width: 90px;
-            text-align: center;
-        }
+<div id="k-shopping" class="container k-height-header">
+    <div class="k-shopping-list">
 
-        button.stepy-finish {
-            display: none;
-        }
+                <section>
+        <div class="k-header-shopping-list clearfix">
+            <div class="k-header-shopping-list-left">
+                <img src="https://cdn-skill.kynaenglish.vn/img/cart/icon-cart-checkout.png" alt="">
+                <div class="k-header-shopping-list-left-info">
+                    <div class="k-header-shopping-list-left-info-tit">Thông tin giỏ hàng</div>
+                    <div class="k-header-shopping-list-left-info-des">
+                        <span>1</span> <span class="pc">khóa học,</span><span class="mob"><b>khóa học</b> đã chọn</span> <span>199.000&nbsp;₫</span>
+                    </div>
+                </div>
+            </div>
+            <div class="k-header-shopping-list-right">
+                <a href="/thanh-toan" class="btn-payment">TIẾP TỤC THANH TOÁN</a>
+            </div>
+        </div>
+    </section>
+    <section>
+        <form id="cart-form" action="/cart/default/remove" method="post">
+<input type="hidden" name="_csrf" value="eXM1MGhUYXAsEmVJB2wCRzEcakgCED43PywHZR0WNl0TREQGG2MGCg==">                    <input type="hidden" name="pids[]">
+        <ol class="k-shopping-list-items list-unstyled">
+                                        <li class="items">
+                    
+<div class="k-shopping-list-items-title" data-id="1954" data-price="199000" data-brand="Lê Trọng Nghĩa">
+<div class="items-img">
+<a href="/tu-dong-hoa-kinh-doanh-online" title="Tự động hóa kinh doanh Online">
+                <img class="img-fluid" src="https://cdn-skill.kynaenglish.vn/uploads/courses/1954/img/image_url-1631263836.jpg" size="160x90" width="160px" height="90px" alt="Tự động hóa kinh doanh Online" resizemode="cover" returnmode="img" max-width="100%">                    </a>
+</div>
 
-        .stepy-navigator button.stepy-finish {
-            display: initial;
-        }
+<div class="items-text">
+<h4>
+<a href="/tu-dong-hoa-kinh-doanh-online" title="Tự động hóa kinh doanh Online"><b>Tự động hóa kinh doanh Online</b></a>
+</h4>
+    <!-- <p>Lê Trọng Nghĩa / Giam Doc</p> -->
+            <div class="k-shopping-list-items-group-price -mob">
+                <span class="orange">199.000&nbsp;₫</span>
+        </div>
+<a href="javascript:" data-id="1954" class="items-remove cart-item-remove"><img src="https://cdn-skill.kynaenglish.vn/img/icon-delete.png" alt=""> <i>Xóa khóa học</i></a>
 
-        .confirm_order label {
-            font-weight: bold;
-            display: inline-block;
-            min-width: 140px;
-            text-align: right;
-            margin-right: 5px;
-        }
+</div>
+<!--end .text-->
+</div>
+<!--end .title-->
 
-        td.coupon div.coupon {
-            display: inline-block;
-            margin: 7px 10px 0 0;
-            background-color: #00a800;
-            color: #fff;
-            padding: 3px 10px;
-            cursor: pointer;
-            border-radius: 15px;
-            font-size: 14px;
-        }
-
-        td.coupon div.coupon i {
-            margin-top: -6px;
-            margin-left: 1px;
-            position: absolute;
-            color: #000;
-        }
-
-        #coupon_msg {
-            margin: 7px 0 0;
-            font-weight: normal;
-            color: #fff;
-            background-color: red;
-            padding: 3px 9px;
-            font-size: 14px;
-            display: none;
-        }
-
-        .ship_methods,
-        .payment_methods {
-            list-style: none
-        }
-
-        .payment_description {
-            padding-left: 17px;
-            padding-bottom: 10px;
-            margin-top: -6px;
-        }
-
-        .datatable-header-select-left {
-            position: relative;
-            display: block;
-            float: left;
-            margin: 0;
-        }
-
-        .thumbnail-column {
-            width: 50px;
-        }
-
-        #product_select_filter,
-        #product_select_paginate {
-            margin: 0;
-        }
-    </style>
-    @if (Cart::count() == 0)
-        <style>
-            a.button-next.btn.btn-primary {
-                display: none;
-            }
-        </style>
-    @endif
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-flat">
-                <div class="panel-body">
-                    @if ($cartTotal > 0)
-                        <form class="stepy-validation" id="formCreateOrder">
-                            <fieldset class="stepy-step">
-                                <legend class="text-semibold">Chọn sản phẩm</legend>
-                                <div class="row">
-                                  
-                                    <div class="col-md-12">
-                                        <table id="product_item" class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th width="100px">Hình</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th width="100px">Đơn giá</th>
-                                                    <th width="120px">Số lượng</th>
-                                                    <th width="150px">Thành tiền</th>
-                                                    <th width="50px"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset title="2" style="display: none">
-                                <legend class="text-semibold">Thông tin đặt hàng</legend>
-                                <div class="row" title="">
-                                    <div class="col-md-6">
-                                        <fieldset class="default-form">
-                                            <legend class="text-semibold">Thông tin người mua</legend>
-                                            <div class="form-group">
-                                                <label>Họ tên (*)</label>
-                                                <input type="text" class="form-control" name="name" id="name"
-                                                    placeholder="Họ tên (*)" required />
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Email</label>
-                                                <input type="text" class="form-control" name="email" id="email"
-                                                    placeholder="Email" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Số điện thoại (*)</label>
-                                                <input type="text" class="form-control" name="phone" id="phone"
-                                                    placeholder="Số điện thoại (*)" required />
-                                            </div>
-                                            {{-- <div class="form-group">
-                                            <label>Tỉnh / Thành Phố</label>
-                                            <select class="form-control" name="province" id="province">
-                                                <option value="">Tỉnh / Thành Phố</option>
-                                            </select>
-                                        </div> --}}
-                                            {{-- <div class="form-group">
-                                            <label>Quận / Huyện</label>
-                                            <select class="form-control" name="district" id="district">
-                                                <option value="">Quận / Huyện</option>
-                                            </select>
-                                        </div> --}}
-                                            {{-- <div class="form-group">
-                                            <label>Phường / Xã</label>
-                                            <select class="form-control" name="ward" id="ward">
-                                                <option value="">Phường / Xã</option>
-                                            </select>
-                                        </div> --}}
-                                            <div class="form-group">
-                                                <label>Địa chỉ</label>
-                                                <textarea style="max-width: 100%" class="form-control" name="address" id="address" placeholder="Địa chỉ"></textarea>
-                                            </div>
-                                        </fieldset>
-                                        <div class="form-group">
-                                            <label>Ghi chú:</label>
-                                            <textarea style="max-width: 100%" class="form-control" name="note" id="note" placeholder="Ghi chú"></textarea>
-                                        </div>
-                                        <fieldset class="func-collapse ship-address" id="shipping-same">
-                                            <input id="same-as-billing" type="checkbox" bs-type="checkbox"
-                                                name="has_saddress" value="1" />
-                                            <label for="same-as-billing">Giao hàng tới địa chỉ khác</label>
-                                        </fieldset>
-                                        <fieldset class="default-form addr-form" id="fieldset-shipping"
-                                            style="display: none;">
-                                            <legend class="text-semibold">Thông tin người nhận</legend>
-                                            <div class="form-group">
-                                                <label>Họ tên (*)</label>
-                                                <input type="text" class="form-control" name="sname" id="sname"
-                                                    placeholder="Họ tên" disabled required />
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Email</label>
-                                                <input type="text" class="form-control" name="semail" id="semail"
-                                                    placeholder="Email" disabled />
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Số điện thoại (*)</label>
-                                                <input type="number" class="form-control" name="sphone" id="sphone"
-                                                    placeholder="Số điện thoại" disabled required />
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Tỉnh / Thành Phố</label>
-                                                <div class="wrap-select f-size-medium relative">
-                                                    <select name="sprovince" id="sprovince" class="form-control" disabled>
-                                                        <option value="">Tỉnh / Thành Phố</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Quận / Huyện</label>
-                                                <div class="wrap-select f-size-medium relative">
-                                                    <select name="sdistrict" id="sdistrict" class="form-control"
-                                                        disabled>
-                                                        <option value="">Quận / Huyện</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Phường / Xã</label>
-                                                <div class="wrap-select f-size-medium relative">
-                                                    <select name="sward" id="sward" class="form-control" disabled>
-                                                        <option value="">Phường / Xã</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Địa chỉ</label>
-                                                <textarea style="max-width: 100%" name="saddress" id="saddress" class="form-control" placeholder="Địa chỉ"
-                                                    disabled></textarea>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <fieldset class="default-form addr-form" id="method-shipping">
-                                            <legend class="text-semibold">Phương thức giao hàng</legend>
-                                            <div class="form-group">
-                                                <ul class="ship_methods">
-                                                    <li class="ship_method_bacs">
-                                                        <input id="ship_1" type="radio" name="method_id"
-                                                            value="Nhận hàng tại kho" data-title="Nhận hàng tại kho"
-                                                            checked>
-                                                        <label for="ship_1" class="wb-text15">Nhận hàng tại kho
-                                                        </label>
-                                                        
-
-                                                    </li>
-                                                    <li class="ship_method_bacs">
-                                                        <input id="ship_2" type="radio" name="method_id"
-                                                            value="Giao hàng" data-title="Giao hàng">
-                                                        <label for="ship_2" class="wb-text15">Giao hàng
-                                                        </label>
-
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset class="default-form addr-form" id="method-payment">
-                                            <legend class="text-semibold">Phương thức thanh toán</legend>
-                                            <div class="form-group">
-                                                <ul class="payment_methods">
-                                                    <li class="payment_method_bacs">
-                                                        <input id="payment0" type="radio" name="payment"
-                                                            value="1" data-title="Thu tiền tận nơi - COD" checked>
-                                                        <label for="payment0" class="wb-text15">Thu tiền tận nơi - COD
-                                                        </label>
-                                                        <span class="pull-right">
-                                                            <i class="fa fa-money" aria-hidden="true"></i>
-                                                        </span>
-                                                        <div id="payment_1" class="payment_description">
-                                                            <em class="wb-text13">Chúng tôi giao hàng và thu tiền tận nơi
-                                                                của
-                                                                bạn.</em>
-                                                        </div>
-                                                    </li>
-                                                    <li class="payment_method_bacs">
-                                                        <input id="payment1" type="radio" name="payment"
-                                                            value="2" data-title="Chuyển khoản qua ngân hàng">
-                                                        <label for="payment1" class="wb-text15">Chuyển khoản qua ngân hàng
-                                                        </label>
-                                                        <span class="pull-right">
-                                                            <i class="fa fa-money" aria-hidden="true"></i>
-                                                        </span>
-                                                        <div id="payment_2" class="payment_description" hidden>
-                                                            <em class="wb-text13">Bạn chuyển khoản qua các ngân hàng dưới
-                                                                đây,
-                                                                nội dung chuyển khoản: tên - số điện thoại - mã đơn hàng.
-                                                                Ngân hàng Vietcombank - số tài khoản 01010101010 - chi nhánh
-                                                                Hồ
-                                                                Chí Minh.</em>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset title="3" class="confirm_order" style="display: none;">
-                                <legend class="text-semibold">Xác nhận</legend>
-                                <div class="row" title="">
-                                    <div class="col-md-6">
-                                        <fieldset class="default-form">
-                                            <legend class="text-semibold">Thông tin người mua</legend>
-                                            <div class="form-group">
-                                                <label>Họ tên: </label> <span class="name"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Email: </label> <span class="email"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Số điện thoại: </label> <span class="phone"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Tỉnh / Thành Phố: </label> <span class="province"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Quận / Huyện: </label> <span class="district"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Phường/ Xã: </label> <span class="ward"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Địa chỉ: </label> <span class="address"></span>
-                                            </div>
-                                        </fieldset>
-                                        <div class="form-group">
-                                            <label>Ghi chú: </label> <span class="note"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <fieldset class="default-form addr-form">
-                                            <legend class="text-semibold">Thông tin người nhận</legend>
-                                            <div class="form-group">
-                                                <label>Họ tên: </label> <span class="sname"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Email: </label> <span class="semail"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Số điện thoại: </label> <span class="sphone"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Tỉnh / Thành Phố: </label> <span class="sprovince"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Quận / Huyện: </label> <span class="sdistrict"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Phường / Xã: </label> <span class="sward"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Địa chỉ: </label> <span class="saddress"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Phương thức giao hàng: </label> <span class="sshipping"></span>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <fieldset class="cartItems">
-                                            <legend class="text-semibold">Chi tiết đơn hàng</legend>
-                                            <table id="cartItems" class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th width="100px" class="text-center">Hình</th>
-                                                        <th>Tên sản phẩm</th>
-                                                        <th width="100px" class="text-right">Đơn giá</th>
-                                                        <th width="120px">Số lượng</th>
-                                                        <th width="150px" class="text-right">Thành tiền</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                                <tfoot style="font-weight: bold;">
-                                                    <tr>
-                                                        <td colspan="3" class="text-right">Tổng tiền</td>
-                                                        <td colspan="2" class="text-right subtotal"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3" class="text-right">Phí vận chuyển</td>
-                                                        <td colspan="2" class="text-right shipping"></td>
-                                                    </tr>
-                                                    {{-- <tr>
-                                                    <td colspan="3" class="text-right">Mã giảm giá</td>
-                                                    <td colspan="2" class="coupon">
-                                                        <div class="input-group">
-                                                            <input type="text" name="coupon" id="txtCoupon"
-                                                                class="form-control" placeholder="Nhập mã giảm giá">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn btn-primary" id="btnApplyCoupon"
-                                                                    type="button">Áp dụng</button>
-                                                            </span>
-                                                        </div>
-                                                        <p id="coupon_msg"></p>
-                                                    </td>
-                                                </tr> --}}
-                                                    <tr>
-                                                        <td colspan="3" class="text-right">Giảm giá</td>
-                                                        <td colspan="2" class="text-right discount">0đ</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3" class="text-right">Tổng thanh toán</td>
-                                                        <td colspan="2" class="text-right total"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3"></td>
-                                                        <td colspan="2" class="text-right">
-                                                            <p class="payment_method" style="font-weight: normal;"></p>
-                                                            <p>
-                                                                <label style="font-weight: normal;" for="paid">Đã
-                                                                    thanh
-                                                                    toán</label>
-                                                                <input id="paid" type="checkbox" bs-type="checkbox"
-                                                                    name="paid" value="1" />
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </fieldset>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <button type="submit" class="btn btn-primary stepy-finish">Hoàn tất <i
-                                    class="icon-check position-right"></i></button>
-                        </form>
-                    @else
-                        <p>Giỏ hàng trống</p>
-                    @endif
+<div class="k-shopping-list-items-group-price">
+<div class="k-shopping-list-items-price-old">
+<span><s>199.000&nbsp;₫</s></span>
+</div>
+<div class="k-shopping-list-items-sale">
+<span>0&nbsp;₫</span>
+</div>
+<div class="k-shopping-list-items-price-new">
+        <span>199.000&nbsp;₫</span>
+</div>
+</div>
+                </li>
+                                                                                </ol>
+        </form>                </section>
+    <section>
+                                                <div class="k-shopping-checkout-total-price clearfix">
+            <div class="k-shopping-checkout-total-price-text">
+                <span>TỔNG THÀNH TIỀN</span>
+                <label for="">Học phí gốc</label>
+                                            <label for="">Giảm giá</label>
+                                            <label for="">Tổng cộng</label>
+            </div>
+            <div class="k-shopping-list-items-group-price">
+                <div class="k-shopping-checkout-total-price-old">
+                    <span><s>199.000&nbsp;₫</s></span>
+                </div>
+                                                                            <div class="k-shopping-checkout-total-price-sale">
+                        <span>0&nbsp;₫</span>
+                    </div>
+                
+                                            <div class="k-shopping-checkout-total-price-new">
+                    <span>199.000&nbsp;₫</span>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="k-shopping-checkout-choose-another">
+            <a href="/danh-sach-khoa-hoc"><img src="https://cdn-skill.kynaenglish.vn/img/icon-arrow-left.png" alt=""> Chọn thêm khóa học khác</a>
+        </div>
+
+    </section>
+    <section>
+        <div class="k-shopping-checkout-note clearfix">
+            <ul>
+                <li><img src="https://cdn-skill.kynaenglish.vn/img/cart/icon-cart-note-2.png" alt="">Các phương thức thanh toán linh hoạt</li>
+                <li><img src="https://cdn-skill.kynaenglish.vn/img/cart/icon-cart-note-3.png" alt="">Nội dung học liên tục, xuyên suốt</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- start hot courses-->
+                                            <section id="hot-courses">
+            <h3 style="color:#50ad4e;">
+                <strong>Thường được mua cùng</strong>
+            </h3>
+            <div class="box">
+                <ul id="w1" class="clearfix k-box-card-list hot-courses-container"><li class="col-xl-3 col-lg-4 col-md-6 col-xs-12 k-box-card" data-key="0"><style>
+.view-price__flash-sale{
+position: absolute;
+}
+.view-price__flash-sale .old-price{
+position: relative;
+
+}
+.view-price__flash-sale .in-flash{
+left: -10px;
+text-decoration: line-through;
+}
+.view-price__flash-sale .new-price::before{
+content: url("https://cdn-skill.kynaenglish.vn/img/flash-sale/flash-icon.png");
+position: relative;
+top: 2px;
+}
+.view-price__flash-sale .new-price{
+position: relative;
+top: 5px;
+left: 0px;
+color: #ff293f;
+font-size: 18px;
+
+}
+.clock-flash-sale{
+margin-top: 10px !important;
+}
+@media only screen and (max-width: 540px) {
+.view-price-mb {
+padding: 10px 0 25px !important;
+}
+.clock-flash-sale-text {
+position: absolute;
+left: 10px;
+bottom: 55px;
+}
+}
+</style>
+<div class="k-box-card-wrap clearfix" data-id="196" data-course-type="1">
+<div class="img">
+<img class="img-fluid" src="https://cdn-skill.kynaenglish.vn/uploads/courses/196/img/image_url-1600657858.jpg" size="263x147" width="263px" height="147px" alt="Tư duy logic và giải quyết vấn đề" resizemode="cover" returnmode="img" max-width="100%">
+<div class="label-wrap">
+                
+                                                </div>
+<!-- end .label-wrap -->
+<!-- <div class="teacher mb">
+<ul>
+    <li>
+        <img class="img-teacher" src="https://cdn-skill.kynaenglish.vn/uploads/user/34413/img/avatar.png" size="35x35" width="35px" height="35px" alt="Dương Ngọc Dũng" resizeMode="crop" returnMode="img" max-width="100%">                </li>
+    <li>
+        Dương Ngọc Dũng                </li>
+</ul>
+</div> -->
+
+<!--start course rating-->
+
+<div class="rating-box clearfix">
+<div class="dot" position="1"><i class="fa fa-circle" aria-hidden="true"></i></div>
+<div class="rating-text"><b>4.8 <i class="icon icon-star"></i></b> <span>(24<detail> đánh giá</detail>)</span></div>
+<div class="dot" position="2"><i class="fa fa-circle" aria-hidden="true"></i></div>
+<div class="number-student"><i class="fa fa-user" aria-hidden="true"></i> <span>1496 <span>học viên</span><detail> đăng ký học</detail></span></div>
+</div>
+<!--end rating-->
+
+<span class="background-detail">
+<span class="wrap-position">
+                    <div class="inner">
+        <a href="/tu-duy-logic-va-giai-quyet-van-de" data-ajax="" data-toggle="popup" data-target="#modal">Xem nhanh</a>
+        <a href="/tu-duy-logic-va-giai-quyet-van-de" class="view-detail">Xem chi tiết</a>
+      </div>
+            </span>
+</span>
+</div>
+<!--end .img-->
+
+<div class="content" style="height: 186px;">
+<div class="box-style">
+            <span class="st-video"><i class="fa fa-youtube-play" aria-hidden="true"></i> Khóa học video</span>
+            <span class="time pc"><i class="fa fa-clock-o" aria-hidden="true"></i> 3 giờ</span>
+</div>
+<h4>Tư duy logic và giải quyết vấn đề</h4>
+<span class="author">Dương Ngọc Dũng</span>
+<span class="major">Tiến sĩ Tôn giáo học, ĐH Boston</span>
+</div>
+
+<!--end .content -->
+
+
+<div class="content-mb">
+<b>Dương Ngọc Dũng</b><span><b>,</b> Tiến sĩ Tôn giáo học, ĐH Boston</span>
+</div>
+
+<!--end .content mb -->
+<div class="view-price" style="height: 47px;">
+<ul>
+                                    <li class="price"><strong>198.000đ</strong></li>
+                        </ul>
+                                </div>
+<!--end .view-price-->
+
+
+<div class="view-price-mb">
+<div class="student">
+<div class="number">1496</div>
+<div class="text">học viên</div>
+</div>
+<div class="time">
+<div class="number">3</div>
+<div class="text">giờ</div>
+</div>
+<div class="price">
+<div class="label-price">
+                                                <div class="first">198.000đ</div>
+                                    </div>
+</div>
+</div>
+<!--end .view-price mb-->
+
+            <a href="/tu-duy-logic-va-giai-quyet-van-de" class="link-wrap"></a>
+</div>
+<a href="/tu-duy-logic-va-giai-quyet-van-de" class="card-popup"></a>
+<!--end .wrap-->
+</li>
+<li class="col-xl-3 col-lg-4 col-md-6 col-xs-12 k-box-card" data-key="1"><style>
+.view-price__flash-sale{
+position: absolute;
+}
+.view-price__flash-sale .old-price{
+position: relative;
+
+}
+.view-price__flash-sale .in-flash{
+left: -10px;
+text-decoration: line-through;
+}
+.view-price__flash-sale .new-price::before{
+content: url("https://cdn-skill.kynaenglish.vn/img/flash-sale/flash-icon.png");
+position: relative;
+top: 2px;
+}
+.view-price__flash-sale .new-price{
+position: relative;
+top: 5px;
+left: 0px;
+color: #ff293f;
+font-size: 18px;
+
+}
+.clock-flash-sale{
+margin-top: 10px !important;
+}
+@media only screen and (max-width: 540px) {
+.view-price-mb {
+padding: 10px 0 25px !important;
+}
+.clock-flash-sale-text {
+position: absolute;
+left: 10px;
+bottom: 55px;
+}
+}
+</style>
+<div class="k-box-card-wrap clearfix" data-id="549" data-course-type="1">
+<div class="img">
+<img class="img-fluid" src="https://cdn-skill.kynaenglish.vn/uploads/courses/549/img/image_url-1599635532.jpg" size="263x147" width="263px" height="147px" alt="Content Marketing" resizemode="cover" returnmode="img" max-width="100%">
+<div class="label-wrap">
+                
+                                                </div>
+<!-- end .label-wrap -->
+<!-- <div class="teacher mb">
+<ul>
+    <li>
+        <img class="img-teacher" src="https://cdn-skill.kynaenglish.vn/uploads/user/194763/img/avatar.jpg" size="35x35" width="35px" height="35px" alt="Trần Khánh Tùng" resizeMode="crop" returnMode="img" max-width="100%">                </li>
+    <li>
+        Trần Khánh Tùng                </li>
+</ul>
+</div> -->
+
+<!--start course rating-->
+
+<div class="rating-box clearfix">
+<div class="dot" position="1"><i class="fa fa-circle" aria-hidden="true"></i></div>
+<div class="rating-text"><b>3.8 <i class="icon icon-star"></i></b> <span>(53<detail> đánh giá</detail>)</span></div>
+<div class="dot" position="2"><i class="fa fa-circle" aria-hidden="true"></i></div>
+<div class="number-student"><i class="fa fa-user" aria-hidden="true"></i> <span>2667 <span>học viên</span><detail> đăng ký học</detail></span></div>
+</div>
+<!--end rating-->
+
+<span class="background-detail">
+<span class="wrap-position">
+                    <div class="inner">
+        <a href="/content-marketing" data-ajax="" data-toggle="popup" data-target="#modal">Xem nhanh</a>
+        <a href="/content-marketing" class="view-detail">Xem chi tiết</a>
+      </div>
+            </span>
+</span>
+</div>
+<!--end .img-->
+
+<div class="content" style="height: 186px;">
+<div class="box-style">
+            <span class="st-video"><i class="fa fa-youtube-play" aria-hidden="true"></i> Khóa học video</span>
+            <span class="time pc"><i class="fa fa-clock-o" aria-hidden="true"></i> 6 giờ</span>
+</div>
+<h4>Content Marketing</h4>
+<span class="author">Trần Khánh Tùng</span>
+<span class="major">Đồng sáng lập Your Fashion</span>
+</div>
+
+<!--end .content -->
+
+
+<div class="content-mb">
+<b>Trần Khánh Tùng</b><span><b>,</b> Đồng sáng lập Your Fashion</span>
+</div>
+
+<!--end .content mb -->
+<div class="view-price" style="height: 47px;">
+<ul>
+                                    <li class="price"><strong>198.000đ</strong></li>
+                        </ul>
+                                </div>
+<!--end .view-price-->
+
+
+<div class="view-price-mb">
+<div class="student">
+<div class="number">2667</div>
+<div class="text">học viên</div>
+</div>
+<div class="time">
+<div class="number">6</div>
+<div class="text">giờ</div>
+</div>
+<div class="price">
+<div class="label-price">
+                                                <div class="first">198.000đ</div>
+                                    </div>
+</div>
+</div>
+<!--end .view-price mb-->
+
+            <a href="/content-marketing" class="link-wrap"></a>
+</div>
+<a href="/content-marketing" class="card-popup"></a>
+<!--end .wrap-->
+</li>
+<li class="col-xl-3 col-lg-4 col-md-6 col-xs-12 k-box-card" data-key="2"><style>
+.view-price__flash-sale{
+position: absolute;
+}
+.view-price__flash-sale .old-price{
+position: relative;
+
+}
+.view-price__flash-sale .in-flash{
+left: -10px;
+text-decoration: line-through;
+}
+.view-price__flash-sale .new-price::before{
+content: url("https://cdn-skill.kynaenglish.vn/img/flash-sale/flash-icon.png");
+position: relative;
+top: 2px;
+}
+.view-price__flash-sale .new-price{
+position: relative;
+top: 5px;
+left: 0px;
+color: #ff293f;
+font-size: 18px;
+
+}
+.clock-flash-sale{
+margin-top: 10px !important;
+}
+@media only screen and (max-width: 540px) {
+.view-price-mb {
+padding: 10px 0 25px !important;
+}
+.clock-flash-sale-text {
+position: absolute;
+left: 10px;
+bottom: 55px;
+}
+}
+</style>
+<div class="k-box-card-wrap clearfix" data-id="153" data-course-type="1">
+<div class="img">
+<img class="img-fluid" src="https://cdn-skill.kynaenglish.vn/uploads/courses/153/img/image_url-1600317276.jpg" size="263x147" width="263px" height="147px" alt="Bí quyết thuê và cho thuê nhà nhanh chóng" resizemode="cover" returnmode="img" max-width="100%">
+<div class="label-wrap">
+                
+                                                </div>
+<!-- end .label-wrap -->
+<!-- <div class="teacher mb">
+<ul>
+    <li>
+        <img class="img-teacher" src="https://cdn-skill.kynaenglish.vn/uploads/user/113475/img/avatar-1529981077.png" size="35x35" width="35px" height="35px" alt="Phan Công Chánh " resizeMode="crop" returnMode="img" max-width="100%">                </li>
+    <li>
+        Phan Công Chánh                 </li>
+</ul>
+</div> -->
+
+<!--start course rating-->
+
+<div class="rating-box clearfix">
+<div class="dot" position="1"><i class="fa fa-circle" aria-hidden="true"></i></div>
+<div class="rating-text"><b>4.4 <i class="icon icon-star"></i></b> <span>(66<detail> đánh giá</detail>)</span></div>
+<div class="dot" position="2"><i class="fa fa-circle" aria-hidden="true"></i></div>
+<div class="number-student"><i class="fa fa-user" aria-hidden="true"></i> <span>13209 <span>học viên</span><detail> đăng ký học</detail></span></div>
+</div>
+<!--end rating-->
+
+<span class="background-detail">
+<span class="wrap-position">
+                    <div class="inner">
+        <a href="/bi-quyet-thue-va-cho-thue-nha-nhanh-chong" data-ajax="" data-toggle="popup" data-target="#modal">Xem nhanh</a>
+        <a href="/bi-quyet-thue-va-cho-thue-nha-nhanh-chong" class="view-detail">Xem chi tiết</a>
+      </div>
+            </span>
+</span>
+</div>
+<!--end .img-->
+
+<div class="content" style="height: 186px;">
+<div class="box-style">
+            <span class="st-video"><i class="fa fa-youtube-play" aria-hidden="true"></i> Khóa học video</span>
+            <span class="time pc"><i class="fa fa-clock-o" aria-hidden="true"></i> 2 giờ</span>
+</div>
+<h4>Bí quyết thuê và cho thuê nhà nhanh chóng</h4>
+<span class="author">Phan Công Chánh </span>
+<span class="major">Chuyên gia bất động sản cá nhân </span>
+</div>
+
+<!--end .content -->
+
+
+<div class="content-mb">
+<b>Phan Công Chánh </b><span><b>,</b> Chuyên gia bất động sản cá nhân </span>
+</div>
+
+<!--end .content mb -->
+<div class="view-price" style="height: 47px;">
+<ul>
+                                    <li class="price"><strong>598.000đ</strong></li>
+                        </ul>
+                                </div>
+<!--end .view-price-->
+
+
+<div class="view-price-mb">
+<div class="student">
+<div class="number">13209</div>
+<div class="text">học viên</div>
+</div>
+<div class="time">
+<div class="number">2</div>
+<div class="text">giờ</div>
+</div>
+<div class="price">
+<div class="label-price">
+                                                <div class="first">598.000đ</div>
+                                    </div>
+</div>
+</div>
+<!--end .view-price mb-->
+
+            <a href="/bi-quyet-thue-va-cho-thue-nha-nhanh-chong" class="link-wrap"></a>
+</div>
+<a href="/bi-quyet-thue-va-cho-thue-nha-nhanh-chong" class="card-popup"></a>
+<!--end .wrap-->
+</li>
+<li class="col-xl-3 col-lg-4 col-md-6 col-xs-12 k-box-card" data-key="3"><style>
+.view-price__flash-sale{
+position: absolute;
+}
+.view-price__flash-sale .old-price{
+position: relative;
+
+}
+.view-price__flash-sale .in-flash{
+left: -10px;
+text-decoration: line-through;
+}
+.view-price__flash-sale .new-price::before{
+content: url("https://cdn-skill.kynaenglish.vn/img/flash-sale/flash-icon.png");
+position: relative;
+top: 2px;
+}
+.view-price__flash-sale .new-price{
+position: relative;
+top: 5px;
+left: 0px;
+color: #ff293f;
+font-size: 18px;
+
+}
+.clock-flash-sale{
+margin-top: 10px !important;
+}
+@media only screen and (max-width: 540px) {
+.view-price-mb {
+padding: 10px 0 25px !important;
+}
+.clock-flash-sale-text {
+position: absolute;
+left: 10px;
+bottom: 55px;
+}
+}
+</style>
+<div class="k-box-card-wrap clearfix" data-id="866" data-course-type="1">
+<div class="img">
+<img class="img-fluid" src="https://cdn-skill.kynaenglish.vn/uploads/courses/866/img/image_url-1594981875.jpg" size="263x147" width="263px" height="147px" alt="Tiếng Anh giao tiếp công sở qua điện thoại" resizemode="cover" returnmode="img" max-width="100%">
+<div class="label-wrap">
+                
+                                                </div>
+<!-- end .label-wrap -->
+<!-- <div class="teacher mb">
+<ul>
+    <li>
+        <img class="img-teacher" src="https://cdn-skill.kynaenglish.vn/uploads/user/300068/img/avatar.png" size="35x35" width="35px" height="35px" alt="Kynalingo - Into the World" resizeMode="crop" returnMode="img" max-width="100%">                </li>
+    <li>
+        Kynalingo - Into the World                </li>
+</ul>
+</div> -->
+
+<!--start course rating-->
+
+<div class="rating-box clearfix">
+<div class="dot" position="1"><i class="fa fa-circle" aria-hidden="true"></i></div>
+<div class="rating-text"><b>5 <i class="icon icon-star"></i></b> <span>(1<detail> đánh giá</detail>)</span></div>
+<div class="dot" position="2"><i class="fa fa-circle" aria-hidden="true"></i></div>
+<div class="number-student"><i class="fa fa-user" aria-hidden="true"></i> <span>948 <span>học viên</span><detail> đăng ký học</detail></span></div>
+</div>
+<!--end rating-->
+
+<span class="background-detail">
+<span class="wrap-position">
+                    <div class="inner">
+        <a href="/tieng-anh-giao-tiep-cong-so-qua-dien-thoai" data-ajax="" data-toggle="popup" data-target="#modal">Xem nhanh</a>
+        <a href="/tieng-anh-giao-tiep-cong-so-qua-dien-thoai" class="view-detail">Xem chi tiết</a>
+      </div>
+            </span>
+</span>
+</div>
+<!--end .img-->
+
+<div class="content" style="height: 186px;">
+<div class="box-style">
+            <span class="st-video"><i class="fa fa-youtube-play" aria-hidden="true"></i> Khóa học video</span>
+            <span class="time pc"><i class="fa fa-clock-o" aria-hidden="true"></i> 3 giờ</span>
+</div>
+<h4>Tiếng Anh giao tiếp công sở qua điện thoại</h4>
+<span class="author">Kynalingo - Into the World</span>
+<span class="major">Thuộc hệ sinh thái đào tạo trực tuyến kỹ năng dành cho người đi làm Kyna Group</span>
+</div>
+
+<!--end .content -->
+
+
+<div class="content-mb">
+<b>Kynalingo - Into the World</b><span><b>,</b> Thuộc hệ sinh thái đào tạo trực tuyến kỹ năng dành cho người đi làm Kyna Group</span>
+</div>
+
+<!--end .content mb -->
+<div class="view-price" style="height: 47px;">
+<ul>
+                                    <li class="price"><strong>298.000đ</strong></li>
+                        </ul>
+                                </div>
+<!--end .view-price-->
+
+
+<div class="view-price-mb">
+<div class="student">
+<div class="number">948</div>
+<div class="text">học viên</div>
+</div>
+<div class="time">
+<div class="number">3</div>
+<div class="text">giờ</div>
+</div>
+<div class="price">
+<div class="label-price">
+                                                <div class="first">298.000đ</div>
+                                    </div>
+</div>
+</div>
+<!--end .view-price mb-->
+
+            <a href="/tieng-anh-giao-tiep-cong-so-qua-dien-thoai" class="link-wrap"></a>
+</div>
+<a href="/tieng-anh-giao-tiep-cong-so-qua-dien-thoai" class="card-popup"></a>
+<!--end .wrap-->
+</li>
+</ul>                        </div>
+
+        </section>
+                    <!-- end hot courses -->
+
+        </div>
+
+</div>
 @endsection
 @section('custom_srcipt')
     <script type="text/javascript">

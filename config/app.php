@@ -182,6 +182,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
 
 
         /*
@@ -212,6 +213,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
 
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),

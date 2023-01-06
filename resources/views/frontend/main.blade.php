@@ -3,7 +3,7 @@
 <head data-user-id="">
     @include('frontend.elements.head')
 </head>
-<body class="desktop">
+<body class="@yield('body_class','desktop')">
     <div class="modal fade" id="video-modal" tabindex="-1" role="dialog" aria-labelledby="video-modal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -53,15 +53,6 @@
     </div>
     <main id="@yield('id', 'home-page')" data-cdn-url="https://cdn-skill.kynaenglish.vn">
         @yield('content')
-        <!-- Header banner -->
-        <!-- Skill course -->
-        <!-- Wow courses -->
-        <!-- Free course -->
-        <!-- Relevant courses -->
-        <!-- Tag list -->
-        <!-- Best user seen courses -->
-        <!-- Lecturer List -->
-        <!-- Pre footer   -->
         <a href="#" class="cta-scroll-to-top"><i class="fas fa-arrow-up"></i></a>
     </main>
     <footer>
@@ -69,5 +60,6 @@
     </footer>
     <!-- Góp ý -->
     @include('frontend.elements.script')
+    @yield('custom_script')
 </body>
 </html>

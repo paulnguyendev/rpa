@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\UserModel;
-
+use Jenssegers\Agent\Agent;
 class Obn
 {
     public static function generateUniqueCode()
@@ -41,6 +41,19 @@ class Obn
     }
     public static function showThumbnail($thumb) {
         $result = $thumb ? $thumb : asset('obn-dashboard/img/no-image.png');
+        return $result;
+    }
+    public static function checkDevice() {
+        $agent = new Agent();
+        if($agent->isMobile()) {
+            $result = 'mobile';
+        }
+        elseif($agent->isDesktop()) {
+            $result = 'isTablet';
+        }
+        else {
+            $result = 'desktop';
+        }
         return $result;
     }
 }
