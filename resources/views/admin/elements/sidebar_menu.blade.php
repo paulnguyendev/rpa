@@ -33,6 +33,40 @@
             </li>
         </ul>
     </li>
+      <li data-label="Quản Lý Bài Viết">
+        <a href="javascript:void(0)">
+            <i class="icon-price-tag2"></i>
+            <span>Quản lý khóa học</span>
+        </a>
+        <ul class="second-menu-level">
+            <li>
+                <a href="{{route('admin_course/form')}}">
+                    <span>Tạo khóa học</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin_course/index')}}">
+                    <span>Tất cả khóa học</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin_courseCategory/index')}}">
+                    <span>Danh mục khóa học</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin_teacher/index')}}">
+                    <span>Danh sách giáo viên</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin_level/index')}}">
+                    <span>Danh sách trình độ</span>
+                </a>
+            </li>
+           
+        </ul>
+    </li>
     {{-- <li data-label="Quản Lý Bài Viết">
         <a href="javascript:void(0)">
             <i class="icon-magazine"></i>

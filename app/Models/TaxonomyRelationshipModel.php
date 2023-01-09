@@ -16,7 +16,7 @@ class TaxonomyRelationshipModel extends Model
     const UPDATED_AT = 'updated_at';
     protected $fieldSearchAccepted = ['email', 'phone', 'fullname'];
     protected $crudNotAccepted = ['_token', 'data_attributes', 'id'];
-    protected $fillable = ['product_id', 'taxonomy_id', 'sort_order', 'created_at', 'updated_at', 'taxonomy_type'];
+    protected $fillable = ['product_id', 'course_id', 'taxonomy_id', 'sort_order', 'created_at', 'updated_at', 'taxonomy_type'];
     use HasFactory;
     public function listItems($params = "", $options = "")
     {
@@ -71,10 +71,13 @@ class TaxonomyRelationshipModel extends Model
         if ($option['task'] == 'delete') {
             $this->where('id', $params['id'])->delete();
         }
-      
+
         if ($option['task'] == 'taxonomy_id') {
 
-            $this->where('taxonomy_id', $params['taxonomy_id'])->where('product_id',$params['product_id'])->delete();
+            $this->where('taxonomy_id', $params['taxonomy_id'])->where('product_id', $params['product_id'])->delete();
+        }
+        if ($option['task'] == 'course_id') {
+            $this->where('taxonomy_id', $params['taxonomy_id'])->where('course_id', $params['course_id'])->delete();
         }
     }
     public function articles()

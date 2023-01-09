@@ -12,7 +12,7 @@ class CourseModel extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
     protected $fieldSearchAccepted = ['email', 'phone', 'fullname'];
-    protected $crudNotAccepted = ['_token', 'data_attributes','id'];
+    protected $crudNotAccepted = ['_token', 'data_attributes','id','cat_id','other_cat_ids','action'];
     protected $fillable = ['title','slug','thumbnail','code','point','price','price_sale','description','content','is_best_seller','is_certificate','video_intro','time','is_published','created_at','updated_at','level_id','teacher_id'];
     use HasFactory;
     public function listItems($params = "", $options = "")
@@ -96,7 +96,7 @@ class CourseModel extends Model
     }
     public function taxonomy()
     {
-        return $this->belongsToMany(TaxonomyModel::class,'taxonomy_relationship','product_id','taxonomy_id');
+        return $this->belongsToMany(TaxonomyModel::class,'taxonomy_relationship','course_id','taxonomy_id');
     }
     public function supplier() {
         return $this->belongsTo(SupplierModel::class, 'supplier_id','id' );

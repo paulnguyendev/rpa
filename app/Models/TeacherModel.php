@@ -12,7 +12,7 @@ class TeacherModel extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
     protected $fieldSearchAccepted = ['email', 'phone', 'fullname'];
-    protected $crudNotAccepted = ['_token', 'data_attributes','id'];
+    protected $crudNotAccepted = ['_token', 'data_attributes','id','taxonomy'];
     protected $fillable = ['title','position','thumbnail','description','content','created_at','updated_at'];
     use HasFactory;
     public function listItems($params = "", $options = "")
@@ -56,6 +56,10 @@ class TeacherModel extends Model
         }
         if ($options['task'] == 'list_home') {
             $result = $query->orderBy('id', 'desc')->paginate(10);
+        }
+        if ($options['task'] == 'list_title') {
+            $query = $this->select('id', 'title');
+            $result = $query->orderBy('id', 'desc')->get();
         }
         return $result;
     }

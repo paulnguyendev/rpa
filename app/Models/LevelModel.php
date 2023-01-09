@@ -57,6 +57,10 @@ class LevelModel extends Model
         if ($options['task'] == 'list_home') {
             $result = $query->orderBy('id', 'desc')->paginate(10);
         }
+        if ($options['task'] == 'list_title') {
+            $query = $this->select('id', 'title');
+            $result = $query->orderBy('id', 'desc')->get();
+        }
         return $result;
     }
     public function getItem($params = [], $options = [])

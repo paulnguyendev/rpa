@@ -1,11 +1,16 @@
 <?php
+
+use App\Http\Controllers\Admin\CourseCategoryController;
+use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthAdminController;
 use App\Http\Controllers\Auth\AuthController;
@@ -179,6 +184,17 @@ Route::middleware('access.adminDashboard')->prefix($prefix)->group(function () {
             Route::get('/data/list', 'dataList')->name($routeName . '/dataList');
         });
     });
+    Route::prefix('course-category')->group(function () {
+        $routeName = "admin_courseCategory";
+        Route::controller(CourseCategoryController::class)->group(function () use ($routeName) {
+            Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('/form/{id?}', 'form')->name($routeName . '/form');
+            Route::delete('/delete/{id?}', 'delete')->name($routeName . '/delete');
+            Route::delete('/destroy-multi/{id?}', 'destroyMulti')->name($routeName . '/destroy-multi');
+            Route::post('/save/{id?}', 'save')->name($routeName . '/save');
+            Route::get('/data/list', 'dataList')->name($routeName . '/dataList');
+        });
+    });
     Route::prefix('supplier')->group(function () {
         $routeName = "supplier";
         Route::controller(SupplierController::class)->group(function () use ($routeName) {
@@ -202,6 +218,41 @@ Route::middleware('access.adminDashboard')->prefix($prefix)->group(function () {
             Route::delete('/destroyMulti', 'destroyMulti')->name($routeName . '/destroyMulti');
         });
     });
+    Route::prefix('teacher')->group(function () {
+        $routeName = "admin_teacher";
+        Route::controller(TeacherController::class)->group(function () use ($routeName) {
+            Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('/form/{id?}', 'form')->name($routeName . '/form');
+            Route::delete('/delete/{id?}', 'delete')->name($routeName . '/delete');
+            Route::delete('/destroy-multi/{id?}', 'destroyMulti')->name($routeName . '/destroy-multi');
+            Route::post('/save/{id?}', 'save')->name($routeName . '/save');
+            Route::get('/data/list', 'dataList')->name($routeName . '/dataList');
+        });
+    });
+    Route::prefix('level')->group(function () {
+        $routeName = "admin_level";
+        Route::controller(LevelController::class)->group(function () use ($routeName) {
+            Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('/form/{id?}', 'form')->name($routeName . '/form');
+            Route::delete('/delete/{id?}', 'delete')->name($routeName . '/delete');
+            Route::delete('/destroy-multi/{id?}', 'destroyMulti')->name($routeName . '/destroy-multi');
+            Route::post('/save/{id?}', 'save')->name($routeName . '/save');
+            Route::get('/data/list', 'dataList')->name($routeName . '/dataList');
+        });
+    });
+    Route::prefix('course')->group(function () {
+        $routeName = "admin_course";
+        Route::controller(AdminCourseController::class)->group(function () use ($routeName) {
+            Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('/form/{id?}', 'form')->name($routeName . '/form');
+            Route::post('/save/{id?}', 'save')->name($routeName . '/save');
+            Route::patch('/updateField/{id?}', 'updateField')->name($routeName . '/updateField');
+            Route::delete('/delete/{id?}', 'delete')->name($routeName . '/delete');
+            Route::get('/dataList', 'dataList')->name($routeName . '/dataList');
+            Route::delete('/destroyMulti', 'destroyMulti')->name($routeName . '/destroyMulti');
+        });
+    });
+  
     Route::prefix('post')->group(function () {
         $routeName = "post";
         Route::controller(ProductController::class)->group(function () use ($routeName) {
