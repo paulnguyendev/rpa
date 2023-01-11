@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\BunnyController;
 use App\Http\Controllers\Admin\CourseCategoryController;
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\FrontEnd\HomeController;
 use App\Http\Controllers\FrontEnd\ProductController as FrontEndProductController;
 use App\Http\Controllers\User\AffiliateController as UserAffiliateController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\CourseController as UserCourseController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\ProfileController as UserProfileController;
@@ -29,7 +32,6 @@ use App\Http\Controllers\User\SupplierController as UserSupplierController;
 use App\Http\Controllers\User\TicketController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\EventListener\ProfilerListener;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -87,7 +89,6 @@ Route::prefix($prefix)->group(function () {
             Route::get('/{code?}/product/{product_id?}', 'product')->name($routeName . '/product');
         });
     });
-   
     // Route::controller(HomeController::class)->group(function () use ($routeName) {
     //     Route::get('/aff/{?username}', 'index')->name($routeName . '/index');
     // });
@@ -160,6 +161,16 @@ Route::middleware('access.userDashboard')->prefix($prefix)->group(function () {
         $routeName = "user_ticket";
         Route::controller(TicketController::class)->group(function () use ($routeName) {
             Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('/form/{id?}', 'form')->name($routeName . '/form');
+            Route::get('/dataList', 'dataList')->name($routeName . '/dataList');
+            Route::post('/save', 'save')->name($routeName . '/save');
+        });
+    });
+    Route::prefix('course')->group(function () {
+        $routeName = "user_course";
+        Route::controller(UserCourseController::class)->group(function () use ($routeName) {
+            Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('/detail/{id?}', 'detail')->name($routeName . '/detail');
             Route::get('/form/{id?}', 'form')->name($routeName . '/form');
             Route::get('/dataList', 'dataList')->name($routeName . '/dataList');
             Route::post('/save', 'save')->name($routeName . '/save');
@@ -252,7 +263,26 @@ Route::middleware('access.adminDashboard')->prefix($prefix)->group(function () {
             Route::delete('/destroyMulti', 'destroyMulti')->name($routeName . '/destroyMulti');
         });
     });
-  
+    Route::prefix('lesson')->group(function () {
+        $routeName = "admin_lesson";
+        Route::controller(LessonController::class)->group(function () use ($routeName) {
+            Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('course/{course_id}/form/{id?}', 'course_form')->name($routeName . '/course_form');
+            Route::get('/form/{id?}', 'form')->name($routeName . '/form');
+            Route::post('/save/{id?}', 'save')->name($routeName . '/save');
+            Route::patch('/updateField/{id?}', 'updateField')->name($routeName . '/updateField');
+            Route::delete('/delete/{id?}', 'delete')->name($routeName . '/delete');
+            Route::get('/dataList', 'dataList')->name($routeName . '/dataList');
+            Route::delete('/destroyMulti', 'destroyMulti')->name($routeName . '/destroyMulti');
+        });
+    });
+    Route::prefix('bunny')->group(function () {
+        $routeName = "admin_bunny";
+        Route::controller(BunnyController::class)->group(function () use ($routeName) {
+            Route::post('/uploadVideo', 'uploadVideo')->name($routeName . '/uploadVideo');
+           
+        });
+    });
     Route::prefix('post')->group(function () {
         $routeName = "post";
         Route::controller(ProductController::class)->group(function () use ($routeName) {

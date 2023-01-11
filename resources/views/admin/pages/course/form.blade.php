@@ -88,10 +88,23 @@
             <button class="btn btn-default heading-btn" type="button">Hủy</button>
         </a>
     </li>
+    @if ($id)
+        <li>
+            <a href="{{ route("admin_lesson/course_form",['course_id' => $id]) }}" style="padding:5px 0px 5px 5px">
+                <button class="btn btn-danger heading-btn" type="button">Tạo bài học</button>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route("{$controllerName}/index") }}" style="padding:5px 0px 5px 5px">
+                <button class="btn btn-primary heading-btn" type="button">Danh sách bài học</button>
+            </a>
+        </li>
+    @endif
     <li>
         <div style="padding:5px 0px 5px 5px">
-            <button type="button" class="heading-btn btn btn-info btn-ladda btn-ladda-spinner" onclick="nav_submit_form(this)"
-                data-style="zoom-in" data-form="post-form"><span class="ladda-label">Lưu</span></button>
+            <button type="button" class="heading-btn btn btn-info btn-ladda btn-ladda-spinner"
+                onclick="nav_submit_form(this)" data-style="zoom-in" data-form="post-form"><span
+                    class="ladda-label">Lưu</span></button>
         </div>
     </li>
 @endsection
@@ -148,14 +161,14 @@
                                 @endphp
                                 <option value="">Chọn trình độ</option>
                                 @foreach ($levels as $level)
-                                    <option value="{{ $level['id'] }}"
-                                        {{ $level_id == $level['id'] ? 'selected' : '' }}>{{ $level['title'] }}
+                                    <option value="{{ $level['id'] }}" {{ $level_id == $level['id'] ? 'selected' : '' }}>
+                                        {{ $level['title'] }}
                                     </option>
                                 @endforeach
                             </select>
                             <span class="help-block"></span>
                         </div>
-                     
+
                         <div class="form-group">
                             <label>Video Intro
                             </label>
@@ -175,22 +188,22 @@
                                 @php
                                     $is_certificate = $item['is_certificate'] ?? '';
                                 @endphp
-                                <input bs-type="checkbox" {{ $is_certificate == '1' ? 'checked' : '' }} name="is_certificate"
-                                    type="checkbox" value="1">
+                                <input bs-type="checkbox" {{ $is_certificate == '1' ? 'checked' : '' }}
+                                    name="is_certificate" type="checkbox" value="1">
                                 Cấp chứng nhận hoàn thành
                             </label>
-                          
+
                         </div>
                         <div class="form-group">
                             <label class="checkbox-inline">
                                 @php
                                     $is_best_seller = $item['is_best_seller'] ?? '';
                                 @endphp
-                                <input bs-type="checkbox" {{ $is_best_seller == '1' ? 'checked' : '' }} name="is_best_seller"
-                                    type="checkbox" value="1">
+                                <input bs-type="checkbox" {{ $is_best_seller == '1' ? 'checked' : '' }}
+                                    name="is_best_seller" type="checkbox" value="1">
                                 Khóa học bán chạy
                             </label>
-                          
+
                         </div>
 
                     </div>
@@ -219,7 +232,7 @@
 
                     </div>
                 </div>
-           
+
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <fieldset class="content-group">
@@ -233,7 +246,7 @@
                                         value="{{ $item['price'] ?? '' }}">
                                     <span class="help-block"></span>
                                 </div>
-                                
+
                                 <div class="col-md-6 col-xs-8">
                                     <div class="row form-group mb-10">
                                         <div class="col-xs-12">
@@ -319,9 +332,9 @@
                                 type="checkbox" value="1">
                             Hiện
                         </label>
-                       
+
                     </div>
-                   
+
                 </div>
             </div>
             <div class="panel panel-default">
@@ -362,42 +375,42 @@
                     <input type="hidden" name="id" value="{{ $id }}">
                 </div>
             </div>
-                 <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="col-md-12 col-xs-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h6 class="panel-title">Hình đại diện <small>(600x600)</small></h6>
-                                    <div class="heading-elements">
-                                        <ul class="icons-list">
-                                            <li><a data-action="collapse" class=""></a></li>
-                                        </ul>
-                                    </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">Hình đại diện <small>(600x600)</small></h6>
+                                <div class="heading-elements">
+                                    <ul class="icons-list">
+                                        <li><a data-action="collapse" class=""></a></li>
+                                    </ul>
                                 </div>
-                                <div class="panel-body">
-                                    <div class="single-media text-center">
-                                        <input id="thumbnail" name="thumbnail" type="hidden"
-                                            value="{{ $item['thumbnail'] ?? '' }}">
-                                        <div class="media-item">
-                                            <img class="img-thumbnail"
-                                                data-no-image="https://via.placeholder.com/150x120&amp;text=No+Image"
-                                                src="{{ $item['thumbnail'] ?? 'https://via.placeholder.com/150x120&amp;text=No+Image' }}"
-                                                width="150px" height="120px" id="holder_thumbnail"
-                                                style="max-height: 100%">
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <a style="margin-top: 5px;margin-bottom: 3px" data-input="thumbnail"
-                                            data-type="single" data-preview="holder_thumbnail" id="lfm_thumbnail"
-                                            class="btn ;btn-sm btn-default" bs-type="filemanager">
-                                            Chọn hình
-                                        </a>
+                            </div>
+                            <div class="panel-body">
+                                <div class="single-media text-center">
+                                    <input id="thumbnail" name="thumbnail" type="hidden"
+                                        value="{{ $item['thumbnail'] ?? '' }}">
+                                    <div class="media-item">
+                                        <img class="img-thumbnail"
+                                            data-no-image="https://via.placeholder.com/150x120&amp;text=No+Image"
+                                            src="{{ $item['thumbnail'] ?? 'https://via.placeholder.com/150x120&amp;text=No+Image' }}"
+                                            width="150px" height="120px" id="holder_thumbnail"
+                                            style="max-height: 100%">
                                     </div>
+                                    <div class="clearfix"></div>
+                                    <a style="margin-top: 5px;margin-bottom: 3px" data-input="thumbnail"
+                                        data-type="single" data-preview="holder_thumbnail" id="lfm_thumbnail"
+                                        class="btn ;btn-sm btn-default" bs-type="filemanager">
+                                        Chọn hình
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                      
                     </div>
+
                 </div>
+            </div>
         </div>
     </form>
 @endsection
