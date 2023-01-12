@@ -5,7 +5,7 @@
             <span>Quản Lý Chung</span>
         </a>
     </li>
-    <li data-label="Quản Lý Bài Viết">
+    {{-- <li data-label="Quản Lý Bài Viết">
         <a href="javascript:void(0)">
             <i class="icon-price-tag2"></i>
             <span>Quản lý Sản phẩm</span>
@@ -32,39 +32,39 @@
                 </a>
             </li>
         </ul>
-    </li>
-      <li data-label="Quản Lý Bài Viết">
+    </li> --}}
+    <li data-label="Quản Lý Bài Viết">
         <a href="javascript:void(0)">
             <i class="icon-price-tag2"></i>
             <span>Quản lý khóa học</span>
         </a>
         <ul class="second-menu-level">
             <li>
-                <a href="{{route('admin_course/form')}}">
+                <a href="{{ route('admin_course/form') }}">
                     <span>Tạo khóa học</span>
                 </a>
             </li>
             <li>
-                <a href="{{route('admin_course/index')}}">
+                <a href="{{ route('admin_course/index') }}">
                     <span>Tất cả khóa học</span>
                 </a>
             </li>
             <li>
-                <a href="{{route('admin_courseCategory/index')}}">
+                <a href="{{ route('admin_courseCategory/index') }}">
                     <span>Danh mục khóa học</span>
                 </a>
             </li>
             <li>
-                <a href="{{route('admin_teacher/index')}}">
+                <a href="{{ route('admin_teacher/index') }}">
                     <span>Danh sách giáo viên</span>
                 </a>
             </li>
             <li>
-                <a href="{{route('admin_level/index')}}">
+                <a href="{{ route('admin_level/index') }}">
                     <span>Danh sách trình độ</span>
                 </a>
             </li>
-           
+
         </ul>
     </li>
     {{-- <li data-label="Quản Lý Bài Viết">
@@ -102,7 +102,7 @@
                 </a>
             </li> --}}
             <li>
-                <a href="{{route('admin_order/index')}}">
+                <a href="{{ route('admin_order/index') }}">
                     <span>Quản lý đơn hàng</span>
                 </a>
             </li>
@@ -111,6 +111,35 @@
                     <span>Quản lý tồn kho</span>
                 </a>
             </li> --}}
+        </ul>
+    </li>
+    <li data-label="Affiliate" >
+        <a href="javascript:void(0)" class="has-ul">
+            <i class="icon-link"></i>
+            <span>Affiliate</span>
+        </a>
+        <ul class="second-menu-level hidden-ul">
+
+
+            <li>
+                <a href="http://anhnnd.s1.loveitop.com/admin/affiliate/users">
+                    <span>Danh sách tài khoản</span>
+                </a>
+            </li>
+
+
+            <li>
+                <a href="http://anhnnd.s1.loveitop.com/admin/affiliate/withdrawal-requests">
+                    <span>Yêu cầu rút tiền</span>
+                </a>
+            </li>
+
+
+            <li>
+                <a href="http://anhnnd.s1.loveitop.com/admin/affiliate/setting">
+                    <span>Cấu hình</span>
+                </a>
+            </li>
         </ul>
     </li>
     <li data-label="Tài khoản">

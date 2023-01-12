@@ -95,7 +95,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route("{$controllerName}/index") }}" style="padding:5px 0px 5px 5px">
+            <a href="{{ route("admin_lesson/course_index",['course_id' => $id]) }}" style="padding:5px 0px 5px 5px">
                 <button class="btn btn-primary heading-btn" type="button">Danh sách bài học</button>
             </a>
         </li>

@@ -267,6 +267,7 @@ Route::middleware('access.adminDashboard')->prefix($prefix)->group(function () {
         $routeName = "admin_lesson";
         Route::controller(LessonController::class)->group(function () use ($routeName) {
             Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('course/{course_id}/', 'course_index')->name($routeName . '/course_index');
             Route::get('course/{course_id}/form/{id?}', 'course_form')->name($routeName . '/course_form');
             Route::get('/form/{id?}', 'form')->name($routeName . '/form');
             Route::post('/save/{id?}', 'save')->name($routeName . '/save');

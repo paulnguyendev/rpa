@@ -1,28 +1,35 @@
 @extends('admin.admin')
-@section('navbar_title', 'Quản lý khóa học')
+@section('navbar_title')
+    @if ($course_id)
+        {!! $courseTitleLink !!} / Quản lý {!! $title !!}
+    @else
+        Quản lý {!! $title !!}
+    @endif
+@endsection
 @section('navbar-right')
     <li>
-        <a href="{{ route('admin_course/form') }}" style="padding:5px 5px">
-            <button class="btn bg-info heading-btn" type="button">Tạo khóa học</button>
+        <a href="{{ route('admin_lesson/course_form',['course_id' => $course_id]) }}" style="padding:5px 5px">
+            <button class="btn bg-info heading-btn" type="button">Tạo bài học</button>
         </a>
     </li>
 @endsection
 @section('content')
     <div class="panel panel-flat">
-        <table class="table table-xlg datatable-ajax" data-source="{{ route('admin_course/dataList') }}"
-            data-destroymulti="{{ route('admin_course/destroyMulti') }}">
+        <table class="table table-xlg datatable-ajax" data-source="{{ route('admin_lesson/dataList',['course_id' => $course_id]) }}"
+            data-destroymulti="{{ route('admin_lesson/destroyMulti') }}">
             <thead>
                 <tr>
                     <th class="text-center" width="50"><input type="checkbox" bs-type="checkbox" value="all"
                             id="inputCheckAll"></th>
-                    <th></th>
+
                     <th>Tiêu đề</th>
-                    <th>Thể loại</th>
-                    <th width="115">Giá</th>
-                   
+                    <th>Khóa học</th>
+                    <th>Học thử</th>
+
+
                     <th width="180" class="text-center">Ngày đăng</th>
 
-                    <th width="130" class="text-center"></th>
+
                     <th width="10"></th>
                 </tr>
             </thead>
@@ -41,21 +48,23 @@
                     orderable: false,
                     searchable: false
                 },
-                {
-                    data: null,
-                    render: function(data) {
-                        return WBDatatables.showThumbnailLazy(data.thumbnail);
-                    },
-                    class: "text-center no-padding-right",
-                    orderable: false,
-                    searchable: false
-                },
+
                 {
                     data: null,
                     name: 'description.title',
                     render: function(data) {
-                        return WBDatatables.showTitle(data.description.title, data.route_edit, data.is_published,
-                            data.published_at);
+                        return WBDatatables.showTitle(data.title, data.route_edit, data.is_published,
+                            data
+                            .published_at, ('<span class="tree-icon">¦––</span> ').repeat(data.depth));
+                    },
+                  
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: null,
+                    render: function(data) {
+                        return (!data.course.title) ? '' : data.course.title;
                     },
                     orderable: false,
                     searchable: false
@@ -63,41 +72,18 @@
                 {
                     data: null,
                     render: function(data) {
-                        return (!data.category.description) ? '' : data.category.description.title;
+                        return (!data.is_try_show) ? '' : data.is_try_show;
                     },
                     orderable: false,
                     searchable: false
                 },
-                {
-                    data: null,
-                    class: "text-right",
-                    render: function(data) {
-                        var $element = `<a href="javascript:void(0);" class="price" data-popup="popover-price" data-id="${data.id}" data-url="${base_domain}/admin/product/updateField/${data.id}" data-price="${data.price}" data-price_sale="${data.sale_price }">
-                        
-                        `;
-                        if (data.sale_price_formated) {
-                            $element += `${data.sale_price_formated}`;
-                            if (data.sale_price != data.price) {
-                                $element += `<p class="old_price">${data.price_formated}</p>`;
-                            }
-                        }
-                        else {
-                            $element += `${data.price_formated}`;
-                        }
 
-                        $element += `</a>`;
-                        return $element;
-                    },
-                    orderable: false,
-                    searchable: false
-                },
-             
                 {
                     data: null,
                     name: "published_at",
                     render: function(data) {
                         return (!data.created_at) ? '' : data.created_at;
-                      
+
                     },
                     className: "text-center",
                     orderable: false,
@@ -105,16 +91,7 @@
 
                 },
 
-                {
-                    data: null,
-                    class: 'option-actions text-center no-padding-right',
-                    render: function(product) {
-                        return `<a data-href="${product.direct_add_to_cart_url}" class="copy-add-cart-url text-info-600" title="Copy link đặt hàng"><i class="icon-cart-add2"></i> </a>
-                    <a href="${product.route_review}" class="text-info-600" title="Xem thử" target="_blank"> <i class="icon-eye"></i></a>`;
-                    },
-                    orderable: false,
-                    searchable: false
-                },
+
                 {
                     data: null,
                     render: function(data) {
@@ -177,7 +154,7 @@
                             '  <input type="number" class="form-control" value="' + data.price +
                             '" name="price">' +
                             '</div>' +
-                           
+
                             '<div class="editable-buttons editable-buttons-bottom">' +
                             '<button type="button" class="btn btn-primary btn-sm button_submit_form" data-form="form_price_' +
                             data.id + '"><i class="glyphicon glyphicon-ok"></i></button>' +

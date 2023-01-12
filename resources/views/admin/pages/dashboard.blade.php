@@ -24,26 +24,26 @@
         </div>
         <div class="col-sm-12 col-md-3">
             <div class="panel panel-body panel-body-accent">
-                <a class="media no-margin" href="{{ route('supplier/index') }}">
+                <a class="media no-margin" href="{{ route('admin_teacher/index') }}">
                     <div class="media-left media-middle">
                         <i class="icon-profile icon-3x text-success-400"></i>
                     </div>
                     <div class="media-body text-right">
                         <h3 class="no-margin text-semibold">{{ $totalSupplier }}</h3>
-                        <span class="text-uppercase text-size-mini text-muted">Nhà cung cấp</span>
+                        <span class="text-uppercase text-size-mini text-muted">Giáo viên</span>
                     </div>
                 </a>
             </div>
         </div>
         <div class="col-sm-12 col-md-3">
             <div class="panel panel-body">
-                <a class="media no-margin" href="{{ route('product/index') }}">
+                <a class="media no-margin" href="{{ route('admin_course/index') }}">
                     <div class="media-left media-middle">
                         <i class="icon-price-tag2 icon-3x text-indigo-400"></i>
                     </div>
                     <div class="media-body text-right">
                         <h3 class="no-margin text-semibold">{{ $totalProduct }}</h3>
-                        <span class="text-uppercase text-size-mini text-muted">Sản phẩm</span>
+                        <span class="text-uppercase text-size-mini text-muted">Khóa học</span>
                     </div>
                 </a>
             </div>
@@ -68,12 +68,12 @@
         <div class="col-md-6">
             <div class="panel panel-white">
                 <div class="panel-heading">
-                    <h5 class="panel-title"><i class="icon-menu3 position-left"></i> QUẢN LÝ SẢN PHẨM</h5>
+                    <h5 class="panel-title"><i class="icon-menu3 position-left"></i> QUẢN LÝ KHÓA HỌC</h5>
                 </div>
                 <div class="panel-body">
-                    <a style="font-size: 16px" href="{{ route('product/index') }}">
+                    <a style="font-size: 16px" href="{{ route('admin_course/index') }}">
                         <i class="icon-arrow-right6"></i>
-                        Click vào đây để quản lý sản phẩm
+                        Click vào đây để quản lý khóa học
                     </a>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                             <th width="9%">Đơn hàng</th>
                             <th>Ngày đặt</th>
                             <th>Khách hàng</th>
-                            <th  width="15%">Sản phẩm</th>
+                            <th  width="15%">Khóa học</th>
                             <th>Tổng tiền</th>
                             <th width="15%">Hình thức thanh toán</th>
                             <th width="15%">Thanh toán</th>

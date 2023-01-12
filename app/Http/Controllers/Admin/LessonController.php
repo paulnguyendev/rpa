@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Helpers\Obn;
 use App\Http\Controllers\Controller;
 use App\Models\CourseModel;
@@ -50,9 +48,28 @@ class LessonController extends Controller
     }
     public function index(Request $request)
     {
+        $course_id = null;
         return view(
             "{$this->pathViewController}index",
-            []
+            [
+                'course_id' => $course_id,
+            ]
+        );
+    }
+    public function course_index(Request $request)
+    {
+        $course_id = $request->course_id;
+        $courseInfo = $this->courseModel->getItem(['id' => $course_id], ['task' => 'id']);
+        $courseLink = route('admin_course/form', ['id' => $course_id]);
+        $manageCourseLink = route('admin_course/index');
+        $courseTitleLink = $courseInfo ? " <a href = '{$manageCourseLink}'>Quản lý khóa học</a> / <a href = '{$courseLink}'>{$courseInfo->title}</a> " : "";
+        $courseTitle = $courseInfo ? $courseInfo->title : "";
+        return view(
+            "{$this->pathViewController}index",
+            [
+                'courseTitleLink' => $courseTitleLink,
+                'course_id' => $course_id,
+            ]
         );
     }
     public function course_form(Request $request)
@@ -64,8 +81,8 @@ class LessonController extends Controller
         $courseTitle = $courseInfo ? $courseInfo->title : "";
         $id = $request->id;
         $item = $this->model->getItem(['id' => $id], ['task' => 'id']);
-        $items = $this->model->listItems([], ['task' => 'list']);
-       
+        $lessons = $this->model->listItems([], ['task' => 'list_title']);
+        $redirect = route('admin_lesson/course_index',['course_id' => $course_id]);
         return view(
             "{$this->pathViewController}form",
             [
@@ -74,7 +91,8 @@ class LessonController extends Controller
                 'course_id' => $course_id,
                 'courseTitle' => $courseTitle,
                 'courseTitleLink' => $courseTitleLink,
-                'items' => $items,
+                'lessons' => $lessons,
+                'redirect' => $redirect,
             ]
         );
     }
@@ -132,119 +150,17 @@ class LessonController extends Controller
         if (!$params['title']) {
             $error['title'] = "Chưa nhập tên khóa học";
         }
-        if (!$params['teacher_id']) {
-            $error['teacher_id'] = "Chưa chọn giáo viên";
-        }
-        if (!$params['level_id']) {
-            $error['level_id'] = "Chưa chọn trình độ";
-        }
-        if (!$params['slug']) {
-            $error['slug'] = "Chưa nhập đường dẫn";
-        }
-        if (!$params['time']) {
-            $error['time'] = "Chưa nhập thời lượng video";
-        }
-        if ($params['price_sale'] > $params['price']) {
-            $error['price_sale'] = "Giá khuyến mãi không được lớn hơn giá gốc";
-        }
         if (empty($error)) {
             $created_at = date('Y-m-d H:i:s');
             $params['created_at'] = date('Y-m-d H:i:s');
-            $cat_id = isset($params['cat_id']) ? $params['cat_id'] : "";
-            $other_cat_ids = isset($params['other_cat_ids']) ? $params['other_cat_ids'] : [];
-            $params['is_certificate'] = isset($params['is_certificate']) ? $params['is_certificate'] : 0;
-            $params['is_best_seller'] = isset($params['is_best_seller']) ? $params['is_best_seller'] : 0;
-            $params['is_published'] = isset($params['is_published']) ? $params['is_published'] : 0;
+            $params['is_try'] = isset($params['is_try']) ? $params['is_try'] : 0;
             if (!$id) {
-                #_Add Product
-                $product_id = $this->model->saveItem($params, ['task' => 'add-item']);
-                if ($product_id) {
-                    #_Add Taxonomy Relationships
-                    $taxonomyMain = [
-                        [
-                            'course_id' => $product_id,
-                            'taxonomy_id' => $cat_id,
-                            'taxonomy_type' => 'main',
-                        ]
-                    ];
-                    $taxonomySecond = [];
-                    if (count($other_cat_ids) > 0) {
-                        foreach ($other_cat_ids as $key_otherCatID => $other_cat_id) {
-                            $taxonomySecond[$key_otherCatID]['taxonomy_id'] = $other_cat_id;
-                            $taxonomySecond[$key_otherCatID]['taxonomy_type'] = 'second';
-                            $taxonomySecond[$key_otherCatID]['course_id'] = $product_id;
-                        }
-                        $taxonomyList = array_merge($taxonomyMain, $taxonomySecond);
-                    } else {
-                        $taxonomyList = $taxonomyMain;
-                    }
-                    if (count($taxonomyList) > 0) {
-                        foreach ($taxonomyList as $paramsTaxonomyRelationship) {
-                            $this->taxonomyRelationshipModel->saveItem($paramsTaxonomyRelationship, ['task' => 'add-item']);
-                        }
-                    }
-                }
+                $this->model->saveItem($params, ['task' => 'add-item']);
             } else {
-                $params['action'] = "edit";
                 #_Edit Product
-                $paramsProduct['id'] = $id;
                 $this->model->saveItem($params, ['task' => 'edit-item']);
-                #_Edit taxonomy relationship
-                if (count($other_cat_ids) > 0) {
-                    #_Delete item cũ
-                    $taxonomy = $this->model::find($id)->taxonomy()->get()->toArray();
-                    if (count($taxonomy) > 0) {
-                        foreach ($taxonomy as $item_taxonomy) {
-                            $this->taxonomyRelationshipModel->deleteItem(
-                                [
-                                    'taxonomy_id' => $item_taxonomy['id'],
-                                    'course_id' => $id,
-                                ],
-                                ['task' => 'course_id']
-                            );
-                        }
-                    }
-                    #_Add item mới
-                    $taxonomyMain = [
-                        [
-                            'course_id' => $id,
-                            'taxonomy_id' => $cat_id,
-                            'taxonomy_type' => 'main',
-                        ]
-                    ];
-                    $taxonomySecond = [];
-                    if (count($other_cat_ids) > 0) {
-                        foreach ($other_cat_ids as $key_otherCatID => $other_cat_id) {
-                            $taxonomySecond[$key_otherCatID]['taxonomy_id'] = $other_cat_id;
-                            $taxonomySecond[$key_otherCatID]['taxonomy_type'] = 'second';
-                            $taxonomySecond[$key_otherCatID]['course_id'] = $id;
-                        }
-                        $taxonomyList = array_merge($taxonomyMain, $taxonomySecond);
-                    } else {
-                        $taxonomyList = $taxonomyMain;
-                    }
-                    if (count($taxonomyList) > 0) {
-                        foreach ($taxonomyList as $paramsTaxonomyRelationship) {
-                            $this->taxonomyRelationshipModel->saveItem($paramsTaxonomyRelationship, ['task' => 'add-item']);
-                        }
-                    }
-                } else {
-                    #_Delete item cũ
-                    $taxonomy = $this->model::find($id)->taxonomy()->where('taxonomy_type', 'second')->get()->toArray();
-                    if (count($taxonomy) > 0) {
-                        foreach ($taxonomy as $item_taxonomy) {
-                            $this->taxonomyRelationshipModel->deleteItem(
-                                [
-                                    'taxonomy_id' => $item_taxonomy['id'],
-                                    'course_id' => $id,
-                                ],
-                                ['task' => 'course_id']
-                            );
-                        }
-                    }
-                }
             }
-            $params['redirect'] = route("{$this->controllerName}/index");
+            // $params['redirect'] = route("{$this->controllerName}/index");
             return response()->json($params);
         } else {
             return response()->json(
@@ -325,8 +241,17 @@ class LessonController extends Controller
         $length = isset($params['length']) ? $params['length'] : "";
         $search = isset($params['search']) ? $params['search'] : "";
         $searchValue = isset($search['value']) ? $search['value'] : "";
+        $course_id = isset($params['course_id']) ? $params['course_id'] : "";
         if (!$searchValue) {
-            $data = $this->model->listItems(['start' => $start, 'length' => $length], ['task' => 'list']);
+            $data = $this->model::withDepth()->orderBy('id','desc');
+            if($course_id) {
+                $data  = $data->where('course_id',$course_id);
+            }
+            if($start) {
+                $data = $data->skip($params['start'])->take($params['length']);
+            }
+            $data = $data->get()->toFlatTree();
+            // $data = $this->model->listItems(['start' => $start, 'length' => $length], ['task' => 'list']);
         } else {
             $data = $this->model->listItems(['title' => $searchValue], ['task' => 'search']);
         }
@@ -334,46 +259,29 @@ class LessonController extends Controller
         $data  = $total > 0 ? $data->toArray() : [];
         $data = array_map(function ($item) {
             $id = $item['id'];
-            $slug = $item['slug'];
-            $item['route_edit'] = route('admin_course/form', ['id' => $id]);
+            $course = $this->model::find($id)->course()->first();
+            $courseTitle = $course ? $course->title : "";
+            $courseID = $course ? $course->id : "";
+            $item['course2'] = $course;
+            $item['course'] = [
+                'title' => $courseTitle
+            ];
+            $item['is_try_show'] = $item['is_try'] == 1 ? "Có" : "Không";
+            $item['route_edit'] = route('admin_lesson/course_form', ['course_id' => $courseID,'id' => $id]);
             $item['published_at'] = "";
-            $item['description'] = [
-                'title' => $item['title'],
-            ];
             $product = $this->model::find($id);
-            $taxonomy = $product->taxonomy()->where('taxonomy_type', 'main')->first();
-            $taxonomyName = $taxonomy ? $taxonomy->name : "";
-            $taxonomyID = $taxonomy ? $taxonomy->id : "";
-            $item['taxonomy'] = $taxonomy;
-            $item['category'] = [
-                "id" => $taxonomyID,
-                "description" => [
-                    "cat_id" => $taxonomyID,
-                    "title" => $taxonomyName,
-                ]
-            ];
-            $item["thumbnail"] = [
-                "lazy_src" => "data-isrc",
-                "img_path" => $item['thumbnail'],
-                "class" => "lazyload ",
-                "alt_content" => ""
-            ];
             $item['is_advanced_quantity'] = 0;
             $item['route_update'] = route('admin_course/updateField', ['id' => $id]);
             $item['direct_add_to_cart_url'] = route('fe_cart/add', ['id' => $id]);
-            $item['route_review'] = route('fe_course/detail', ['slug' => $slug]);
-            $item['price_formated'] = Obn::showPrice($item['price']);
-            if ($item['price_sale']) {
-                $item['sale_price_formated'] = Obn::showPrice($item['price_sale']);
-            }
+            $item['route_review'] = route('fe_course/detail', ['slug' => '123']);
             $item['published_at'] = $item['created_at'];
-            $item['route_remove'] = route('admin_course/delete', ['id' => $id]);
+            $item['route_remove'] = route('admin_lesson/delete', ['id' => $id]);
             return $item;
         }, $data);
         $result = [
-            "draw" => 0,
-            "recordsTotal" => $this->model->count(),
-            "recordsFiltered" => $this->model->count(),
+            "draw" => $draw,
+            "recordsTotal" => count($data) ,
+            "recordsFiltered" => count($data),
             "data" => $data
         ];
         return $result;

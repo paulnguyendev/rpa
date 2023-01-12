@@ -8,9 +8,7 @@
         $('select[name="cat_id"]').select2({
             placeholder: 'Chọn thể loại'
         });
-        $('select[name="teacher_id"]').select2({
-            placeholder: 'Chọn giáo viên'
-        });
+
         $('select[name="level_id"]').select2({
             placeholder: 'Chọn trình độ'
         });
@@ -99,15 +97,38 @@
     </script>
 @endsection
 @section('navbar-right')
-    <li>
-        <a href="{{ route("{$controllerName}/index") }}" style="padding:5px 0px 5px 5px">
-            <button class="btn btn-default heading-btn" type="button">Hủy</button>
-        </a>
-    </li>
+    @if ($course_id)
+        <li>
+            <a href="{{ route("{$controllerName}/course_index", ['course_id' => $course_id]) }}"
+                style="padding:5px 0px 5px 5px">
+                <button class="btn btn-default heading-btn" type="button">Hủy</button>
+            </a>
+        </li>
+    @else
+        <li>
+            <a href="{{ route("{$controllerName}/index") }}" style="padding:5px 0px 5px 5px">
+                <button class="btn btn-default heading-btn" type="button">Hủy</button>
+            </a>
+        </li>
+    @endif
+    @if ($id)
+        <li>
+            <a href="{{ route("{$controllerName}/index") }}" style="padding:5px 0px 5px 5px">
+                <button class="btn btn-danger heading-btn" type="button">Thêm tài liệu</button>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route("{$controllerName}/index") }}" style="padding:5px 0px 5px 5px">
+                <button class="btn btn-primary heading-btn" type="button">Danh sách tài liệu</button>
+            </a>
+        </li>
+    @endif
+
     <li>
         <div style="padding:5px 0px 5px 5px">
-            <button type="button" class="heading-btn btn btn-info btn-ladda btn-ladda-spinner" onclick="nav_submit_form(this)"
-                data-style="zoom-in" data-form="post-form"><span class="ladda-label">Lưu</span></button>
+            <button type="button" class="heading-btn btn btn-info btn-ladda btn-ladda-spinner"
+                onclick="nav_submit_form(this)" data-style="zoom-in" data-form="post-form"><span
+                    class="ladda-label">Lưu</span></button>
         </div>
     </li>
 @endsection
@@ -125,6 +146,7 @@
                                 <label> Khóa học (*)
                                 </label>
                                 <input class="form-control" type="text" value="{{ $courseTitle ?? '' }}" readonly>
+                                <input type="hidden" value="{{ $course_id ?? '' }}" name="course_id">
                                 <span class="help-block"></span>
                             </div>
                         @else
@@ -139,7 +161,16 @@
                         <div class="form-group">
                             <label for="">Chọn bài học</label>
                             <select name="parent_id" class="form-control" id="">
-                                <option value=""></option>
+                                @if (count($lessons) > 0)
+                                    @foreach ($lessons as $lesson)
+                                        @php
+                                            $parent_id = $item['parent_id'] ?? '';
+                                        @endphp
+                                        <option value="">Chọn bài học</option>
+                                        <option value="{{ $lesson['id'] ?? '' }}" {{ $parent_id == $lesson['id'] ? 'selected' : '' }}>{{ $lesson['title'] ?? '' }}</option>
+                                    @endforeach
+                                @endif
+
                             </select>
                         </div>
                         <div class="form-group">
@@ -147,8 +178,8 @@
                                 @php
                                     $is_try = $item['is_try'] ?? '';
                                 @endphp
-                                <input bs-type="checkbox" {{ $is_try == '1' ? 'checked' : '' }}
-                                    name="is_try" type="checkbox" value="1">
+                                <input bs-type="checkbox" {{ $is_try == '1' ? 'checked' : '' }} name="is_try"
+                                    type="checkbox" value="1">
                                 Cho phép Học thử
                             </label>
 
@@ -189,9 +220,11 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <div class="form-group text-center">
-                            <input type="file" name="video" id="videoInput" class="hide" data-url="{{route('admin_bunny/uploadVideo')}}">
-                            <button class="btn btn-default" id="btnUploadVideo" type="button" >Tải video</button>
+                        <div class="form-group">
+                            <label for="">Video ID</label>
+                            <input type="text" class="form-control" name="video" value="{{ $item['video'] ?? ' ' }}">
+                            {{-- <input type="file" name="video" id="videoInput" class="hide" data-url="{{route('admin_bunny/uploadVideo')}}">
+                            <button class="btn btn-default" id="btnUploadVideo" type="button" >Tải video</button> --}}
                         </div>
                     </div>
                 </div>
@@ -222,5 +255,7 @@
             </div>
 
         </div>
+        <input type="hidden" name="id" value="{{ $id }}">
+        <input type="hidden" name="redirect" value="{{ $redirect }}">
     </form>
 @endsection
