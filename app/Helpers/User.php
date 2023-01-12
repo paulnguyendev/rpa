@@ -57,4 +57,17 @@ class User
         $result = sprintf(' <span class="badge badge-primary">%s</span>', $group_name);
         return $result;
     }
+    public static function getTotalBalance($user_id, $status = "total") {
+        $total = 0;
+        $user = UserModel::find($user_id);
+        if($status == 'total') {
+            $total = $user->payment_history()->where('status','approve_success')->sum('total_commission');
+        }
+        else {
+            $total = $user->payment_history()->where('status','active')->sum('total_commission');
+        }
+      
+        $total = number_format($total) . " đ";
+        return $total;
+    }
 }

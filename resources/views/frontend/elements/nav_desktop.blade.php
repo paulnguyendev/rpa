@@ -93,21 +93,21 @@
                             <i class="far fa-thumbs-up"></i>Bán chạy nhất
                         </a>
                     </div>
-                    <div class="nav-item nav-item-course" data-toggle="user-seen-course-header">
+                    {{-- <div class="nav-item nav-item-course" data-toggle="user-seen-course-header">
                         <a class="nav-link" href="#">
                             <i class="far fa-eye"></i>Khóa học đã xem
                         </a>
-                    </div>
+                    </div> --}}
                     <div class="nav-item">
                         <a href="/danh-sach-khoa-hoc" class="nav-link">
                             <i class="far fa-books"></i>Tất cả khóa học
                         </a>
                     </div>
-                    <div class="nav-item nav-item-blog">
+                    {{-- <div class="nav-item nav-item-blog">
                         <a href="/bai-viet" target="_blank" class="nav-link">
                             <i class="fas fa-wifi"></i>Blog
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="user-seen-course-header course-header">
                     <div class="container"></div>

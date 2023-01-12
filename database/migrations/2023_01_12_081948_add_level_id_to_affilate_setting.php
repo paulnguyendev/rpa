@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('lesson', function (Blueprint $table) {
+        Schema::table('affilate_setting', function (Blueprint $table) {
             //
-            $table->dropForeign('course_id_foreign');
-            $table->dropColumn('course_id');
-            
+            $table->unsignedBigInteger('level_id')->nullable();
+            $table->foreign('level_id')->references('id')->on('affilate_level')->onDelete('cascade');
         });
     }
 
@@ -28,10 +27,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('lesson', function (Blueprint $table) {
+        Schema::table('affilate_setting', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('course_id')->nullable();
-            $table->foreign('course_id')->references('id')->on('course')->onDelete('cascade');
+            $table->dropForeign('level_id_foreign');
+            $table->dropColumn('level_id');
         });
     }
 };

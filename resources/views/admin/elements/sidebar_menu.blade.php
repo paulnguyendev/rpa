@@ -114,15 +114,15 @@
         </ul>
     </li>
     <li data-label="Affiliate" >
-        <a href="javascript:void(0)" class="has-ul">
+        <a href="javascript:void(0)" class="has-ul admin-menu-active">
             <i class="icon-link"></i>
             <span>Affiliate</span>
         </a>
-        <ul class="second-menu-level hidden-ul">
+        <ul class="second-menu-level">
 
 
             <li>
-                <a href="http://anhnnd.s1.loveitop.com/admin/affiliate/users">
+                <a href="{{route('admin_user/index')}}">
                     <span>Danh sách tài khoản</span>
                 </a>
             </li>

@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\Admin\AffiliateController as AdminAffiliateController;
 use App\Http\Controllers\Admin\BunnyController;
 use App\Http\Controllers\Admin\CourseCategoryController;
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
@@ -251,6 +251,30 @@ Route::middleware('access.adminDashboard')->prefix($prefix)->group(function () {
             Route::get('/data/list', 'dataList')->name($routeName . '/dataList');
         });
     });
+    Route::prefix('affiliate')->group(function () {
+        $routeName = "admin_affiliate";
+        Route::controller(AdminAffiliateController::class)->group(function () use ($routeName) {
+            Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('/setting', 'setting')->name($routeName . '/setting');
+            Route::get('/form/{id?}', 'form')->name($routeName . '/form');
+            Route::delete('/delete/{id?}', 'delete')->name($routeName . '/delete');
+            Route::delete('/destroy-multi/{id?}', 'destroyMulti')->name($routeName . '/destroy-multi');
+            Route::post('/save/{id?}', 'save')->name($routeName . '/save');
+            Route::get('/data/list', 'dataList')->name($routeName . '/dataList');
+        });
+    });
+    Route::prefix('user')->group(function () {
+        $routeName = "admin_user";
+        Route::controller(UserController::class)->group(function () use ($routeName) {
+            Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('/detail/{id?}', 'detail')->name($routeName . '/detail');
+            Route::get('/form/{id?}', 'form')->name($routeName . '/form');
+            Route::delete('/delete/{id?}', 'delete')->name($routeName . '/delete');
+            Route::delete('/destroy-multi/{id?}', 'destroyMulti')->name($routeName . '/destroy-multi');
+            Route::post('/save/{id?}', 'save')->name($routeName . '/save');
+            Route::get('/data/list', 'dataList')->name($routeName . '/dataList');
+        });
+    });
     Route::prefix('course')->group(function () {
         $routeName = "admin_course";
         Route::controller(AdminCourseController::class)->group(function () use ($routeName) {
@@ -281,7 +305,6 @@ Route::middleware('access.adminDashboard')->prefix($prefix)->group(function () {
         $routeName = "admin_bunny";
         Route::controller(BunnyController::class)->group(function () use ($routeName) {
             Route::post('/uploadVideo', 'uploadVideo')->name($routeName . '/uploadVideo');
-           
         });
     });
     Route::prefix('post')->group(function () {

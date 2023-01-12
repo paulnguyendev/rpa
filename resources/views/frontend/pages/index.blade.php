@@ -8,11 +8,13 @@
 @section('content')
     @include("{$templatePart}headerBanner")
     @include("{$templatePart}skillCourse")
-    @include("{$templatePart}exclusiveCourse")
+   
     @include("{$templatePart}freeCourse")
-    @include("{$templatePart}hotKeywords")
+
+    {{-- @include("{$templatePart}hotKeywords") --}}
     @include("{$templatePart}lectureList")
     @include("{$templatePart}partner")
+    
 @endsection
 @section('custom_srcipt')
     <script>
