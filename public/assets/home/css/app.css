@@ -260,6 +260,7 @@ footer {
     font-size: 15px;
     line-height: 1;
 }
+
 @media screen and (max-width: 767.98px) {
     .row-banner {
         display: flex;

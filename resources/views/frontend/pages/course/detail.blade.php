@@ -517,7 +517,7 @@
                             </div>
                         </div>
                     </div>
-                    <section id="courseDetailRating">
+                    {{-- <section id="courseDetailRating">
                         <div class="course-general">
                             <h5 class="title">Đánh giá từ học viên</h5>
                             <div class="active" id="nav-comment">
@@ -676,7 +676,7 @@
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </section> --}}
                     <section class="course-general related-course__wrapper">
                         <h5 class="title">Khóa học liên quan <span style="color: #ff7818;"></span></h5>
                         <div class="course-related-horizontal__slider slick__slider--normal "

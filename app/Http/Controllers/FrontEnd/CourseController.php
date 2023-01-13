@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\FrontEnd;
+
 use App\Http\Controllers\Controller;
 use App\Models\ProductMetaModel;
 #Request
@@ -36,18 +38,16 @@ class CourseController extends Controller
     public function detail(Request $request)
     {
         $slug = $request->slug;
-     
+
         // $item = $this->model::find($id);
         return view(
             "{$this->pathViewController}/detail",
-            [
-                
-            ]
+            []
         );
         // if ($item) {
         //     $item_meta = $this->productMetaModel->getItem(['product_id' => $id], ['task' => 'product_id']);
         //     $item_supplier = $item->supplier()->first();
-           
+
         // }
         // else {
         //     return redirect(route('home/index'));
@@ -56,15 +56,14 @@ class CourseController extends Controller
     public function data(Request $request)
     {
     }
-    public function category(Request $request) {
+    public function category(Request $request)
+    {
         $slug = $request->slug;
-      
-        
+
+
         return view(
             "{$this->pathViewController}/category",
-            [
-               
-            ]
+            []
         );
         $id = 0;
         $item = $this->taxonomyModel::find($id);
@@ -79,9 +78,10 @@ class CourseController extends Controller
             ]
         );
     }
-    public function supplier(Request $request) {
+    public function supplier(Request $request)
+    {
         $id = $request->id;
-        $item = $this->supplierModel ::find($id);
+        $item = $this->supplierModel::find($id);
         $items = $item->products()->get();
         $total = $item->products()->count();
         return view(
@@ -92,5 +92,17 @@ class CourseController extends Controller
                 'total' => $total,
             ]
         );
+    }
+    public function listCourse(Request $request)
+    {
+        $items = [];
+        $data = view('frontend.pages.ajax.wowCourse')->with('items', $items)->render();
+        return response()->json([
+            'status' => [
+                'code' => 200,
+                'message' => "Success"
+            ],
+            'data' => $data
+        ]);
     }
 }

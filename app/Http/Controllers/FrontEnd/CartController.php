@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\FrontEnd;
+
 use App\Helpers\Link\ProductLink;
 use App\Helpers\Obn;
 use App\Helpers\Template\Product;
@@ -67,8 +69,14 @@ class CartController extends Controller
         }
         $cartData = Cart::instance('frontend')->content();
         $cartTotal = Cart::instance('frontend')->count();
+        $content = view('frontend.pages.ajax.cart')->with('')->render();
         $result = [
+            'result' =>true,
+            'content' => $content,
+            'totalCount' => 2,
+
             'cartData' => $cartData,
+
             'cartTotal' => $cartTotal,
         ];
         return response()->json($result);
@@ -198,7 +206,7 @@ class CartController extends Controller
             $rowId = $item['id'];
             $cartItem = $this->searchCartByRowId($rowId);
             $id = $cartItem['id'] ?? "";
-            if($id) {
+            if ($id) {
                 $product = $this->model::find($id);
                 $point = $product['point'] ?? 0;
                 $quantity = $item['quantity'] ?? 0;
@@ -206,15 +214,14 @@ class CartController extends Controller
                 $item['point'] = $point;
                 $item['product_name'] = $product['title'] ?? "-";
             }
-            if($user_id) {
+            if ($user_id) {
                 $commision = Product::getDiscountByUser($user_id, $item['price']);
                 $commision = $commision * $quantity;
                 $item['commision'] = $commision;
-            }
-            else {
+            } else {
                 $item['commision'] = 0;
             }
-           
+
             return $item;
         }, $products);
         #_Total Point
@@ -230,7 +237,7 @@ class CartController extends Controller
         $params['shoppingCart'] = $shoppingCart;
         // $params['redirect'] = "";
         $code = config('obn.prefix.code') . Obn::generateUniqueCode();
-        $params['redirect'] = route('fe_cart/order_success',['code' => $code]);
+        $params['redirect'] = route('fe_cart/order_success', ['code' => $code]);
         // Add database order
         $shoppingCart['status'] = config('obn.status.setting.order');
         $shoppingCart['code'] = $code;
@@ -243,7 +250,7 @@ class CartController extends Controller
         $shoppingCart['total_commission'] = $total_commission;
         $order_id = $this->orderModel->saveItem($shoppingCart, ['task' => 'add-item']);
         #_Add database payment history
-        if($order_id) {
+        if ($order_id) {
             $params_PaymentHistory = [
                 'order_id' => $order_id,
                 'user_id' => $user_id,
@@ -252,7 +259,7 @@ class CartController extends Controller
                 'status' => config('obn.status.setting.payment'),
                 'created_at' => date('Y-m-d H:i:s'),
             ];
-            $this->paymentHistoryModel->saveItem($params_PaymentHistory,['task' => 'add-item' ]);
+            $this->paymentHistoryModel->saveItem($params_PaymentHistory, ['task' => 'add-item']);
         }
         Cart::instance('frontend')->destroy();
         return $params;
@@ -262,9 +269,10 @@ class CartController extends Controller
         $user = User::getInfo('', 'id');
         return $user;
     }
-    public function order_success(Request $request) {
+    public function order_success(Request $request)
+    {
         $code = $request->code;
-        $item =  $this->orderModel->getItem(['code' => $code] ,['task' => 'code']);
+        $item =  $this->orderModel->getItem(['code' => $code], ['task' => 'code']);
         $info_order = json_decode($item['info_order'], true) ?? [];
         return view(
             "{$this->pathViewController}/order_success",
@@ -273,13 +281,12 @@ class CartController extends Controller
             ]
         );
     }
-    public function checkout(Request $request) {
-       
+    public function checkout(Request $request)
+    {
+
         return view(
             "{$this->pathViewController}/checkout",
-            [
-               
-            ]
+            []
         );
     }
 }

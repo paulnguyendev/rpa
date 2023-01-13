@@ -79,6 +79,7 @@ Route::prefix($prefix)->group(function () {
             Route::get('/{slug?}', 'detail')->name($routeName . '/detail');
             Route::get('/category/{slug?}', 'category')->name($routeName . '/category');
             Route::get('/supplier/{id?}', 'supplier')->name($routeName . '/supplier');
+            Route::get('/ajax/listCourse', 'listCourse')->name($routeName . '/listCourse');
         });
     });
     Route::prefix('aff')->group(function () {

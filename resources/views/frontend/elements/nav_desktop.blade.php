@@ -9,14 +9,7 @@
                                 <img width="148" height="auto" src="{{asset('kyna/img/logo.png')}}" alt="Khóa học online nâng cao kỹ năng cùng các chuyên gia đầu ngành" class="img-fluid" /></a>
                         </h1>
                     </div>
-                    <script type="application/ld+json">
-                        {
-                            "@context": "http://schema.org",
-                            "@type": "Organization",
-                            "url": "https://kyna.vn",
-                            "logo": "https://cdn-skill.kynaenglish.vn/img/logo/Kynavnraftlogo.svg"
-                        }
-                    </script>
+                   
                     <div class="form-inline header-search">
                         <div class="row-menu-bar-mobile hidden-sm-up">
                             <div class="k-menu-list-course col-xs-8">
@@ -61,9 +54,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="nav-item right-line">
+                    {{-- <div class="nav-item right-line">
                         <a class="nav-link cod-btn" href="/kich-hoat">Kích hoạt COD</a>
-                    </div>
+                    </div> --}}
                     <div class="nav-item">
                         <!--                  <a href="/dang-nhap" class="button-login header-login" data-toggle="modal"-->
                         <!--                     data-target="#k-popup-account-login" data-ajax="" data-push-state="false">Đăng nhập-->

@@ -12,9 +12,7 @@
                         <span aria-hidden="true"><i class="fal fa-times-circle"></i></span>
                     </button>
                     <div class="video-preview__wrapper">
-                        <video id="video-preview__player" class="video-js vjs-fluid" controls>
-                            <video id="video-preview__player" class="video-js vjs-fluid" controls>
-                            </video>
+                        <div style="position: relative; padding-top: 56.25%;"><iframe src loading="lazy" style="border: none; position: absolute; top: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe></div>
                     </div>
                 </div>
                 <div class="modal-footer">

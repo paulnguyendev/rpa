@@ -7,9 +7,10 @@
 @extends('frontend.main')
 @section('content')
     @include("{$templatePart}headerBanner")
-    @include("{$templatePart}skillCourse")
+    {{-- @include("{$templatePart}skillCourse") --}}
+    @include("{$templatePart}exclusiveCourse")
    
-    @include("{$templatePart}freeCourse")
+    {{-- @include("{$templatePart}freeCourse") --}}
 
     {{-- @include("{$templatePart}hotKeywords") --}}
     @include("{$templatePart}lectureList")
