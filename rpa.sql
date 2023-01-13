@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 12, 2023 lúc 10:55 AM
+-- Thời gian đã tạo: Th1 13, 2023 lúc 11:32 AM
 -- Phiên bản máy phục vụ: 10.4.25-MariaDB
 -- Phiên bản PHP: 8.0.23
 
@@ -85,6 +85,57 @@ INSERT INTO `affilate_setting` (`id`, `name`, `commission`, `commission_type`, `
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `combo`
+--
+
+CREATE TABLE `combo` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `price_sale` int(11) DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `combo`
+--
+
+INSERT INTO `combo` (`id`, `title`, `code`, `thumbnail`, `price`, `price_sale`, `description`, `content`, `created_at`, `updated_at`) VALUES
+(1, 'Đột phá để dẫn đầu', NULL, NULL, 5000000, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `combo_course`
+--
+
+CREATE TABLE `combo_course` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `course_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `combo_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `combo_course`
+--
+
+INSERT INTO `combo_course` (`id`, `course_id`, `combo_id`, `created_at`, `updated_at`) VALUES
+(1, 5, 1, NULL, NULL),
+(4, 10, 1, NULL, NULL),
+(5, 7, 1, NULL, NULL),
+(6, 9, 1, NULL, NULL),
+(7, 6, 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `course`
 --
 
@@ -115,7 +166,12 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`id`, `title`, `slug`, `thumbnail`, `code`, `point`, `price`, `price_sale`, `description`, `content`, `is_best_seller`, `is_certificate`, `video_intro`, `time`, `is_published`, `created_at`, `updated_at`, `level_id`, `teacher_id`) VALUES
-(4, 'Tự động hóa kinh doanh Online', 'tu-dong-hoa-kinh-doanh-online', 'http://localhost/rpa/public/uploads/images/tRpthHPFf2.jpg', NULL, NULL, 199000, NULL, '<p>Xây dựng dòng khách - dòng tiền - dòng việc cho Startup</p>\r\n\r\n<p>Lắp ráp hệ thống vận hành tự động vào đội ngũ</p>\r\n\r\n<p>Tự động hóa để mở rộng quy mô</p>', '<p>Tự động hóa kinh doanh là khái niệm khá mới mẻ đối với phần đông các chủ doanh nghiệp Việt Nam, nhưng nó rất quan trọng, đặc biệt là trong thời đại cuộc cách mạng công nghiệp 4.0 đang tác động mạnh mẽ đến hoạt động kinh doanh hàng ngày, hàng giờ như hiện nay.</p>\r\n\r\n<p>Làm sao để một đội ngũ nhỏ tạo được cú hích lớn? Câu trả lời là đó là&nbsp;tối ưu hóa quy trình vận hành&nbsp;và tự động hóa kinh doanh.</p>\r\n\r\n<p>Khóa học tự động hóa kinh doanh Online này rất thích hợp cho những doanh nghiệp nhỏ, các bạn đang kinh doanh Online đang muốn mở rộng quy mô hơn nhưng còn vướng mắc chưa biết phải làm sao, phải tận dụng giải pháp gì để tăng quy mô, doanh thu mà tối ưu được nhân sự. Khóa học này với 3 module chính, thời lượng hơn 3 giờ được giảng dạy bởi chuyên gia Lê Trọng Nghĩa có nhiều kinh nghiệm trong lĩnh vực tự động hóa vận hành Online Business là dành cho bạn</p>', '0', '1', 'https://youtu.be/o-ZNJXFju6E', 3, 1, '2023-01-12 02:34:28', NULL, 1, 2);
+(5, 'Tư duy đột phá', 'tu-duy-dot-pha', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-12 04:18:16', NULL, 1, 2),
+(6, 'Kỹ năng quản trị cảm xúc', 'ky-nang-quan-tri-cam-xuc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-13 02:02:18', NULL, 4, 2),
+(7, 'Nghệ thuật giao tiếp kết nối bậc thầy', 'nghe-thuat-giao-tiep-ket-noi-bac-thay', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-12 04:19:30', NULL, 4, 2),
+(8, 'Kỹ năng thuyết trình', 'ky-nang-thuyet-trinh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-12 04:19:44', NULL, 4, 2),
+(9, 'Bán hàng đỉnh cao', 'ban-hang-dinh-cao', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-12 04:20:02', NULL, 4, 2),
+(10, 'Nghệ thuật lãnh đạo', 'nghe-thuat-lanh-dao', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-12 04:20:14', NULL, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -182,21 +238,6 @@ CREATE TABLE `lesson` (
   `course_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `lesson`
---
-
-INSERT INTO `lesson` (`id`, `title`, `video`, `content`, `parent_id`, `_lft`, `_rgt`, `created_at`, `updated_at`, `is_try`, `course_id`) VALUES
-(34, 'Ý tưởng khởi tạo & ý tưởng nâng cấp', NULL, NULL, NULL, 1, 6, '2023-01-12 02:35:07', NULL, '0', 4),
-(35, 'Chapter intro - Ý tưởng khởi tạo _ ý tưởng nâng cấp', NULL, NULL, 34, 2, 3, '2023-01-12 02:35:18', NULL, '1', 4),
-(36, 'Sử dụng Google Trend để so sánh xu hướng tìm kiếm nhóm sản phẩm', NULL, NULL, 34, 4, 5, '2023-01-12 02:35:32', NULL, '1', 4),
-(37, 'Phễu khởi tạo & phễu mở rộng', NULL, NULL, NULL, 7, 12, '2023-01-12 02:35:49', NULL, '0', 4),
-(38, 'Chapter intro - Phễu khởi tạo _ phễu mở rộng', NULL, NULL, 37, 8, 9, '2023-01-12 02:36:00', NULL, '0', 4),
-(39, 'Lý thuyết | Kênh trải nghiệm - Kênh tương tác - Kênh trở lại', NULL, NULL, 37, 10, 11, '2023-01-12 02:36:16', NULL, '0', 4),
-(40, 'Tối ưu ý tưởng', NULL, NULL, NULL, 13, 18, '2023-01-12 02:36:27', NULL, '0', 4),
-(41, 'Chapter intro - Tối ưu ý tưởng', NULL, NULL, 40, 14, 15, '2023-01-12 02:36:36', NULL, '0', 4),
-(42, 'Sử dụng công cụ phân tích từ khóa & kênh mạng xã hội để tìm ý tưởng', NULL, NULL, 40, 16, 17, '2023-01-12 02:36:48', NULL, '0', 4);
-
 -- --------------------------------------------------------
 
 --
@@ -218,7 +259,7 @@ INSERT INTO `level` (`id`, `title`, `created_at`, `updated_at`) VALUES
 (1, 'Cơ bản', '2023-01-09 21:50:23', NULL),
 (2, 'Nâng cao', '2023-01-09 21:50:36', NULL),
 (3, 'Chuyên nghiệp', '2023-01-09 21:50:42', NULL),
-(4, 'Mọi trình độ', '2023-01-09 21:50:48', NULL);
+(4, 'Mọi trình độ', '2023-01-12 03:00:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -288,7 +329,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (52, '2023_01_12_081001_create_affilate_level_table', 9),
 (53, '2023_01_12_081059_add_indirect_level_id_to_affilate_setting', 9),
 (54, '2023_01_12_081948_add_level_id_to_affilate_setting', 10),
-(55, '2023_01_12_083330_add_level_id_to_user_table', 11);
+(55, '2023_01_12_083330_add_level_id_to_user_table', 11),
+(58, '2023_01_12_110921_create_course_combo_table', 12),
+(59, '2023_01_12_111301_create_combo_course_table', 13);
 
 -- --------------------------------------------------------
 
@@ -526,7 +569,12 @@ CREATE TABLE `taxonomy_relationship` (
 --
 
 INSERT INTO `taxonomy_relationship` (`id`, `product_id`, `taxonomy_id`, `sort_order`, `created_at`, `updated_at`, `taxonomy_type`, `course_id`) VALUES
-(3, NULL, 3, NULL, NULL, NULL, 'main', 4);
+(4, NULL, 3, NULL, NULL, NULL, 'main', 5),
+(5, NULL, 3, NULL, NULL, NULL, 'main', 6),
+(6, NULL, 3, NULL, NULL, NULL, 'main', 7),
+(7, NULL, 3, NULL, NULL, NULL, 'main', 8),
+(8, NULL, 3, NULL, NULL, NULL, 'main', 9),
+(9, NULL, 3, NULL, NULL, NULL, 'main', 10);
 
 -- --------------------------------------------------------
 
@@ -550,7 +598,7 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`id`, `title`, `position`, `thumbnail`, `description`, `content`, `created_at`, `updated_at`) VALUES
-(2, 'Lê Trọng Nghĩa', 'Giam Doc', 'http://localhost/rpa/public/uploads/images/hNkTAhA92h.jpg', NULL, '<p>Vị trí</p>\r\n\r\n<p>CEO - 1LINE</p>\r\n\r\n<p>Planning Manager - Hung Thinh Agency</p>\r\n\r\n<p>Account Executive - Ureka Media</p>', '2023-01-12 02:33:00', NULL);
+(2, 'Lê Trọng Nghĩa', 'Giam Doc', 'http://localhost/rpa/public/uploads/images/hNkTAhA92h.jpg', NULL, '<p>Vị trí</p>\r\n\r\n<p>CEO - 1LINE</p>\r\n\r\n<p>Planning Manager - Hung Thinh Agency</p>\r\n\r\n<p>Account Executive - Ureka Media</p>', '2023-01-12 03:00:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -573,6 +621,15 @@ CREATE TABLE `ticket` (
   `_lft` int(10) UNSIGNED DEFAULT NULL,
   `_rgt` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `ticket`
+--
+
+INSERT INTO `ticket` (`id`, `name`, `phone`, `type`, `content`, `user_id`, `created_at`, `updated_at`, `parent_id`, `status`, `code`, `_lft`, `_rgt`) VALUES
+(1, 'test', '0932730394', 'team', '<p>test</p>', 2, '2023-01-12 03:02:46', NULL, NULL, 'pending', 'NS398944', 1, 6),
+(2, NULL, NULL, NULL, '<p>test12521521</p>', 2, '2023-01-12 03:02:54', NULL, 1, 'pending', 'NS326991', 2, 3),
+(3, NULL, NULL, NULL, '<p>te12512521521</p>', 2, '2023-01-12 03:03:00', NULL, 1, 'pending', 'NS444039', 4, 5);
 
 -- --------------------------------------------------------
 
@@ -682,6 +739,20 @@ ALTER TABLE `affilate_setting`
   ADD PRIMARY KEY (`id`),
   ADD KEY `affilate_setting_indirect_level_id_foreign` (`indirect_level_id`),
   ADD KEY `affilate_setting_level_id_foreign` (`level_id`);
+
+--
+-- Chỉ mục cho bảng `combo`
+--
+ALTER TABLE `combo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `combo_course`
+--
+ALTER TABLE `combo_course`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `combo_course_course_id_foreign` (`course_id`),
+  ADD KEY `combo_course_combo_id_foreign` (`combo_id`);
 
 --
 -- Chỉ mục cho bảng `course`
@@ -867,10 +938,22 @@ ALTER TABLE `affilate_setting`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT cho bảng `combo`
+--
+ALTER TABLE `combo`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `combo_course`
+--
+ALTER TABLE `combo_course`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT cho bảng `course`
 --
 ALTER TABLE `course`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `course_lession_document`
@@ -906,7 +989,7 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT cho bảng `order`
@@ -972,7 +1055,7 @@ ALTER TABLE `taxonomy`
 -- AUTO_INCREMENT cho bảng `taxonomy_relationship`
 --
 ALTER TABLE `taxonomy_relationship`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `teacher`
@@ -984,7 +1067,7 @@ ALTER TABLE `teacher`
 -- AUTO_INCREMENT cho bảng `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `upload`
@@ -1014,6 +1097,13 @@ ALTER TABLE `user_group`
 ALTER TABLE `affilate_setting`
   ADD CONSTRAINT `affilate_setting_indirect_level_id_foreign` FOREIGN KEY (`indirect_level_id`) REFERENCES `affilate_level` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `affilate_setting_level_id_foreign` FOREIGN KEY (`level_id`) REFERENCES `affilate_level` (`id`) ON DELETE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `combo_course`
+--
+ALTER TABLE `combo_course`
+  ADD CONSTRAINT `combo_course_combo_id_foreign` FOREIGN KEY (`combo_id`) REFERENCES `combo` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `combo_course_course_id_foreign` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `course`
