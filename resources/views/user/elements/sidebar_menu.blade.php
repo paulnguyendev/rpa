@@ -11,42 +11,15 @@
                 <span>Quản Lý Chung</span>
             </a>
         </li>
-        <li data-label="Quản Lý Bài Viết">
-            <a href="javascript:void(0)">
-                <i class="icon-price-tag2"></i>
-                <span>Sản phẩm</span>
-            </a>
-            <ul class="second-menu-level">
-                @foreach ($suppliers as $supplier)
-                    @php
-                        $supplier_link = ProductLink::getSupplierLink($supplier['id']);
-                    @endphp
-                    <li>
-                        <a href="{{$supplier_link}}">
-                            <span>{{$supplier['name']}}</span>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        </li>
-        <li data-label="Quản Lý Chung">
-            <a href="{{route('cart/index')}}">
-                <i class="icon-cart5"></i>
-                <span>Giỏ hàng</span>
-            </a>
-        </li>
+       
+       
         <li data-label="Quản Lý Chung">
             <a href="{{route('user_order/index')}}">
                 <i class="icon-folder"></i>
                 <span>Đơn hàng</span>
             </a>
         </li>
-        <li data-label="Quản Lý Chung">
-            <a href="{{route('user_order/customer')}}">
-                <i class="icon-user"></i>
-                <span>Khách hàng</span>
-            </a>
-        </li>
+       
         <li data-label="Quản Lý Bài Viết">
             <a href="javascript:void(0)">
                 <i class="icon-coin-dollar"></i>

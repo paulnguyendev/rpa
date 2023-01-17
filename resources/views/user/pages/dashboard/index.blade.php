@@ -6,7 +6,7 @@
 @extends('user.main')
 @section('content')
     <div class="row">
-        <div class="col-sm-12 col-md-3">
+        <div class="col-sm-12 col-md-4">
             <div class="panel panel-body panel-body-accent">
                 <a class="media no-margin" href="{{ route('user_order/income') }}">
                     <div class="media-left media-middle">
@@ -19,20 +19,8 @@
                 </a>
             </div>
         </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="panel panel-body">
-                <a class="media no-margin" href="{{ route('user_order/customer') }}">
-                    <div class="media-left media-middle">
-                        <i class="icon-price-tag2 icon-3x text-indigo-400"></i>
-                    </div>
-                    <div class="media-body text-right">
-                        <h3 class="no-margin text-semibold">0</h3>
-                        <span class="text-uppercase text-size-mini text-muted">SỐ LƯỢNG KHÁCH HÀNG</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
+       
+        <div class="col-sm-12 col-md-4">
             <div class="panel panel-body">
                 <a class="media no-margin" href="{{ route('user_order/index') }}">
                     <div class="media-body">
@@ -45,15 +33,15 @@
                 </a>
             </div>
         </div>
-        <div class="col-sm-12 col-md-3">
+        <div class="col-sm-12 col-md-4">
             <div class="panel panel-body">
-                <a class="media no-margin" href="{{ route('user_order/index', ['status' => 'complete']) }}">
-                    <div class="media-body">
-                        <h3 class="no-margin text-semibold">{{ $totalOrderSuccess }}</h3>
-                        <span class="text-uppercase text-size-mini text-muted">ĐƠN HÀNG THÀNH CÔNG</span>
+                <a class="media no-margin" href="{{ route('user_order/customer') }}">
+                    <div class="media-left media-middle">
+                        <i class="icon-price-tag2 icon-3x text-indigo-400"></i>
                     </div>
-                    <div class="media-right media-middle">
-                        <i class="icon-folder3 icon-3x text-blue-400"></i>
+                    <div class="media-body text-right">
+                        <h3 class="no-margin text-semibold">0</h3>
+                        <span class="text-uppercase text-size-mini text-muted">KHÓA HỌC ĐÃ ĐĂNG KÝ</span>
                     </div>
                 </a>
             </div>
@@ -64,11 +52,11 @@
             <div class="panel panel-body">
                 <div class="dashboard-slide">
                     <div class="dashboard-slide-item">
-                        <img src="{{ asset('obn-dashboard/img/slide-1.png') }}" alt="Dashboard slide 1"
+                        <img src="{{ asset('kyna/img/slide1.jpg') }}" alt="Dashboard slide 1"
                             class="img-responsive">
                     </div>
                     <div class="dashboard-slide-item">
-                        <img src="{{ asset('obn-dashboard/img/slide-2.png') }}" alt="Dashboard slide 1"
+                        <img src="{{ asset('kyna/img/slide2.jpg') }}" alt="Dashboard slide 1"
                             class="img-responsive">
                     </div>
                 </div>
@@ -113,7 +101,7 @@
 
 
         </div>
-        <div class="col-lg-12">
+        {{-- <div class="col-lg-12">
             <div class="panel panel-flat panel-order-dashboard">
                 <div class="panel-heading">
                     <h6 class="panel-title text-uppercase">Đơn hàng mới</h6>
@@ -139,7 +127,7 @@
                     </thead>
                 </table>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
 @section('custom_srcipt')

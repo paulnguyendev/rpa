@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\UserController;
@@ -18,10 +19,12 @@ use App\Http\Controllers\Auth\AuthAdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\FrontEnd\AffiliateController;
 use App\Http\Controllers\FrontEnd\CartController as FrontEndCartController;
+use App\Http\Controllers\FrontEnd\ComboController;
 use App\Http\Controllers\FrontEnd\CourseController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\FrontEnd\HomeController;
 use App\Http\Controllers\FrontEnd\ProductController as FrontEndProductController;
+use App\Http\Controllers\FrontEnd\TeacherController as FrontEndTeacherController;
 use App\Http\Controllers\User\AffiliateController as UserAffiliateController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\CourseController as UserCourseController;
@@ -48,6 +51,7 @@ Route::prefix($prefix)->group(function () {
     $routeName = "home";
     Route::controller(HomeController::class)->group(function () use ($routeName) {
         Route::get('/', 'index')->name($routeName . '/index');
+        Route::get('/subBanner', 'subBanner')->name($routeName . '/subBanner');
     });
     Route::prefix('cart')->group(function () {
         $routeName = "fe_cart";
@@ -61,6 +65,7 @@ Route::prefix($prefix)->group(function () {
             Route::get('/removeAll', 'removeAll')->name($routeName . '/removeAll');
             Route::get('/test', 'test')->name($routeName . '/test');
             Route::post('/order', 'order')->name($routeName . '/order');
+            Route::post('/buyNow', 'buyNow')->name($routeName . '/buyNow');
             Route::get('/thanh-toan', 'checkout')->name($routeName . '/checkout');
             Route::get('/order_success/{code?}', 'order_success')->name($routeName . '/order_success');
         });
@@ -79,6 +84,20 @@ Route::prefix($prefix)->group(function () {
             Route::get('/{slug?}', 'detail')->name($routeName . '/detail');
             Route::get('/category/{slug?}', 'category')->name($routeName . '/category');
             Route::get('/supplier/{id?}', 'supplier')->name($routeName . '/supplier');
+            Route::get('/ajax/listCourse', 'listCourse')->name($routeName . '/listCourse');
+        });
+    });
+    Route::prefix('giang-vien')->group(function () {
+        $routeName = "fe_teacher";
+        Route::controller(FrontEndTeacherController::class)->group(function () use ($routeName) {
+            Route::get('/{slug?}', 'detail')->name($routeName . '/detail');
+        });
+    });
+    Route::prefix('combo')->group(function () {
+        $routeName = "fe_combo";
+        Route::controller(ComboController::class)->group(function () use ($routeName) {
+            Route::get('/', 'index')->name($routeName . '/index');
+            Route::get('/{slug?}', 'detail')->name($routeName . '/detail');
             Route::get('/ajax/listCourse', 'listCourse')->name($routeName . '/listCourse');
         });
     });
@@ -344,6 +363,14 @@ Route::middleware('access.adminDashboard')->prefix($prefix)->group(function () {
             Route::post('/saveInfo/{type?}/{id?}', 'saveInfo')->name($routeName . '/saveInfo');
             Route::delete('/destroyMulti', 'destroyMulti')->name($routeName . '/destroyMulti');
             Route::get('/dataList', 'dataList')->name($routeName . '/dataList');
+        });
+    });
+    Route::prefix('setting')->group(function () {
+        $routeName = "admin_setting";
+        Route::controller(SettingController::class)->group(function () use ($routeName) {
+            Route::get('/{type?}', 'index')->name($routeName . '/index');
+            Route::post('/save/{type?}', 'save')->name($routeName . '/save');
+            Route::get('/data/list', 'dataList')->name($routeName . '/dataList');
         });
     });
 });

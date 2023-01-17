@@ -1,3 +1,7 @@
+@php
+    use App\Helpers\User;
+    use App\Helpers\Obn;
+@endphp
 <!DOCTYPE HTML>
 <html lang="vi">
 
@@ -46,6 +50,7 @@
     <link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/app.css?v=15217955218005" rel="stylesheet">
     <link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/sweetalert2.min.css?v=15217955218005"
         rel="stylesheet">
+    
     <style>
         .label-danger {
             white-space: normal;
@@ -53,36 +58,14 @@
     </style>
     <script src="/assets/7431fa9e/jquery/dist/jquery.min.js"></script>
     <script src="/assets/35de618e/yii.js"></script>
-    <!-- Hotjar Tracking Code for kyna.vn -->
-    <script>
-        (function(h, o, t, j, a, r) {
-            h.hj = h.hj || function() {
-                (h.hj.q = h.hj.q || []).push(arguments)
-            };
-            h._hjSettings = {
-                hjid: 2067240,
-                hjsv: 6
-            };
-            a = o.getElementsByTagName('head')[0];
-            r = o.createElement('script');
-            r.async = 1;
-            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-    </script>
-    <!-- End Hotjar tracking code -->
+   
     <link rel="stylesheet" href="https://cdn-skill.kynaenglish.vn/css/checkout.css?v=1516332748">
-    <!-- Google Tag Manager -->
-    <script type="text/javascript" src="https://cdn-skill.kynaenglish.vn/src/js/gtm.js?v=1508382297"></script>
-    <script type="text/javascript" src="https://cdn-skill.kynaenglish.vn/src/js/fb-pixel.js?v=1521778876"></script>
-    <script type="text/javascript" src="https://cdn-skill.kynaenglish.vn/src/js/headScript.js?v=126"></script>
-    <!-- End Google Tag Manager -->
+    <link type="text/css" href="{{ asset('kyna/css/obn.css') }}?ver={{ time() }}" rel="stylesheet">
 </head>
 
 <body>
     <div class="loading-checkout">
     </div>
-    
     <div class="checkout" id="checkout-home">
         <div class="wrap-content">
             <div class="container">
@@ -91,9 +74,9 @@
                         <div class="checkout-header clearfix">
                             <div class="left-first col-sm-4 col-xs-6 pd0">
                                 <h2 class="logo">
-                                    <a href="{{route('home/index')}}"><img
-                                            src="{{asset('kyna/img/logo.png')}}"
-                                            alt="Kyna.vn" class="img-responsive" /></a></h2>
+                                    <a href="{{ route('home/index') }}"><img src="{{ asset('kyna/img/logo.png') }}"
+                                            alt="Kyna.vn" class="img-responsive" /></a>
+                                </h2>
                             </div>
                             <!--end .left-first-->
                             <div class="right-first col-sm-8 col-xs-6 pd0">
@@ -128,7 +111,8 @@
                         <ul class="checkout-list-part pc">
                             <li>
                                 <!-- <span class="checkout-triangle-left"></span> -->
-                                <span class="checkout-span">Xem giỏ hàng</span>
+                                <span class="checkout-span"><a href="{{ route('fe_cart/index') }}">Xem giỏ
+                                        hàng</a></span>
                                 <span class="checkout-triangle-right"></span>
                             </li>
                             <li>
@@ -185,7 +169,7 @@
                                     <h3 style="margin-bottom: 0px">CHỌN PHƯƠNG THỨC THANH TOÁN</h3>
                                     <div class="payment-method-error input-error" style="padding-left: 15px"></div>
                                     <div class="wrap clearfix">
-                                        <div class="checkout-list" id="checkout-cod">
+                                        {{-- <div class="checkout-list" id="checkout-cod">
                                             <input id="radio-cod" type="radio" name="PaymentForm[method]"
                                                 value="cod">
                                             <label for="radio-cod">
@@ -201,7 +185,8 @@
                                                         <li
                                                             style="display: list-item !important; list-style-type: disc;">
                                                             <b>MIỄN PHÍ</b> đối với các đơn hàng có giá trị <b>từ
-                                                                297.000 đồng trở lên</b> (áp dụng trên toàn quốc)</li>
+                                                                297.000 đồng trở lên</b> (áp dụng trên toàn quốc)
+                                                        </li>
                                                         <li
                                                             style="display: list-item !important; list-style-type: disc;">
                                                             Đối với những đơn hàng <b>dưới 297.000</b>, Kyna sẽ áp dụng
@@ -217,56 +202,27 @@
                                                 <!--end .checkout-sub-list-->
                                             </div>
                                             <!--end .checkout-wrap-list-->
-                                        </div>
+                                        </div> --}}
                                         <!--end .checkout-list-->
                                         <div class="checkout-list" id="checkout-paypal">
                                             <input id="radio-bank-transfer" type="radio" name="PaymentForm[method]"
-                                                value="bank-transfer">
+                                                value="bank-transfer" checked>
                                             <label for="radio-bank-transfer" style="margin-bottom: 0px;">
                                                 <span><span></span></span>
                                                 <methodname><span>Chuyển khoản Ngân hàng</span></methodname>
                                             </label>
-                                            <div class="checkout-wrap-list" style="height: 0px;">
+                                            <div class="checkout-wrap-list open" style="height: 0px;">
                                                 <div class="checkout-sub-list" id="checkout-show-bank-transfer">
                                                     <h6 class="bold color-green">Khóa học sẽ được kích hoạt sau khi
-                                                        Kyna.vn kiểm tra tài khoản và xác nhận việc thanh toán của bạn
+                                                       RPA kiểm tra tài khoản và xác nhận việc thanh toán của bạn
                                                         thành công. (Thời gian kiểm tra và xác nhận tài khoản ít nhất là
                                                         12 giờ)</h6>
                                                     <br>
                                                     <p><b>Chuyển khoản ngân hàng</b></p>
-                                                    <p>Bạn có thể đến bất kỳ ngân hàng nào ở Việt Nam (hoặc sử dụng
-                                                        Internet Banking) để chuyển tiền theo thông tin bên dưới:</p>
-                                                    <br>
-                                                    <ul class="top">
-                                                        <li><span class="bold">• Số tài khoản:</span> 1903 50585
-                                                            30017</li>
-                                                        <li><span class="bold">• Chủ tài khoản:</span> Công ty TNHH
-                                                            Đào Tạo Nguồn Lực Việt</li>
-                                                        <li><span class="bold">• Ngân hàng:</span> Ngân Hàng Thương
-                                                            Mại Cổ Phần Kỹ Thương Việt Nam (Techcombank) - Chi nhánh
-                                                            Bình Thạnh, Tp.Hồ Chí Minh</li>
-                                                        <br>
-                                                        <li><span class="bold">• Số tài khoản:</span> 053 100 259
-                                                            0569</li>
-                                                        <li><span class="bold">• Chủ tài khoản:</span> Công ty TNHH
-                                                            Đào Tạo Nguồn Lực Việt</li>
-                                                        <li><span class="bold">• Ngân hàng:</span> Ngân Hàng Thương
-                                                            Mại Cổ Phần Ngoại Thương Việt Nam (Vietcombank) - Chi nhánh
-                                                            Đông Sài Gòn, Tp.Hồ Chí Minh</li>
-                                                    </ul>
-                                                    <p><i>Ghi chú khi chuyển khoản:</i></p>
-                                                    <ul class="center">
-                                                        <li>• Tại mục "Ghi chú" khi chuyển khoản, bạn ghi rõ: Số điện
-                                                            thoại. Họ và tên. Email đăng ký học (thay "@" thành "."). Mã
-                                                            đơn hàng</li>
-                                                        <li>• Ví dụ: SDT 0909090909. Nguyen Thi Huong Lan.
-                                                            nguyenthihuonglan.gmail.com. Don hang 2313123</li>
-                                                    </ul>
+                                                   {!!Obn::getSetting('payment_info')!!}
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                     <!--end .wrap-->
                                 </div>
@@ -306,7 +262,8 @@
                                                 <fieldset>
                                                     <legend><label class="control-label"
                                                             for="paymentform-phone_number">Số điện thoại</label>
-                                                        <span>*</span></legend>
+                                                        <span>*</span>
+                                                    </legend>
                                                     <input type="text" id="paymentform-phone_number"
                                                         class="form-control" name="PaymentForm[phone_number]">
                                                 </fieldset>
@@ -331,10 +288,7 @@
                                                     <input class="form-group" id="paymentform-register_by_phone"
                                                         type="checkbox" name="PaymentForm[register_by_phone]"
                                                         value="1">
-                                                    <label for="paymentform-register_by_phone">
-                                                        <span><span></span></span>
-                                                        <methodName><span>Không có email</span></methodName>
-                                                    </label>
+                                                   
                                                 </div>
                                                 <div class="note-email"></div>
                                             </div>
@@ -343,7 +297,8 @@
                                                     <fieldset>
                                                         <legend><label class="control-label"
                                                                 for="paymentform-otp_code">Mã xác thực</label>
-                                                            <span>*</span></legend>
+                                                            <span>*</span>
+                                                        </legend>
                                                         <input type="text" id="paymentform-otp_code"
                                                             class="form-control" name="PaymentForm[otp_code]">
                                                     </fieldset>
@@ -359,7 +314,8 @@
                                                 <fieldset>
                                                     <legend><label class="control-label"
                                                             for="paymentform-contact_name">Họ tên</label>
-                                                        <span>*</span></legend>
+                                                        <span>*</span>
+                                                    </legend>
                                                     <input type="text" id="paymentform-contact_name"
                                                         class="form-control" name="PaymentForm[contact_name]">
                                                 </fieldset>
@@ -372,7 +328,8 @@
                                                 <fieldset>
                                                     <legend><label class="control-label"
                                                             for="paymentform-street_address">Địa chỉ</label>
-                                                        <span>*</span></legend>
+                                                        <span>*</span>
+                                                    </legend>
                                                     <input type="text" id="paymentform-street_address"
                                                         class="form-control" name="PaymentForm[street_address]">
                                                 </fieldset>
@@ -431,7 +388,8 @@
                                                 <fieldset>
                                                     <legend><label class="control-label"
                                                             for="paymentform-company_name">Tên Công ty</label>
-                                                        <span>*</span></legend>
+                                                        <span>*</span>
+                                                    </legend>
                                                     <input type="text" id="paymentform-company_name"
                                                         class="form-control" name="PaymentForm[company_name]">
                                                 </fieldset>
@@ -445,7 +403,8 @@
                                                 <fieldset>
                                                     <legend><label class="control-label"
                                                             for="paymentform-tax_number">Mã số thuế</label>
-                                                        <span>*</span></legend>
+                                                        <span>*</span>
+                                                    </legend>
                                                     <input type="string" id="paymentform-tax_number"
                                                         class="form-control" name="PaymentForm[tax_number]"
                                                         maxlength="14" minlength>
@@ -453,7 +412,6 @@
                                                 <div class="help-block input-error"></div>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="clearfix">
                                         <div class="col-xs-12 col-sm-12" visible-input="red-invoce">
@@ -542,7 +500,8 @@
                                                     <fieldset>
                                                         <legend><label class="control-label"
                                                                 for="paymentform-pincode">Mã thẻ cào</label>
-                                                            <span>*</span></legend>
+                                                            <span>*</span>
+                                                        </legend>
                                                         <input type="text" id="paymentform-pincode"
                                                             class="form-control" name="PaymentForm[pinCode]">
                                                     </fieldset>
@@ -554,7 +513,8 @@
                                                     <fieldset>
                                                         <legend><label class="control-label"
                                                                 for="paymentform-serial">Số seri thẻ</label>
-                                                            <span>*</span></legend>
+                                                            <span>*</span>
+                                                        </legend>
                                                         <input type="text" id="paymentform-serial"
                                                             class="form-control" name="PaymentForm[serial]">
                                                     </fieldset>
@@ -587,10 +547,10 @@
                                 <!-- Login section -->
                                 <div class="login-for-guest">
                                     <div class="box-login-for-guest">
-                                        <div class="title">Nếu bạn đã từng mua khóa học và có tài khoản ở KYNA.VN, bạn
+                                        <div class="title">Nếu bạn đã từng mua khóa học và có tài khoản ở RPA, bạn
                                             có thể đăng nhập để không phải nhập lại thông tin cá nhân</div>
-                                        <a class="btn btn-login-account-kyna" href="{{route('auth/login')}}" 
-                                           >Đăng nhập ngay</a>
+                                        <a class="btn btn-login-account-kyna" href="{{ route('auth/login',['redirect_url' => route('fe_cart/checkout')]) }}">Đăng
+                                            nhập ngay</a>
                                     </div>
                                 </div>
                                 <div class="wrap-checkout-button-pc">
@@ -605,7 +565,7 @@
                                             </div>
                                             <div class="item">
                                                 <span>Tổng số tiền thanh toán</span><br>
-                                                <span><b>199.000 ₫</b></span>
+                                                <span><b> {{ $cartTotal }}</b></span>
                                             </div>
                                             <div class="item">
                                                 <span>Tài khoản</span><br>
@@ -840,27 +800,29 @@
                             <div class="wrap">
                                 <h4>
                                     <img src="https://cdn-skill.kynaenglish.vn/img/icon-mini-cart.png" alt="">
-                                    <b><span class="color-green">1 khóa học</span></b>
-                                    <a href="/gio-hang">Thay đổi</a>
+                                    <b><span class="color-green">{{ $cartCount }} khóa học</span></b>
+                                    <a href="{{ route('fe_cart/index') }}">Thay đổi</a>
                                 </h4>
                                 <ul class="list">
-                                    <li class="clearfix" data-id="1954" data-price="199000" data-course-type="1">
-                                        <div class="col-sm-9 col-xs-8 title pd0 text">
-                                            <h6>Tự động hóa kinh doanh Online<a class="product-hidden-link"
-                                                    href="/tu-dong-hoa-kinh-doanh-online-p1954"
-                                                    style="display: none">Tự động hóa kinh doanh Online</a></h6>
-                                            <span class="product-hidden-price price" style="display: none;">199.000
-                                                ₫</span>
-                                        </div>
-                                        <!--end .col-xs-2 col-xs-4 name-->
-                                        <div class="col-sm-3 col-xs-4 price pd0">
-                                            <span><b>
-                                                    199.000 ₫ </b></span>
-                                        </div>
-                                        <!--end .col-md-10 col-xs-8 price-->
-                                    </li>
+                                    @foreach ($cartContent as $cartItem)
+                                        @php
+                                            $cartItemPrice = Obn::showPrice($cartItem->price);
+                                        @endphp
+                                        <li class="clearfix" data-id="1954" data-price="199000"
+                                            data-course-type="1">
+                                            <div class="col-sm-9 col-xs-8 title pd0 text">
+                                                <h6>{{ $cartItem->name ?? '-' }}</h6>
+                                            </div>
+                                            <!--end .col-xs-2 col-xs-4 name-->
+                                            <div class="col-sm-3 col-xs-4 price pd0">
+                                                <span><b>
+                                                        {{$cartItemPrice}} </b></span>
+                                            </div>
+                                            <!--end .col-md-10 col-xs-8 price-->
+                                        </li>
+                                    @endforeach
                                 </ul>
-                                <div class="checkout-apdung clearfix">
+                                {{-- <div class="checkout-apdung clearfix">
                                     <p>Mã khuyến mãi (nhập mã và click Áp dụng)</p>
                                     <form id="promo-code-form" class="clearfix" action="/cart/promo/apply"
                                         method="post">
@@ -880,7 +842,7 @@
                                         <div class="error-label">
                                         </div>
                                     </form>
-                                </div>
+                                </div> --}}
                                 <!--end checkout-apdung-->
                                 <script type="text/javascript"></script>
                                 <style>
@@ -896,17 +858,18 @@
                                 </style>
                                 <div class="checkout-list-price">
                                     <ul>
-                                        <li>
+                                        {{-- <li>
                                             <span>Học phí gốc</span>
                                             <span class="price total-cost" data-price="199000"><b>199.000 ₫</b></span>
-                                        </li>
-                                        <li>
+                                        </li> --}}
+                                        {{-- <li>
                                             <span>Tổng giảm giá</span>
                                             <span class="price"><b> 0 ₫</b></span>
-                                        </li>
+                                        </li> --}}
                                         <li>
                                             <span class="color-orange"><b>THÀNH TIỀN</b></span>
-                                            <span class="price total-price color-orange"><b>199.000 ₫</b></span>
+                                            <span class="price total-price color-orange"><b>
+                                                    {{ $cartTotal }}</b></span>
                                         </li>
                                     </ul>
                                     <div class="note-cod"><b>Lưu ý:</b> <i>Chưa bao gồm phí vận chuyển</i></div>
@@ -916,14 +879,14 @@
                             <!--end .wrap-->
                             <div class="re-money">
                                 <div class="banner-widget promotion" id="promotion" data-banner-type="8">
-                                    <a href="https://kyna.vn/khoa-hoc-thien-va-quan-tri-cam-xuc-cho-nguoi-hien-dai "
+                                    <a href="#"
                                         title="thien-va-quan-tri-cam-xuc" target="_blank">
                                         <img class="image-topbar banner-pc img-fluid"
-                                            src="https://cdn-skill.kynaenglish.vn/uploads/banners/1025/img/image_url-1625586194.png"
+                                            src="{{asset('kyna/img/banner-sidebar.jpg')}}"
                                             size="0x0" alt="thien-va-quan-tri-cam-xuc"
                                             title="thien-va-quan-tri-cam-xuc" resizeMode="cover" returnMode="img">
                                         <img class="image-topbar banner-mb img-fluid"
-                                            src="https://cdn-skill.kynaenglish.vn/uploads/banners/1025/img/mobile_image_url-1625586198.png"
+                                            src="{{asset('kyna/img/banner-sidebar.jpg')}}"
                                             size="0x0" alt="thien-va-quan-tri-cam-xuc"
                                             title="thien-va-quan-tri-cam-xuc" resizeMode="cover" returnMode="img">
                                     </a>
@@ -934,7 +897,7 @@
                     </li>
                     <li class="col-lg-7 col-xs-12 wrap-checkout-button-mb col">
                         <div class="wrap-checkout-button">
-                            <a class="checkout-button back-to-cart" href="/gio-hang"><i class="fa fa-long-arrow-left"
+                            <a class="checkout-button back-to-cart" href="{{route('fe_cart/index')}}"><i class="fa fa-long-arrow-left"
                                     aria-hidden="true"></i> Quay lại</a>
                             <button class="checkout-button-mb">Hoàn tất</button>
                         </div>

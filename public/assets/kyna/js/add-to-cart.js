@@ -78,6 +78,7 @@ function ClickDropDownCart() {
         $("#k-header-form-cart ul.list").privateScroll();
 
         $('body').on('click', '.add-to-cart', function(e) {
+            e.preventDefault();
             var thisBtn = $(this);
 
             if (!$(this).hasClass('reg')) {
@@ -135,7 +136,8 @@ function ClickDropDownCart() {
                             parent.append(response.alertContent);
 
                             if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-                                window.location.href='/gio-hang';
+                                let cartUrl = $(`meta[name='cart_url']`).attr('content');
+                                window.location.href= cartUrl;
                             }
 
                         }
@@ -151,17 +153,16 @@ function ClickDropDownCart() {
                 var pid = $(this).data('pid');
                 var csrfToken = $('meta[name="csrf-token"]').attr("content");
                 console.log(pid);
+                let url = $(this).data('url');
                 $.ajax({
-                    url: '/cart/default/buy-now',
+                    url: url,
                     type: 'POST',
                     data: {
                         pid: pid,
                         _csrf: csrfToken
                     },
                     success: function(response) {
-                        if (response.result) {
-                            window.location = response.redirectUrl;
-                        }
+                        window.location = response.redirectUrl;
                     }
                 });
             }
@@ -177,8 +178,18 @@ function ClickDropDownCart() {
         });
         $('body').on('click', '.cart-item-remove', function () {
             var pid = $(this).data('id');
-            $('input[name=\'pids[]\']').val(pid);
-            $('#cart-form').submit();
+            var url = $(this).data('url');
+            $.ajax({
+                type: "get",
+                url: url,
+                data: {
+                    id:pid
+                },
+                dataType: "json",
+                success: function (response) {
+                    location.reload();
+                }
+            });
         });
         $('#get1_buy1').on('hidden.bs.modal', function () {
             $('#get1_buy1').find('.modal-content').empty();

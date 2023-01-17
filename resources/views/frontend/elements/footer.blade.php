@@ -1,7 +1,7 @@
 <div id="k-footer">
     <div class="box container clearfix">
         <div class="hotline">
-            <h4 class="text-transform title">Kết nối với Kyna</h4>
+            <h4 class="text-transform title">Kết nối với RPA</h4>
             <ul class="bottom">
                 <li>
                     <first><i class="fas fa-phone-alt"></i> Hotline</first>
@@ -9,7 +9,7 @@
                 </li>
                 <li>
                     <first><i class="fas fa-envelope"></i> Email</first>
-                    <second>hotro@kyna.vn</second>
+                    <second>support@rpagroup.vn</second>
                 </li>
             </ul>
             <!--end .bottom-->
@@ -34,39 +34,25 @@
         </div>
         <!--end .hotline -->
         <div class="info">
-            <h4 class="title">Thông tin Kyna</h4>
+            <h4 class="title">Thông tin RPA</h4>
             <ul>
-                <li><a href="/danh-sach-khoa-hoc">Danh sách khóa học</a></li>
-                <li><a href="/p/kyna/cau-hoi-thuong-gap">Câu hỏi thường gặp</a></li>
-                <li><a href="/p/kyna/cau-hoi-thuong-gap/huong-dan-thanh-toan-hoc-phi">Cách thanh toán học
+                <li><a href="#">Danh sách khóa học</a></li>
+                <li><a href="#">Câu hỏi thường gặp</a></li>
+                <li><a href="#">Cách thanh toán học
                         phí</a>
                 </li>
-                <li><a href="/bai-viet" target="_blank">Thông tin hữu ích</a></li>
-                <!--<li>
-    <a href="https://www.vietnamworks.com?utm_source=from_kyna" target="_blank">VietnamWorks</a>
-  </li>
-  <li>
-    <a
-      href="https://www1.primus.vn/?utm_source=Kyna&utm_campaign=Acquisition_ConversionRate_9092020_MKT&utm_medium=CVS_KynaUser_Des.Mob_Direct__VN_&utm_term=&utm_content=footer_EN"
-      target="_blank">PRIMUS
-     </a>
-  </li>-->
+                <li><a href="#" target="_blank">Thông tin hữu ích</a></li>
             </ul>
             <!--end .top-->
         </div>
         <!--end .info-->
         <div class="about ">
-            <h4 class="text-transform title">Về Kyna</h4>
+            <h4 class="text-transform title">Về RPA</h4>
             <ul>
-                <li class="iconfeature"><a href="/giang-vien/hop-tac" class="hover-color-green">Giảng dạy
-                        tại
-                        Kyna.vn</a></li>
-                <li><a href="https://www.daycontienganh.com/daisu-kynaenglish" class="hover-color-green">Đối
-                        tác phân phối</a></li>
-                <li><a href="/p/kyna/quy-che-hoat-dong-sgdtmdt" class="hover-color-green">Quy chế hoạt động
+                <li><a href="#" class="hover-color-green">Quy chế hoạt động
                         Sàn
                         GDTMĐT</a></li>
-                <li><a href="/p/hop-tac-cung-cls" class="hover-color-green">Đào tạo doanh nghiệp</a></li>
+                <li><a href="#" class="hover-color-green">Đào tạo doanh nghiệp</a></li>
             </ul>
             <!--end .top-->
         </div>
@@ -103,34 +89,16 @@
         <!-- End Anchor Text -->
         <div class="col-lg-8 col-xs-12 address ">
             <div class="text">
-                <p class="text-copyright">© 2019 - Bản quyền của Công Ty TNHH Đào Tạo Nguồn Lực Việt (NLV
-                    Training)</p>
+                <p class="text-copyright">© 2022 - Bản quyền của RPA</p>
                 <p>
                 <p
                     style="box-sizing: border-box; margin: 0px; line-height: 1.43; color: #333333; font-family: SVN-ProductSans, sans-serif;">
-                    VP Hồ Ch&iacute; Minh: Lầu 5 t&ograve;a nh&agrave; Bcons - 4A/167A Nguyễn Văn Thương, Phường
-                    25, quận B&igrave;nh Thạnh, TP Hồ Ch&iacute; Minh</p>
-                <p
-                    style="box-sizing: border-box; margin: 0px; line-height: 1.43; color: #333333; font-family: SVN-ProductSans, sans-serif;">
-                    VP H&agrave; Nội: Tầng 3, Sảnh B, t&ograve;a nh&agrave; Viet Duc Complex, Số 39 L&ecirc; Văn
-                    Lương, phường Nh&acirc;n Ch&iacute;nh, quận Thanh Xu&acirc;n, th&agrave;nh phố H&agrave;
-                    Nội.</p>
-                <p
-                    style="box-sizing: border-box; margin: 0px; line-height: 1.43; color: #333333; font-family: SVN-ProductSans, sans-serif;">
-                    VP Đ&agrave; Nẵng: Lầu 3 DNC - Danang Coworking Space 31 Đường Trần Ph&uacute;, phường Hải
-                    Ch&acirc;u 1, quận Hải Ch&acirc;u, th&agrave;nh phố Đ&agrave; Nẵng.</p>
-                <p
-                    style="box-sizing: border-box; margin: 0px; line-height: 1.43; color: #333333; font-family: SVN-ProductSans, sans-serif;">
-                    Địa chỉ ĐKKD: Tầng 1, T&ograve;a nh&agrave; Packsimex, 52 Đ&ocirc;ng Du, Phường Bến
-                    Ngh&eacute;, Quận 1, TP Hồ Ch&iacute; Minh&nbsp;</p>
-                </p>
-                <p>
-                    Giấy phép ĐKKD số 0315889657 do Sở Kế hoạch và Đầu tư TPHCM cấp </p>
+                    Tầng 4, Tòa C'land, Số 81 Lê Đức Thọ, P. Mỹ Đình 2, Q. Nam Từ Liêm, Tp. Hà Nội</p>
+                
             </div>
             <!--end col-xs-8 text-->
         </div>
         <!--end .col-sm-7 col-xs-12 left-->
-       
         <!--end .col-sm-5 col-xs-12 right-->
     </div>
     <!--end .container-->

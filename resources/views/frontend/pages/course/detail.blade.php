@@ -1,3 +1,7 @@
+@php
+    use App\Helpers\Obn;
+    use App\Helpers\Package\CoursePackage;
+@endphp
 @extends('frontend.main')
 @section('content')
     <!-- Breadcrumbs start -->
@@ -21,55 +25,30 @@
         <!-- Block data for track course viewed -->
         <div id="loadReviewUrl" hidden>/course/default/load-review?course_id=152</div>
         <div id="course-detail" class="course-detail">
-            <div class="modal fade" id="video-modal" tabindex="-1" role="dialog" aria-labelledby="video-modal"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><i class="fal fa-times-circle"></i></span>
-                            </button>
-                            <div class="video-preview__wrapper">
-                                <video id="video-preview__player" class="video-js vjs-fluid" controls>
-                                    <video id="video-preview__player" class="video-js vjs-fluid" controls>
-                                    </video>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="video-preview__playlist"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="cd-top-banner have-bg opt-1"
-                style="background-image: url('https://cdn-skill.kynaenglish.vn/uploads/categories/img/cover-bat-dong-san.jpg');">
+
+            <div class="cd-top-banner have-bg opt-1" style="background-image: url('{{ $item['thumbnail'] }}');">
                 <div class="container">
                     <div class="course-detail--left">
-                        <h1 class="cd-title">Bí quyết mua bán bất động sản thành công</h1>
+                        <h1 class="cd-title">{{ $item['title'] ?? '-' }}</h1>
                         <div class="gv-info">
                             <div class="gv-left">
-                                <img src="https://cdn-skill.kynaenglish.vn/uploads/user/113475/img/avatar-1529981077.cover-100x100.png"
-                                    alt="Kyna - Avatar    Giang Vien">
+                                <img src="{{ Obn::showThumbnail($teacher['thumbnail']) }}"
+                                    alt="{{ $teacher['title'] ?? '' }}">
                             </div>
                             <div class="gv-right">
-                                <h2 class="gv-name">Phan Công Chánh </h2>
-                                <h4 class="gv-title">Chuyên gia bất động sản cá nhân </h4>
-                                <div class="gv-short-des truncate-2 m-b-0">
-                                    <p><span style="color: #333333;">- Chủ tịch hội đồng quản trị <strong>C&ocirc;ng ty
-                                                cổ phần&nbsp;Tư vấn Đầu tư Ph&uacute; Vinh</strong>.</span></p>
-                                    <p><span style="color: #333333;">- Đồng thời l&agrave; <strong>chuy&ecirc;n gia Bất
-                                                động sản c&aacute; nh&acirc;n</strong> nhiều năm kinh nghiệm.</span></p>
-                                </div>
-                                <a class="gv-btn-view-more" href="/giang-vien/phan-cong-chanh">Xem thêm</a>
+                                <h2 class="gv-name">{{ $teacher['title'] ?? '' }} </h2>
+                                <h4 class="gv-title">{{ $teacher['position'] ?? '' }} </h4>
+                                <a class="gv-btn-view-more"
+                                    href="{{ route('fe_teacher/detail', ['slug' => $teacher['slug']]) }}">Xem thêm</a>
                             </div>
                         </div>
                         <ul class="crs-short-info">
                             <li>
                                 <img class="crs-icon-info" src="https://cdn-skill.kynaenglish.vn/img/level.svg"
                                     alt="Kyna - Icon trinh do">
-                                <p>Trình độ: <span>Mọi cấp độ</span></p>
+                                <p>Trình độ: <span>{{ $level['title'] ?? '' }}</span></p>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <img class="crs-icon-info" src="https://cdn-skill.kynaenglish.vn/img/rating.svg"
                                     alt="Kyna - Icon danh gia">
                                 <div class="crs-total-star">
@@ -84,12 +63,14 @@
                                         <img src="https://cdn-skill.kynaenglish.vn/img/star-half.svg" alt="Kyna - Star">
                                     </div>
                                 </div>
-                            </li>
-                            <li>
-                                <img class="crs-icon-info" src="https://cdn-skill.kynaenglish.vn/img/certificate.svg"
-                                    alt="Kyna - Icon hoan thanh">
-                                <p>Cấp chứng nhận <span>hoàn thành</span></p>
-                            </li>
+                            </li> --}}
+                            @if ($item['is_certificate'])
+                                <li>
+                                    <img class="crs-icon-info" src="https://cdn-skill.kynaenglish.vn/img/certificate.svg"
+                                        alt="Kyna - Icon hoan thanh">
+                                    <p>Cấp chứng nhận <span>hoàn thành</span></p>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -98,11 +79,12 @@
             <section id="courseDetailTabs" class="course-detail-tabs">
                 <div class="container">
                     <div class="course-detail-tabs-list ">
-                        <a href="{{route('fe_course/detail',['slug' => 'ten-khoa-hoc'])}}#courseDetailOverview" class="course-detail-tab">Bạn sẽ học được gì?</a>
-                        <a href="{{route('fe_course/detail',['slug' => 'ten-khoa-hoc'])}}#courseDetailIntroduce" class="course-detail-tab">Giới thiệu</a>
-                        <a href="{{route('fe_course/detail',['slug' => 'ten-khoa-hoc'])}}#courseDetailContent" class="course-detail-tab">Nội dung <span class="hide">&nbsp;khóa
+                        <a href="{{ Request::url() }}#courseDetailOverview" class="course-detail-tab">Bạn sẽ học được
+                            gì?</a>
+                        <a href="{{ Request::url() }}#courseDetailIntroduce" class="course-detail-tab">Giới thiệu</a>
+                        <a href="{{ Request::url() }}#courseDetailContent" class="course-detail-tab">Nội dung <span
+                                class="hide">&nbsp;khóa
                                 học</span></a>
-                        <a href="{{route('fe_course/detail',['slug' => 'ten-khoa-hoc'])}}#courseDetailRating" class="course-detail-tab">Đánh giá</a>
                     </div>
                 </div>
             </section>
@@ -112,410 +94,159 @@
                         <div id="courseDetailOverview" class="course-general">
                             <h5 class="title">Bạn sẽ học được gì?</h5>
                             <div class="course-general__wrapper ">
-                                <h4><strong>Th&ocirc;ng qua kh&oacute;a học kinh doanh bất động sản, bạn sẽ nắm
-                                        vững:</strong></h4>
-                                <ul style="color: #272727;">
-                                    <li style="margin-right: 0px;">C&aacute;ch thức t&igrave;m kiếm v&agrave; nắm
-                                        th&ocirc;ng tin về bất động sản gi&aacute; tốt</li>
-                                    <li style="margin-right: 0px;">Nguy&ecirc;n tắc để mua b&aacute;n bất động sản bất
-                                        kỳ với gi&aacute; tốt nhất cho bạn</li>
-                                    <li style="margin-right: 0px;">Nhận diện c&aacute;c rủi ro sẽ gặp phải khi mua
-                                        b&aacute;n nh&agrave; v&agrave; c&aacute;ch tr&aacute;nh</li>
-                                    <li style="margin-right: 0px;">Những điểm cần lưu &yacute; trong một hợp đồng mua
-                                        b&aacute;n nh&agrave;</li>
-                                    <li style="margin-right: 0px;">Xử l&yacute; th&ocirc;ng minh vấn đề t&agrave;i
-                                        ch&iacute;nh, vay tiền để mua nh&agrave;</li>
-                                    <li style="margin-right: 0px;">C&aacute;c điểm cần lưu &yacute; về thủ tục, hợp
-                                        đồng</li>
-                                </ul>
-                                <div id="eJOY__extension_root" class="eJOY__extension_root_class" style="all: unset;">
-                                    &nbsp;</div>
+                                {!! $item['description'] ?? 'Nội dung đang cập nhật' !!}
                             </div>
                         </div>
                         <div id="courseDetailIntroduce" class="course-general">
                             <h5 class="title">Giới thiệu khóa học</h5>
                             <div class="course-general__wrapper">
-                                <p>Bạn đ&atilde; l&agrave;m l&acirc;u năm trong lĩnh vực <strong>mua b&aacute;n bất động
-                                        sản</strong> v&agrave; lu&ocirc;n thắc mắc rằng:</p>
-                                <ul style="color: #272727;">
-                                    <li style="margin-right: 0px;">Liệu c&oacute; c&aacute;ch n&agrave;o để
-                                        kh&aacute;ch h&agrave;ng muốn "gi&agrave;nh" mua nh&agrave; của bạn?</li>
-                                    <li style="margin-right: 0px;">C&aacute;ch thức n&agrave;o gi&uacute;p bạn mua bất
-                                        động sản<span style="color: #000000;"> bất kỳ với gi&aacute; rẻ hơn thị trường
-                                            rất nhiều lần?</span></li>
-                                    <li style="margin-right: 0px;">L&agrave;m thế n&agrave;o để việc mua b&aacute;n
-                                        được nhanh ch&oacute;ng, gi&aacute; tốt nhất cho bạn?</li>
-                                    <li style="margin-right: 0px;">Vượt qua c&aacute;c vấn đề thủ tục nh&agrave; đất
-                                        một c&aacute;ch trơn tru?</li>
-                                    <li style="margin-right: 0px;">L&agrave;m thế n&agrave;o để tạo lợi thế v&agrave;
-                                        nắm quyền chủ động trong thương lượng?</li>
-                                </ul>
-                                <p>Thực tế, việc trở th&agrave;nh một người <strong><a title="m&ocirc;i giới bất động sản"
-                                            href="https://kyna.vn/nhap-mon-nghe-moi-gioi-bat-dong-san" target="_blank"
-                                            rel="noopener">m&ocirc;i giới bất động sản</a></strong>&nbsp;th&agrave;nh
-                                    c&ocirc;ng cũng kh&ocirc;ng qu&aacute; kh&oacute; nếu ch&uacute;ng ta biết
-                                    c&aacute;ch chủ động v&agrave; tạo nhiều lợi thế hơn trong việc mua b&aacute;n một
-                                    bất động sản bất kỳ.</p>
-                                <p>Những c&aacute;ch thức ấy được chia sẻ trong <strong>kh&oacute;a học b&iacute; quyết
-                                        mua b&aacute;n bất động sản th&agrave;nh c&ocirc;ng</strong> của giảng
-                                    vi&ecirc;n <strong>Phan C&ocirc;ng Ch&aacute;nh Trainer,</strong> Chủ tịch hội đồng
-                                    quản trị C&ocirc;ng ty Ph&aacute;t triển đầu tư Ph&uacute; Vinh, đồng thời l&agrave;
-                                    chuy&ecirc;n gia bất động sản bất động sản c&aacute; nh&acirc;n nhiều năm kinh
-                                    nghiệm.</p>
-                                <p>Kh&oacute;a học đ&uacute;c r&uacute;t những kinh nghiệm v&agrave; những t&igrave;nh
-                                    huống từ thực tế, qua đ&oacute; sẽ gi&uacute;p bạn c&oacute; c&aacute;i nh&igrave;n
-                                    to&agrave;n diện trong việc <strong>mua b&aacute;n nh&agrave;</strong> cũng như
-                                    c&aacute;c kỹ năng quản l&yacute; trong bất động sản; từ đ&oacute; biết c&aacute;ch
-                                    để mua b&aacute;n được nh&agrave; gi&aacute; tốt nhất trong thời gian ngắn.</p>
-                                <h4><strong>Th&ocirc;ng qua kh&oacute;a học kinh doanh bất động sản, bạn sẽ nắm
-                                        vững:</strong></h4>
-                                <ul style="color: #272727;">
-                                    <li style="margin-right: 0px;">C&aacute;ch thức t&igrave;m kiếm v&agrave; nắm
-                                        th&ocirc;ng tin về bất động sản gi&aacute; tốt</li>
-                                    <li style="margin-right: 0px;">Nguy&ecirc;n tắc để mua b&aacute;n bất động sản bất
-                                        kỳ với gi&aacute; tốt nhất cho bạn</li>
-                                    <li style="margin-right: 0px;">Nhận diện c&aacute;c rủi ro sẽ gặp phải khi mua
-                                        b&aacute;n nh&agrave; v&agrave; c&aacute;ch tr&aacute;nh</li>
-                                    <li style="margin-right: 0px;">Những điểm cần lưu &yacute; trong một hợp đồng mua
-                                        b&aacute;n nh&agrave;</li>
-                                    <li style="margin-right: 0px;">Xử l&yacute; th&ocirc;ng minh vấn đề t&agrave;i
-                                        ch&iacute;nh, vay tiền để mua nh&agrave;</li>
-                                    <li style="margin-right: 0px;">C&aacute;c điểm cần lưu &yacute; về thủ tục, hợp
-                                        đồng</li>
-                                </ul>
-                                <p>&nbsp;H&atilde;y kh&aacute;m ph&aacute; v&agrave; trải nghiệm ngay kh&oacute;a học
-                                    tại <strong>Kyna.vn</strong></p>
-                                <div id="eJOY__extension_root" class="eJOY__extension_root_class" style="all: unset;">
-                                    &nbsp;</div>
+                                {!! $item['content'] ?? 'Nội dung đang cập nhật' !!}
                             </div>
                         </div>
-                        <div class="course-general">
-                            <h5 class="title">Combo có khóa học này</h5>
-                            <div class="card-combo">
-                                <a class="card-combo-link" href="/dau-tu-bat-dong-san-p782" target="_blank"
-                                    title="Bí quyết đầu tư bất động sản thành công">
-                                    <div class="card-combo-header">
-                                        <img class="img-fluid "
-                                            src="https://cdn-skill.kynaenglish.vn/uploads/courses/782/img/image_url-1500949516.jpg"
-                                            size="263x147" width="263px" height="147px"
-                                            alt="Bí quyết đầu tư bất động sản thành công" resizeMode="cover"
-                                            returnMode="img" max-width="100%">
+                        @if (count($combo) > 0)
+                            <div class="course-general">
+                                <h5 class="title">Combo có khóa học này</h5>
+                                @foreach ($combo as $comboItem)
+                                    @php
+                                        $comboInfo = $comboItem['combo_info'] ?? [];
+                                    @endphp
+                                    <div class="card-combo">
+                                        <a class="card-combo-link"
+                                            href="{{ route('fe_combo/detail', ['slug' => $comboInfo['slug']]) }}"
+                                            title="{{ $comboInfo['title'] ?? '' }}">
+                                            <div class="card-combo-header">
+                                                <img class="img-fluid "
+                                                    src="{{ Obn::showThumbnail($comboInfo['thumbnail'] ?? '') }}"
+                                                    size="263x147" width="263px" height="147px"
+                                                    alt="{{ $comboInfo['title'] ?? '' }}" resizeMode="cover"
+                                                    returnMode="img" max-width="100%">
+                                            </div>
+                                            <div class="card-combo-body">
+                                                <h5 class="heading-card">{{ $comboInfo['title'] ?? '' }}</h5>
+                                            </div>
+                                            <div class="card-combo-price">
+                                                <span
+                                                    class="course-pricing">{{ Obn::showPrice($comboInfo['price'] ?? 0) }}</span>
+                                                <span class="card-combo-explore">Chi Tiết <i
+                                                        class="fas fa-chevron-right"></i></span>
+                                            </div>
+                                        </a>
                                     </div>
-                                    <div class="card-combo-body">
-                                        <h5 class="heading-card">Bí quyết đầu tư bất động sản thành công</h5>
-                                    </div>
-                                    <div class="card-combo-price">
-                                        <span class="course-pricing">399.000 <u>đ</u></span>
-                                        <span class="card-combo-explore">Chi Tiết <i
-                                                class="fas fa-chevron-right"></i></span>
-                                    </div>
-                                </a>
+                                @endforeach
+
                             </div>
+                        @endif
+
                     </section>
                     <section id="courseDetailContent"></section>
                     <div class="course-general syllabus__wrapper">
                         <h5 class="title">Nội dung khóa học</h5>
-                        <div class="syllabus">
-                            <div class="syllabus-item">
-                                <a href="#chapter0" class="syllabus__cta " data-toggle="collapse" role="button"
-                                    aria-expanded="true" aria-controls="collapseExample">
-                                    <div class="syllabus__chapter">
-                                        <span class="syllabus__icon">
-                                            <img src="https://cdn-skill.kynaenglish.vn/img/arrow.svg" alt="Kyna"
-                                                width="20px" height="20px">
-                                        </span>
-                                        <div class="syllabus__heading">
-                                            <h6 class="heading">
-                                                Phần 1: Mua bất động sản với giá tốt và ít rủi ro </h6>
-                                        </div>
-                                        <div class="syllabus__info">
-                                            <div class="syllabus__info-item">
-                                                <span>6 video</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="collapse in" id="chapter0" aria-expanded="true">
-                                    <div class="syllabus__section">
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <picture>
-                                                    <source media="(min-width:768px)"
-                                                        srcset="https://cdn-skill.kynaenglish.vn/img/play.svg">
-                                                    <img src="https://cdn-skill.kynaenglish.vn/img/play-green.svg"
-                                                        alt="Kyna" width="20px" height="20px">
-                                                </picture>
-                                            </span>
-                                            <span class="syllabus__section--title">
-                                                <a href="#" class="cta-open-video syllabus__section--title-video"
-                                                    data-source="https://vod.kynaenglish.com/kyna/_definst_/1/5/2/152_Lesson_Bai01_mp4itNTaY2ru34BEjkqOk49q65G7HzELc83FVXPUZho3lZHFj7tEcC4iILqqk5bwdfc9d13cirgEr.mp4/playlist.m3u8?v=397">
-                                                    Bài 1: Lựa chọn Khu vực sẽ sinh sống/ Khu vực sẽ mua bất động sản
-                                                </a></span>
-                                            <a href="#" class="syllabus__section--video cta-open-video"
-                                                data-source="https://vod.kynaenglish.com/kyna/_definst_/1/5/2/152_Lesson_Bai01_mp4itNTaY2ru34BEjkqOk49q65G7HzELc83FVXPUZho3lZHFj7tEcC4iILqqk5bwdfc9d13cirgEr.mp4/playlist.m3u8?v=397">
-                                                Học thử
+                        @if (count($lessons) > 0)
+                            <div class="syllabus">
+                                @foreach ($lessons as $key => $lesson)
+                                    @php
+                                        $lesson_index = $key + 1;
+                                        $lesson_id = $lesson['id'];
+                                        $depth = $lesson['depth'] ?? 0;
+                                        $lesson_title = $lesson['title'] ?? '-';
+                                        $expanded = $lesson_index == 1 ? 'true' : 'false';
+                                        $collapse = $lesson_index == 1 ? 'in' : '';
+                                        $childs = $lesson->descendantsOf($lesson_id);
+                                        $isTry = $lesson['is_try'] ?? 0;
+                                        $tryVideoId = $lesson['video'] ?? '';
+                                        $tryVideoUrl = CoursePackage::videoLink($tryVideoId);
+                                    @endphp
+                                    <div class="syllabus-item">
+                                        @if (count($childs) > 0)
+                                            <a href="#chapter{{ $lesson_id }}" class="syllabus__cta "
+                                                data-toggle="collapse" role="button" aria-expanded="true"
+                                                aria-controls="collapseExample">
+                                                <div class="syllabus__chapter">
+                                                    <span class="syllabus__icon">
+                                                        <img src="https://cdn-skill.kynaenglish.vn/img/arrow.svg"
+                                                            alt="Kyna" width="20px" height="20px">
+                                                    </span>
+                                                    <div class="syllabus__heading">
+                                                        <h6 class="heading"> {{ $lesson_title }}</h6>
+                                                    </div>
+                                                    <div class="syllabus__info">
+                                                        <div class="syllabus__info-item">
+                                                            <span>6 video</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <picture>
-                                                    <source media="(min-width:768px)"
-                                                        srcset="https://cdn-skill.kynaenglish.vn/img/play.svg">
-                                                    <img src="https://cdn-skill.kynaenglish.vn/img/play-green.svg"
-                                                        alt="Kyna" width="20px" height="20px">
-                                                </picture>
-                                            </span>
-                                            <span class="syllabus__section--title">
-                                                <a href="#" class="cta-open-video syllabus__section--title-video"
-                                                    data-source="https://vod.kynaenglish.com/kyna/_definst_/1/5/2/152_Lesson_Bai02_mp4jL6NpipuB8f2yz8K6m0ivdkyqDZGirFBcLpB4O5GXlIvURg1dgjItEgThgAzIfbU1Aw5pBMmXuSRm8SzochSRyM8Pm.mp4/playlist.m3u8?v=397">
-                                                    Bài 2: Tính toán khoản tiền vay để mua bất động sản </a></span>
-                                            <a href="#" class="syllabus__section--video cta-open-video"
-                                                data-source="https://vod.kynaenglish.com/kyna/_definst_/1/5/2/152_Lesson_Bai02_mp4jL6NpipuB8f2yz8K6m0ivdkyqDZGirFBcLpB4O5GXlIvURg1dgjItEgThgAzIfbU1Aw5pBMmXuSRm8SzochSRyM8Pm.mp4/playlist.m3u8?v=397">
-                                                Học thử
-                                            </a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài 3: Lựa chọn loại hình bất động
-                                                sản</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài 4: Vấn đề pháp lý khi mua bất
-                                                động sản</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài 5: Tiến hành giao dịch bất động
-                                                sản</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài 6: Thông tin bổ sung</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài đọc thêm - Những sai lầm khi
-                                                chọn mua bất động sản</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Mẫu Hợp đồng Mua bán nhà đất - Tham
-                                                khảo</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Trắc nghiệm Phần 1</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="syllabus-item">
-                                <a href="#chapter10" class="syllabus__cta collapsed" data-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    <div class="syllabus__chapter">
-                                        <span class="syllabus__icon">
-                                            <img src="https://cdn-skill.kynaenglish.vn/img/arrow.svg" alt="Kyna"
-                                                width="20px" height="20px">
-                                        </span>
-                                        <div class="syllabus__heading">
-                                            <h6 class="heading">
-                                                Phần 2: Làm thế nào để bán bất động sản trong vòng 3 ngày </h6>
-                                        </div>
-                                        <div class="syllabus__info">
-                                            <div class="syllabus__info-item">
-                                                <span>5 video</span>
+                                            <div class="collapse {{ $collapse }}" id="chapter{{ $lesson_id }}"
+                                                aria-expanded="{{ $expanded }}">
+                                                <div class="syllabus__section">
+                                                    @foreach ($childs as $child)
+                                                        <div class="syllabus__section-item">
+                                                            <span class="syllabus__section--icon">
+                                                                <picture>
+                                                                    <source media="(min-width:768px)"
+                                                                        srcset="https://cdn-skill.kynaenglish.vn/img/play.svg">
+                                                                    <img src="https://cdn-skill.kynaenglish.vn/img/play-green.svg"
+                                                                        alt="Kyna" width="20px" height="20px">
+                                                                </picture>
+                                                            </span>
+                                                            <span class="syllabus__section--title">
+                                                                <a href="#"
+                                                                    class="cta-open-video syllabus__section--title-video"
+                                                                    data-source="https://vod.kynaenglish.com/kyna/_definst_/1/5/2/152_Lesson_Bai01_mp4itNTaY2ru34BEjkqOk49q65G7HzELc83FVXPUZho3lZHFj7tEcC4iILqqk5bwdfc9d13cirgEr.mp4/playlist.m3u8?v=397">
+                                                                    {{ $child['title'] ?? '-' }}
+                                                                </a></span>
+                                                            @if ($isTry)
+                                                                <a href="#"
+                                                                    class="syllabus__section--video cta-open-video"
+                                                                    data-source="https://vod.kynaenglish.com/kyna/_definst_/1/5/2/152_Lesson_Bai01_mp4itNTaY2ru34BEjkqOk49q65G7HzELc83FVXPUZho3lZHFj7tEcC4iILqqk5bwdfc9d13cirgEr.mp4/playlist.m3u8?v=397">
+                                                                    Học thử
+                                                                </a>
+                                                            @endif
+
+                                                            <!-- Next week -->
+                                                        </div>
+                                                    @endforeach
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="collapse " id="chapter10" aria-expanded="false">
-                                    <div class="syllabus__section">
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài 1: Nghiên cứu bất động sản cần
-                                                bán</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài 2: Viết mẫu quảng cáo khó
-                                                cưỡng</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài 3: Lựa chọn kênh để
-                                                marketing</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài 4: Thương lượng</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài 5: Cải tiến</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Trắc nghiệm Phần 2</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="syllabus-item">
-                                <a href="#chapter17" class="syllabus__cta collapsed" data-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    <div class="syllabus__chapter">
-                                        <span class="syllabus__icon">
-                                            <img src="https://cdn-skill.kynaenglish.vn/img/arrow.svg" alt="Kyna"
-                                                width="20px" height="20px">
-                                        </span>
-                                        <div class="syllabus__heading">
-                                            <h6 class="heading">
-                                                Phần 3: Tổng kết </h6>
-                                        </div>
-                                        <div class="syllabus__info">
-                                            <div class="syllabus__info-item">
-                                                <span>0 video</span>
+                                        @else
+                                            @php
+                                                $collapse = 'in';
+                                            @endphp
+                                            <div class="collapse {{ $collapse }}" id="chapter{{ $lesson_id }}"
+                                                aria-expanded="{{ $expanded }}">
+                                                <div class="syllabus__section">
+                                                    <div class="syllabus__section-item">
+                                                        <span class="syllabus__section--icon">
+                                                            <picture>
+                                                                <source media="(min-width:768px)"
+                                                                    srcset="https://cdn-skill.kynaenglish.vn/img/play.svg">
+                                                                <img src="https://cdn-skill.kynaenglish.vn/img/play-green.svg"
+                                                                    alt="Kyna" width="20px" height="20px">
+                                                            </picture>
+                                                        </span>
+                                                        <span class="syllabus__section--title">
+                                                            <a href="#"
+                                                                class="cta-open-video syllabus__section--title-video"
+                                                                data-source="https://vod.kynaenglish.com/kyna/_definst_/1/5/2/152_Lesson_Bai01_mp4itNTaY2ru34BEjkqOk49q65G7HzELc83FVXPUZho3lZHFj7tEcC4iILqqk5bwdfc9d13cirgEr.mp4/playlist.m3u8?v=397">
+                                                                {{ $lesson_title }}
+                                                            </a></span>
+                                                        @if ($isTry)
+                                                            <a href="#"
+                                                                class="syllabus__section--video cta-open-video"
+                                                                data-source="{{ $tryVideoUrl }}">
+                                                                Học thử
+                                                            </a>
+                                                        @endif
+
+                                                        <!-- Next week -->
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
-                                </a>
-                                <div class="collapse " id="chapter17" aria-expanded="false">
-                                    <div class="syllabus__section">
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Đánh giá và góp ý khóa học liên
-                                                quan</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Các khóa học liên quan và ưu đãi
-                                                dành cho bạn</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bài tập Tốt nghiệp</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
-                            <div class="syllabus-item">
-                                <a href="#chapter21" class="syllabus__cta collapsed" data-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    <div class="syllabus__chapter">
-                                        <span class="syllabus__icon">
-                                            <img src="https://cdn-skill.kynaenglish.vn/img/arrow.svg" alt="Kyna"
-                                                width="20px" height="20px">
-                                        </span>
-                                        <div class="syllabus__heading">
-                                            <h6 class="heading">
-                                                Phần 4: Hỏi đáp cùng giảng viên </h6>
-                                        </div>
-                                        <div class="syllabus__info">
-                                            <div class="syllabus__info-item">
-                                                <span>1 video</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="collapse " id="chapter21" aria-expanded="false">
-                                    <div class="syllabus__section">
-                                        <div class="syllabus__section-item">
-                                            <span class="syllabus__section--icon">
-                                                <img src="https://cdn-skill.kynaenglish.vn/img/play.svg" alt="Kyna"
-                                                    width="20px" height="20px">
-                                            </span>
-                                            <span class="syllabus__section--title">Bí quyết đầu tư bất động sản thành
-                                                công</span>
-                                            <a href="#" class="syllabus__section--video none-video"></a>
-                                            <!-- Next week -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                     {{-- <section id="courseDetailRating">
                         <div class="course-general">
@@ -677,284 +408,107 @@
                             </div>
                         </div>
                     </section> --}}
+                    @if (count($relatedCourses) > 0)
+                    @endif
                     <section class="course-general related-course__wrapper">
                         <h5 class="title">Khóa học liên quan <span style="color: #ff7818;"></span></h5>
                         <div class="course-related-horizontal__slider slick__slider--normal "
                             data-slick-class="course-related-horizontal" data-slick-type="course-detail"
                             data-number-card="3" data-see-more-link="">
-                            <div class="card-course " data-toggle="popover" data-trigger="hover" data-id="357"
-                                data-upload-date="21/05/2021" data-duration="2 giờ" data-user-enroll="625"
-                                data-description="&lt;h4&gt;&lt;strong&gt;Lợi &amp;iacute;ch khi tham dự kh&amp;oacute;a học:&lt;/strong&gt;&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Được tư vấn, hỗ trợ, giải đ&amp;aacute;p thắc mắc li&amp;ecirc;n quan đến thị trường bất động sản từ ch&amp;iacute;nh giảng vi&amp;ecirc;n&lt;/li&gt;
-&lt;li&gt;Nắm vững những y&amp;ecirc;u cầu, quy tắc hoạt động của dịch vụ m&amp;ocirc;i giới bất động sản&lt;/li&gt;
-&lt;li&gt;X&amp;acirc;y dựng nền tảng vững chắc với những kiến thức cơ bản v&amp;agrave; t&amp;iacute;ch lũy kinh nghiệm thực tiễn trong lĩnh vực m&amp;ocirc;i giới bất động sản&lt;/li&gt;
-&lt;/ul&gt;"
-                                data-promo-text="" data-is-best-seller="" data-status-item="1" data-course-item-free="">
-                                <div class="card-inner">
-                                    <a target="_blank" href="tong-quan-ve-moi-gioi-bat-dong-san" class="card-link">
-                                        <div class="card-header">
-                                            <img src="https://cdn-skill.kynaenglish.vn/uploads/courses/357/img/image_url-1601008374.cover-559x348.jpg"
-                                                alt="course-image">
-                                            <div class="card-header__badget card-vertical">
-                                                <span class="card-header__badget-item">
-                                                    <i class="fal fa-play-circle"></i>
-                                                    13 </span>
-                                                <span class="card-header__badget-item"><i
-                                                        class="fal fa-star"></i>4.8</span>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="card-info">
-                                                <h5 class="heading-card__main">
-                                                    Tổng quan về môi giới bất động sản </h5>
-                                                <div class="card-body__badget card-horizontal">
-                                                    <span class="card-body__badget-item">
-                                                        <img src="https://cdn-skill.kynaenglish.vn/img/duration.svg"
-                                                            alt="Kyna" width="18px" height="18px">2 giờ
-                                                    </span>
-                                                    <span class="card-body__badget-item">
-                                                        <img src="https://cdn-skill.kynaenglish.vn/img/book.svg"
-                                                            alt="Kyna" width="18px" height="18px">13 bài học
-                                                    </span>
+                            @foreach ($relatedCourses as $relatedCourse)
+                                @php
+                                    $totalLesson = $relatedCourse->totalLesson();
+                                    $relatedTeacher = $relatedCourse->teacher()->first();
+                                    
+                                @endphp
+                                <div class="card-course " data-toggle="popover" data-trigger="hover" data-id="376"
+                                    data-upload-date="19/06/2021" data-duration="4 giờ" data-user-enroll="1074"
+                                    data-promo-text="" data-is-best-seller="" data-status-item="1"
+                                    data-course-item-free="">
+                                    <div class="card-inner">
+                                        <a href="{{ route('fe_course/detail', ['slug' => $relatedCourse['slug']]) }}"
+                                            class="card-link">
+                                            <div class="card-header">
+                                                <img src="{{ Obn::showThumbnail($relatedCourse['thumbnail']) }}"
+                                                    alt="course-image">
+                                                <div class="card-header__badget card-vertical">
+                                                    <span class="card-header__badget-item">
+                                                        <i class="fal fa-play-circle"></i>
+                                                        22 </span>
+                                                    <span class="card-header__badget-item"><i
+                                                            class="fal fa-star"></i>5</span>
                                                 </div>
-                                                <div class="info-card-wrap card-vertical">
-                                                    <div class="info-card-avatar">
-                                                        <img data-src="https://cdn-skill.kynaenglish.vn/uploads/user/183550/img/avatar.cover-100x100.jpg"
-                                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABHNCSVQICAgIfAhkiAAAAWtJREFUeF7t1cEJADAMw8B2/6Fd6BT3UCYQEiZ3207HGLgFYVp8kIJYPQqC9ShIQTQDGE8/pCCYAQynhRQEM4DhtJCCYAYwnBZSEMwAhtNCCoIZwHBaSEEwAxhOCykIZgDDaSEFwQxgOC2kIJgBDKeFFAQzgOG0kIJgBjCcFlIQzACG00IKghnAcFpIQTADGE4LKQhmAMNpIQXBDGA4LaQgmAEMp4UUBDOA4bSQgmAGMJwWUhDMAIbTQgqCGcBwWkhBMAMYTgspCGYAw2khBcEMYDgtpCCYAQynhRQEM4DhtJCCYAYwnBZSEMwAhtNCCoIZwHBaSEEwAxhOCykIZgDDaSEFwQxgOC2kIJgBDKeFFAQzgOG0kIJgBjCcFlIQzACG00IKghnAcFpIQTADGE4LKQhmAMNpIQXBDGA4LaQgmAEMp4UUBDOA4bSQgmAGMJwWUhDMAIbTQgqCGcBwWkhBMAMYTgspCGYAw3mmPo7k6LH8eAAAAABJRU5ErkJggg=="
-                                                            class="img-lazy" alt="ThS Trương Anh Tú">
-                                                    </div>
-                                                    <div class="info-card-title">
-                                                        <span class="info-card">
-                                                            <i class="fas fa-user-tie"></i>
-                                                            ThS Trương Anh Tú </span>
-                                                        <span class="info-card">
-                                                            <i class="fas fa-briefcase"></i>
-                                                            Giám đốc Phát triển kinh doanh Phúc Khang Corporation
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="card-info">
+                                                    <h5 class="heading-card__main">
+                                                        {{ $relatedCourse['title'] ?? '-' }} </h5>
+                                                    <div class="card-body__badget card-horizontal">
+                                                        <span class="card-body__badget-item">
+                                                            <img src="https://cdn-skill.kynaenglish.vn/img/duration.svg"
+                                                                alt="Kyna" width="18px"
+                                                                height="18px">{{ $item['time'] ?? 0 }} giờ
+                                                        </span>
+                                                        <span class="card-body__badget-item">
+                                                            <img src="https://cdn-skill.kynaenglish.vn/img/book.svg"
+                                                                alt="Kyna" width="18px"
+                                                                height="18px">{{ $totalLesson }} bài học
                                                         </span>
                                                     </div>
+                                                    <div class="info-card-wrap card-vertical">
+                                                        <div class="info-card-avatar">
+                                                            <img data-src="{{ Obn::showThumbnail($relatedTeacher['thumbnail']) }}"
+                                                                src="{{ Obn::showThumbnail($relatedTeacher['thumbnail']) }}"
+                                                                class="img-lazy" alt="ThS Trương Anh Tú">
+                                                        </div>
+                                                        <div class="info-card-title">
+                                                            <span class="info-card">
+                                                                <i class="fas fa-user-tie"></i>
+                                                                {{ $relatedTeacher['title'] ?? '-' }} </span>
+                                                            <span class="info-card">
+                                                                <i class="fas fa-briefcase"></i>
+                                                                {{ $relatedTeacher['position'] ?? '-' }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-rating card-horizontal">
+                                                    <span class="card-rating-item">
+                                                        <span class="number">5</span>
+                                                        <img class="course-rating__icon tablet"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                        <img class="course-rating__icon"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                        <img class="course-rating__icon"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                        <img class="course-rating__icon"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                        <img class="course-rating__icon"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                        <img class="course-rating__icon tablet"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                    </span>
+                                                </div>
+                                                <div class="pricing-card">
+
+                                                    <span
+                                                        class="course-pricing">{{ Obn::showPrice($relatedCourse['price']) }}</u>
+                                                    </span>
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <div class="card-rating card-horizontal">
-                                                <span class="card-rating-item">
-                                                    <span class="number">4.8</span>
-                                                    <img class="course-rating__icon tablet"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-outline.svg"
-                                                        alt="Kyna - Star">
-                                                </span>
-                                            </div>
-                                            <div class="pricing-card">
-                                                <span class="cta-open-video card-vertical"
-                                                    data-source="https://vod.kynaenglish.com/kyna/_definst_/3/5/7/290_Lesson_Bai01_mp4hzsUs1k4JiLiiGaLI2MWFQ9m7VbzSxd96F4zHoDqHpJZ6TLPWyLCpUYwQ95IGjSNZXnGl163rP3xJPmF.mp4/playlist.m3u8?v=930">
-                                                    <button class="btn-ripple">
-                                                        <i class="fas fa-play"></i>
-                                                    </button>
-                                                    Học thử
-                                                </span>
-                                                <span class="course-pricing">198.000 <u>đ</u>
-                                                </span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-course " data-toggle="popover" data-trigger="hover" data-id="376"
-                                data-upload-date="19/06/2021" data-duration="4 giờ" data-user-enroll="1074"
-                                data-promo-text="" data-is-best-seller="" data-status-item="1" data-course-item-free="">
-                                <div class="card-inner">
-                                    <a target="_blank" href="quy-trinh-va-ky-nang-moi-gioi-bat-dong-san"
-                                        class="card-link">
-                                        <div class="card-header">
-                                            <img src="https://cdn-skill.kynaenglish.vn/uploads/courses/376/img/image_url-1600227729.cover-559x348.jpg"
-                                                alt="course-image">
-                                            <div class="card-header__badget card-vertical">
-                                                <span class="card-header__badget-item">
-                                                    <i class="fal fa-play-circle"></i>
-                                                    22 </span>
-                                                <span class="card-header__badget-item"><i
-                                                        class="fal fa-star"></i>4.6</span>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="card-info">
-                                                <h5 class="heading-card__main">
-                                                    Quy trình và kỹ năng môi giới bất động sản </h5>
-                                                <div class="card-body__badget card-horizontal">
-                                                    <span class="card-body__badget-item">
-                                                        <img src="https://cdn-skill.kynaenglish.vn/img/duration.svg"
-                                                            alt="Kyna" width="18px" height="18px">4 giờ
-                                                    </span>
-                                                    <span class="card-body__badget-item">
-                                                        <img src="https://cdn-skill.kynaenglish.vn/img/book.svg"
-                                                            alt="Kyna" width="18px" height="18px">22 bài học
-                                                    </span>
-                                                </div>
-                                                <div class="info-card-wrap card-vertical">
-                                                    <div class="info-card-avatar">
-                                                        <img data-src="https://cdn-skill.kynaenglish.vn/uploads/user/183550/img/avatar.cover-100x100.jpg"
-                                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABHNCSVQICAgIfAhkiAAAAWtJREFUeF7t1cEJADAMw8B2/6Fd6BT3UCYQEiZ3207HGLgFYVp8kIJYPQqC9ShIQTQDGE8/pCCYAQynhRQEM4DhtJCCYAYwnBZSEMwAhtNCCoIZwHBaSEEwAxhOCykIZgDDaSEFwQxgOC2kIJgBDKeFFAQzgOG0kIJgBjCcFlIQzACG00IKghnAcFpIQTADGE4LKQhmAMNpIQXBDGA4LaQgmAEMp4UUBDOA4bSQgmAGMJwWUhDMAIbTQgqCGcBwWkhBMAMYTgspCGYAw2khBcEMYDgtpCCYAQynhRQEM4DhtJCCYAYwnBZSEMwAhtNCCoIZwHBaSEEwAxhOCykIZgDDaSEFwQxgOC2kIJgBDKeFFAQzgOG0kIJgBjCcFlIQzACG00IKghnAcFpIQTADGE4LKQhmAMNpIQXBDGA4LaQgmAEMp4UUBDOA4bSQgmAGMJwWUhDMAIbTQgqCGcBwWkhBMAMYTgspCGYAw3mmPo7k6LH8eAAAAABJRU5ErkJggg=="
-                                                            class="img-lazy" alt="ThS Trương Anh Tú">
-                                                    </div>
-                                                    <div class="info-card-title">
-                                                        <span class="info-card">
-                                                            <i class="fas fa-user-tie"></i>
-                                                            ThS Trương Anh Tú </span>
-                                                        <span class="info-card">
-                                                            <i class="fas fa-briefcase"></i>
-                                                            Giám đốc Phát triển kinh doanh Phúc Khang Corporation
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-rating card-horizontal">
-                                                <span class="card-rating-item">
-                                                    <span class="number">4.6</span>
-                                                    <img class="course-rating__icon tablet"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-outline.svg"
-                                                        alt="Kyna - Star">
-                                                </span>
-                                            </div>
-                                            <div class="pricing-card">
-                                                <span class="cta-open-video card-vertical"
-                                                    data-source="https://vod.kynaenglish.com/kyna/_definst_/3/7/6/309_Lesson_Bai01_mp4VFfqmyDwGlf8KBGzit5TAPZJdOboto4p3kQqStXyPdHAOn97Re1s40bhPmFiKKHO4xeX1bwQpdqdBAksO.mp4/playlist.m3u8?v=173">
-                                                    <button class="btn-ripple">
-                                                        <i class="fas fa-play"></i>
-                                                    </button>
-                                                    Học thử
-                                                </span>
-                                                <span class="course-pricing">198.000 <u>đ</u>
-                                                </span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-course " data-toggle="popover" data-trigger="hover" data-id="94"
-                                data-upload-date="16/10/2021" data-duration="42 phút" data-user-enroll="3979"
-                                data-description="&lt;h4&gt;&lt;strong&gt;Sau khi kết th&amp;uacute;c kh&amp;oacute;a học bất động sản n&amp;agrave;y:&lt;/strong&gt;&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Bạn c&amp;oacute; thể nắm được những nguy&amp;ecirc;n l&amp;yacute; để c&amp;oacute; thể tr&amp;aacute;nh được hơn 95% những rủi ro thường gặp trong thị trường bất động sản&lt;/li&gt;
-&lt;li&gt;Bạn sẽ hiểu một c&amp;aacute;ch s&amp;acirc;u sắc đến tận gốc rễ của vấn đề: c&amp;aacute;c nguy&amp;ecirc;n l&amp;yacute;, nguy&amp;ecirc;n tắc cơ bản trong lĩnh vực đầu tư v&amp;agrave; giao dịch bất động sản&lt;/li&gt;
-&lt;li&gt;Hiểu được gốc rễ vấn đề v&amp;agrave; d&amp;ugrave;ng phương ph&amp;aacute;p X-quang bất động sản để tr&amp;aacute;nh được hầu hết c&amp;aacute;c rủi ro trước khi ch&amp;uacute;ng ta giao dịch&lt;/li&gt;
-&lt;li&gt;Bạn sẽ n&amp;acirc;ng cao được sự tự tin của m&amp;igrave;nh khi tiến h&amp;agrave;nh đầu tư v&amp;agrave;o một giao dịch bất động sản&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div id=&quot;eJOY__extension_root&quot; class=&quot;eJOY__extension_root_class&quot; style=&quot;all: unset;&quot;&gt;&amp;nbsp;&lt;/div&gt;"
-                                data-promo-text="" data-is-best-seller="" data-status-item="1" data-course-item-free="">
-                                <div class="card-inner">
-                                    <a target="_blank" href="10-rui-ro-bat-bien-va-phuong-phap-x-quang-bat-dong-san"
-                                        class="card-link">
-                                        <div class="card-header">
-                                            <img src="https://cdn-skill.kynaenglish.vn/uploads/courses/94/img/image_url-1600227370.cover-559x348.jpg"
-                                                alt="course-image">
-                                            <div class="card-header__badget card-vertical">
-                                                <span class="card-header__badget-item">
-                                                    <i class="fal fa-play-circle"></i>
-                                                    16 </span>
-                                                <span class="card-header__badget-item"><i
-                                                        class="fal fa-star"></i>4.4</span>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="card-info">
-                                                <h5 class="heading-card__main">
-                                                    10 rủi ro bất biến và phương pháp X-quang bất động sản </h5>
-                                                <div class="card-body__badget card-horizontal">
-                                                    <span class="card-body__badget-item">
-                                                        <img src="https://cdn-skill.kynaenglish.vn/img/duration.svg"
-                                                            alt="Kyna" width="18px" height="18px">42 phút
-                                                    </span>
-                                                    <span class="card-body__badget-item">
-                                                        <img src="https://cdn-skill.kynaenglish.vn/img/book.svg"
-                                                            alt="Kyna" width="18px" height="18px">16 bài học
-                                                    </span>
-                                                </div>
-                                                <div class="info-card-wrap card-vertical">
-                                                    <div class="info-card-avatar">
-                                                        <img data-src="https://cdn-skill.kynaenglish.vn/uploads/user/113475/img/avatar-1529981077.cover-100x100.png"
-                                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABHNCSVQICAgIfAhkiAAAAWtJREFUeF7t1cEJADAMw8B2/6Fd6BT3UCYQEiZ3207HGLgFYVp8kIJYPQqC9ShIQTQDGE8/pCCYAQynhRQEM4DhtJCCYAYwnBZSEMwAhtNCCoIZwHBaSEEwAxhOCykIZgDDaSEFwQxgOC2kIJgBDKeFFAQzgOG0kIJgBjCcFlIQzACG00IKghnAcFpIQTADGE4LKQhmAMNpIQXBDGA4LaQgmAEMp4UUBDOA4bSQgmAGMJwWUhDMAIbTQgqCGcBwWkhBMAMYTgspCGYAw2khBcEMYDgtpCCYAQynhRQEM4DhtJCCYAYwnBZSEMwAhtNCCoIZwHBaSEEwAxhOCykIZgDDaSEFwQxgOC2kIJgBDKeFFAQzgOG0kIJgBjCcFlIQzACG00IKghnAcFpIQTADGE4LKQhmAMNpIQXBDGA4LaQgmAEMp4UUBDOA4bSQgmAGMJwWUhDMAIbTQgqCGcBwWkhBMAMYTgspCGYAw3mmPo7k6LH8eAAAAABJRU5ErkJggg=="
-                                                            class="img-lazy" alt="Phan Công Chánh ">
-                                                    </div>
-                                                    <div class="info-card-title">
-                                                        <span class="info-card">
-                                                            <i class="fas fa-user-tie"></i>
-                                                            Phan Công Chánh </span>
-                                                        <span class="info-card">
-                                                            <i class="fas fa-briefcase"></i>
-                                                            Chuyên gia bất động sản cá nhân </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-rating card-horizontal">
-                                                <span class="card-rating-item">
-                                                    <span class="number">4.4</span>
-                                                    <img class="course-rating__icon tablet"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
-                                                        alt="Kyna - Star">
-                                                    <img class="course-rating__icon"
-                                                        src="https://cdn-skill.kynaenglish.vn/img/star-outline.svg"
-                                                        alt="Kyna - Star">
-                                                </span>
-                                            </div>
-                                            <div class="pricing-card">
-                                                <span class="cta-open-video card-vertical"
-                                                    data-source="https://vod.kynaenglish.com/kyna/_definst_/9/4/94_Lesson_Bai01_mp4xk5bQtVsKd1be1BbiZAhPyJYXKVDoN5V7a7YD3rngszvuaHN9i4ZQNXOyTsWGxSOHZMl2dJjG.mp4/playlist.m3u8?v=820">
-                                                    <button class="btn-ripple">
-                                                        <i class="fas fa-play"></i>
-                                                    </button>
-                                                    Học thử
-                                                </span>
-                                                <span class="course-pricing">297.000 <u>đ</u>
-                                                </span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
+                            @endforeach
+
+
                         </div>
                         <!--    <a class="cta-all-lecturer-course" href="/danh-sach-khoa-hoc">Xem thêm</a>-->
                     </section>
@@ -965,8 +519,7 @@
                         <div class="cd-wrap-img">
                             <div class="videoWrapper ">
                                 <div id="play_video" class="cursor-pointer">
-                                    <img class="img-fluid"
-                                        src="https://cdn-skill.kynaenglish.vn/uploads/courses/152/img/video_cover_image_url-1612421111.jpg"
+                                    <img class="img-fluid" src="{{ Obn::showThumbnail($item['thumbnail']) }}"
                                         size="730x436" width="730px" height="436px"
                                         alt="Bí quyết mua bán bất động sản thành công" resizeMode="crop" returnMode="img"
                                         max-width="100%"> <button class="ytp-large-play-button ytp-button"
@@ -984,9 +537,8 @@
                                 </div>
                                 <div id="youtube_video_wrapper">
                                     <!-- Copy & Pasted from YouTube -->
-                                    <iframe width="560" height="349"
-                                        src="https://www.youtube.com/embed/V6yYXy_W7i0?rel=0" allow="autoplay"
-                                        frameborder="0" allowfullscreen></iframe>
+                                    <iframe width="560" height="349" src=" {!! $item['video_intro'] ?? '' !!}"
+                                        allow="autoplay" frameborder="0" allowfullscreen></iframe>
                                 </div>
                                 <div class="label-wrap">
                                     <span class="lb-new">NEW</span>
@@ -1105,21 +657,31 @@
 </script>
                         </div>
                         <div class="crs-price">
-                            <span class="crs-price--after" style="color: rgba(251, 106, 2)">598.000<u>đ</u></span>
+                            <span class="crs-price--after" style="color: rgba(251, 106, 2)">
+                                {{ Obn::showPrice($item['price'] ?? 0) }}
+                            </span>
                         </div>
                         <div class="crs-btn">
                             <a class="btn-buy-now dang-ky-hoc crs-btn-buy" href="#" action="AddToCart"
-                                data-ga="event" data-pid="152"
+                                data-ga="event" data-url="{{ route('fe_cart/buyNow') }}" data-pid="{{ $item['id'] }}"
                                 style="background-color: rgba(251, 106, 2); color: #FFFFFF" category="CourseDetail"
                                 label="Bí quyết mua bán bất động sản thành công"><b>Mua ngay</b></a>
-                            <a id="btn-add-to-cart" class="go-to-cart add-to-cart dang-ky-hoc crs-btn-add" href="#"
-                                action="AddToCart" data-ga="event" data-pid="152"
-                                style="background-color:transparent; color: #FFFFFF; border-color: #FFFFFF"
-                                category="CourseDetail" label="Bí quyết mua bán bất động sản thành công"><b
-                                    class=''>Thêm vào giỏ hàng</b></a> <a id="btn-goto-cart" href="/gio-hang"
-                                class="go-to-cart dang-ky-hoc crs-btn-add"
-                                style="display: none;background-color: transparent; color: #FFFFFF; border-color: #FFFFFF">Xem
-                                giỏ hàng</b></a>
+                            @if (Obn::searchCartById($item['id']))
+                                <a id="btn-goto-cart" href="{{route('fe_cart/index')}}" class="go-to-cart dang-ky-hoc crs-btn-add"
+                                    style="background-color: transparent; color: #FFFFFF; border-color: #FFFFFF">Xem
+                                    giỏ hàng</b></a>
+                            @else
+                                <a id="btn-add-to-cart" class="go-to-cart add-to-cart dang-ky-hoc crs-btn-add"
+                                    href="{{ route('fe_cart/add', ['id' => $item['id']]) }}" action="AddToCart"
+                                    data-ga="event" data-pid="{{ $item['id'] }}"
+                                    style="background-color:transparent; color: #FFFFFF; border-color: #FFFFFF"
+                                    category="CourseDetail" label="Bí quyết mua bán bất động sản thành công"><b
+                                        class=''>Thêm vào giỏ hàng</b></a> <a id="btn-goto-cart" href="{{ route('fe_cart/add', ['id' => $item['id']]) }}"
+                                    class="go-to-cart dang-ky-hoc crs-btn-add"
+                                    style="display: none;background-color: transparent; color: #FFFFFF; border-color: #FFFFFF">Xem
+                                    giỏ hàng</b></a>
+                            @endif
+
                         </div>
                     </div>
                     <div class="crs-sticky-info opt-1">
@@ -1132,7 +694,7 @@
                                             src="https://cdn-skill.kynaenglish.vn/img/hoc-vien-icon.svg" alt="icon"
                                             width="20px" height="20px">
                                     </span>
-                                    <p>16.490 học viên</p>
+                                    <p>{{ $item->student()->count() }} học viên</p>
                                 </li>
                                 <li>
                                     <span>
@@ -1140,7 +702,7 @@
                                             src="https://cdn-skill.kynaenglish.vn/img/thoi-luong-icon.svg" alt="icon"
                                             width="20px" height="20px">
                                     </span>
-                                    <p>2 giờ</p>
+                                    <p>{{ $item['time'] ?? 0 }} giờ</p>
                                 </li>
                                 <li>
                                     <span>
@@ -1148,32 +710,11 @@
                                             src="https://cdn-skill.kynaenglish.vn/img/bai-hoc-icon.svg" alt="icon"
                                             width="20px" height="20px">
                                     </span>
-                                    <p>19 bài học</p>
+                                    <p>{{ $lessonCount }} bài học</p>
                                 </li>
-                                <li>
-                                    <span>
-                                        <img class="crs-sticky-icon"
-                                            src="https://cdn-skill.kynaenglish.vn/img/bai-tap-icon.svg" alt="icon"
-                                            width="20px" height="20px">
-                                    </span>
-                                    <p>3 bài tập</p>
-                                </li>
-                                <li>
-                                    <span>
-                                        <img class="crs-sticky-icon"
-                                            src="https://cdn-skill.kynaenglish.vn/img/tai-lieu-icon.svg" alt="icon"
-                                            width="20px" height="20px">
-                                    </span>
-                                    <p> 0 tài liệu</p>
-                                </li>
-                                <li>
-                                    <span>
-                                        <img class="crs-sticky-icon"
-                                            src="https://cdn-skill.kynaenglish.vn/img/ngay-icon.svg" alt="icon"
-                                            width="20px" height="20px">
-                                    </span>
-                                    <p>Cập nhật 04/10/2021</p>
-                                </li>
+
+
+
                             </ul>
                         </div>
                     </div>
@@ -1182,14 +723,6 @@
         </div>
     </section>
 @endsection
-
-
-
-
-
-
-
-
 <style type="text/css">
     @media (max-width: 767px) {
         .zopim {

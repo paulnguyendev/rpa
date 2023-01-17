@@ -1,3 +1,6 @@
+@php
+    use App\Helpers\User;
+@endphp
 <base href="https://skills.kynaenglish.vn/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +10,8 @@
     src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.2&appId=138701140812940&autoLogAppEvents=1">
 </script>
 <meta name="csrf-param" content="_csrf">
+<meta name="cart_url" content="{{route('fe_cart/index')}}">
+<meta name="user-id" content="{{User::getAffInfo()}}" />
 <meta name="csrf-token" content="eGV1NE5FdUstBCVNIX0WfDAKKkwkASoMPjpHYTsHImYSUgQCPXISMQ==">
 <title>RPA - Web Demo</title>
 <meta name="keywords" content="Kyna.vn, kina, Kyna, lớp đào tạo trực tuyến, khóa học online">
@@ -49,3 +54,4 @@
 <script src="/assets/7431fa9e/jquery/dist/jquery.min.js"></script>
 <script src="/assets/35de618e/yii.js"></script>
 <script src="/assets/7431fa9e/bootbox.js/bootbox.js"></script>
+@yield('custom_style')

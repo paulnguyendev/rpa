@@ -113,7 +113,7 @@
             </li> --}}
         </ul>
     </li>
-    <li data-label="Affiliate" >
+    <li data-label="Affiliate">
         <a href="javascript:void(0)" class="has-ul admin-menu-active">
             <i class="icon-link"></i>
             <span>Affiliate</span>
@@ -122,21 +122,21 @@
 
 
             <li>
-                <a href="{{route('admin_user/index')}}">
+                <a href="{{ route('admin_user/index') }}">
                     <span>Danh sách tài khoản</span>
                 </a>
             </li>
 
 
             <li>
-                <a href="http://anhnnd.s1.loveitop.com/admin/affiliate/withdrawal-requests">
+                <a href="#">
                     <span>Yêu cầu rút tiền</span>
                 </a>
             </li>
 
 
             <li>
-                <a href="http://anhnnd.s1.loveitop.com/admin/affiliate/setting">
+                <a href="#">
                     <span>Cấu hình</span>
                 </a>
             </li>
@@ -146,6 +146,12 @@
         <a href="{{ route('admin_profile/form') }}">
             <i class="icon-info3"></i>
             <span>Tài khoản</span>
+        </a>
+    </li>
+    <li data-label="Cấu Hình Website" >
+        <a href="{{route('admin_setting/index')}}">
+            <i class="icon-gear"></i>
+            <span>Cấu Hình Website</span>
         </a>
     </li>
     <li data-label="Đăng xuất">

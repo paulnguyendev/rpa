@@ -20,10 +20,19 @@ class CoursePackage
         $items = self::categoryList();
         $model = new TaxonomyModel();
         $childs = [];
+        $xhtml .= sprintf("<a class='item'
+        href='%s'
+        data-child-category='%s'>
+        <div class='parent-category'>
+            
+            <div class='title'>%s</div>
+            %s
+        </div>
+    </a>", route('fe_combo/index'),"","Tất cả combo","");
         foreach ($items as $item) {
             $id = $item->id;
             $childs = $model->defaultOrder()->descendantsOf($id);
-            
+
             $xhtml .= self::categoryItem($item, $device);
         }
         return $xhtml;
@@ -45,7 +54,7 @@ class CoursePackage
         $isChild = $childCategory ? 'true' : "false";
         $slug = $item->slug ?? "";
         $categoryLink =  self::categoryLink($slug);
-       
+
         if ($device == 'desktop') {
             $xhtml = sprintf(
                 "<a class='item'
@@ -62,8 +71,7 @@ class CoursePackage
                 $name,
                 $childIcon
             );
-        }
-        else {
+        } else {
             $xhtml = sprintf(
                 "<a class='item' data-is-child='%s'
                 href='%s'
@@ -72,12 +80,12 @@ class CoursePackage
                 <div class='name'>%s</div>
                %s
             </a>",
-            $isChild,
-            $categoryLink,
-            $childCategory,
-            $name,
-            $childIcon,
-               
+                $isChild,
+                $categoryLink,
+                $childCategory,
+                $name,
+                $childIcon,
+
             );
         }
 
@@ -86,5 +94,12 @@ class CoursePackage
     public static function categoryLink($slug)
     {
         return route('fe_course/category', ['slug' => $slug]);
+    }
+    public static function videoLink($videoId, $autoplay = 'true')
+    {
+        $libid = config('obn.bunny.libid');
+        $iframeUrl = "https://iframe.mediadelivery.net";
+        $result = "{$iframeUrl}/embed/{$libid}/{$videoId}?autoplay={$autoplay}";
+        return $result;
     }
 }

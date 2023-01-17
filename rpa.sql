@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 13, 2023 lúc 11:32 AM
+-- Thời gian đã tạo: Th1 17, 2023 lúc 11:06 AM
 -- Phiên bản máy phục vụ: 10.4.25-MariaDB
 -- Phiên bản PHP: 8.0.23
 
@@ -98,15 +98,16 @@ CREATE TABLE `combo` (
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `content` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `combo`
 --
 
-INSERT INTO `combo` (`id`, `title`, `code`, `thumbnail`, `price`, `price_sale`, `description`, `content`, `created_at`, `updated_at`) VALUES
-(1, 'Đột phá để dẫn đầu', NULL, NULL, 5000000, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `combo` (`id`, `title`, `code`, `thumbnail`, `price`, `price_sale`, `description`, `content`, `created_at`, `updated_at`, `slug`) VALUES
+(1, 'Đột phá để dẫn đầu', NULL, 'http://localhost/rpa/public/uploads/images/BVm9Zet1oj.jpg', 5000000, NULL, NULL, NULL, NULL, NULL, 'dot-pha-de-dan-dau');
 
 -- --------------------------------------------------------
 
@@ -158,20 +159,21 @@ CREATE TABLE `course` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `level_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `teacher_id` bigint(20) UNSIGNED DEFAULT NULL
+  `teacher_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `course`
 --
 
-INSERT INTO `course` (`id`, `title`, `slug`, `thumbnail`, `code`, `point`, `price`, `price_sale`, `description`, `content`, `is_best_seller`, `is_certificate`, `video_intro`, `time`, `is_published`, `created_at`, `updated_at`, `level_id`, `teacher_id`) VALUES
-(5, 'Tư duy đột phá', 'tu-duy-dot-pha', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-12 04:18:16', NULL, 1, 2),
-(6, 'Kỹ năng quản trị cảm xúc', 'ky-nang-quan-tri-cam-xuc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-13 02:02:18', NULL, 4, 2),
-(7, 'Nghệ thuật giao tiếp kết nối bậc thầy', 'nghe-thuat-giao-tiep-ket-noi-bac-thay', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-12 04:19:30', NULL, 4, 2),
-(8, 'Kỹ năng thuyết trình', 'ky-nang-thuyet-trinh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-12 04:19:44', NULL, 4, 2),
-(9, 'Bán hàng đỉnh cao', 'ban-hang-dinh-cao', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-12 04:20:02', NULL, 4, 2),
-(10, 'Nghệ thuật lãnh đạo', 'nghe-thuat-lanh-dao', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-12 04:20:14', NULL, 4, 2);
+INSERT INTO `course` (`id`, `title`, `slug`, `thumbnail`, `code`, `point`, `price`, `price_sale`, `description`, `content`, `is_best_seller`, `is_certificate`, `video_intro`, `time`, `is_published`, `created_at`, `updated_at`, `level_id`, `teacher_id`, `sort`) VALUES
+(5, 'Tư duy đột phá', 'tu-duy-dot-pha', 'http://localhost/rpa/public/uploads/images/OMCRcEehKh.jpg', NULL, NULL, 999000, NULL, NULL, NULL, '1', '1', NULL, 3, 1, '2023-01-17 00:32:46', NULL, 1, 3, 1),
+(6, 'Kỹ năng quản trị cảm xúc', 'ky-nang-quan-tri-cam-xuc', 'http://localhost/rpa/public/uploads/images/BVm9Zet1oj.jpg', NULL, NULL, 999000, NULL, '<p>Mô tả khóa học</p>', '<p>Nội dung khóa học</p>', '0', '1', 'https://iframe.mediadelivery.net/embed/87177/c5954269-f422-4a4a-b6b2-777c48d5191e?autoplay=false', 3, 1, '2023-01-15 21:04:35', NULL, 3, 3, 2),
+(7, 'Nghệ thuật giao tiếp kết nối bậc thầy', 'nghe-thuat-giao-tiep-ket-noi-bac-thay', 'http://localhost/rpa/public/uploads/images/S8dXvKcdTh.png', NULL, NULL, 999000, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-15 19:26:26', NULL, 4, 3, 3),
+(8, 'Kỹ năng thuyết trình', 'ky-nang-thuyet-trinh', 'http://localhost/rpa/public/uploads/images/fXBJYmftAi.jpg', NULL, NULL, 999000, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-15 19:26:31', NULL, 4, 3, 4),
+(9, 'Bán hàng đỉnh cao', 'ban-hang-dinh-cao', 'http://localhost/rpa/public/uploads/images/RMLgvi7Dss.jpg', NULL, NULL, 999000, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-15 19:26:43', NULL, 4, 3, 5),
+(10, 'Nghệ thuật lãnh đạo', 'nghe-thuat-lanh-dao', 'http://localhost/rpa/public/uploads/images/VXbCzzLrIz.jpg', NULL, NULL, 999000, NULL, NULL, NULL, '0', '0', NULL, 3, 1, '2023-01-15 19:26:51', NULL, 4, 3, 6);
 
 -- --------------------------------------------------------
 
@@ -237,6 +239,22 @@ CREATE TABLE `lesson` (
   `is_try` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `course_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `lesson`
+--
+
+INSERT INTO `lesson` (`id`, `title`, `video`, `content`, `parent_id`, `_lft`, `_rgt`, `created_at`, `updated_at`, `is_try`, `course_id`) VALUES
+(45, 'Bài 1', 'cb086087-39eb-400c-9079-075b5c4e7be7', NULL, NULL, 1, 4, '2023-01-15 20:22:36', NULL, '1', 6),
+(46, 'Bài 2', '2d2f4227-7682-45ea-953e-d71accb09435', NULL, NULL, 5, 8, '2023-01-15 20:21:27', NULL, '0', 6),
+(47, 'Bài 3', '5ffe6ff1-dfa8-4fdf-b4e9-17d8fb605b4d', NULL, NULL, 9, 10, '2023-01-15 19:59:39', NULL, '0', 6),
+(48, 'Bài 4', '3372529f-f4f9-4872-a563-06badd58ec27', NULL, NULL, 11, 12, '2023-01-15 19:59:55', NULL, '0', 6),
+(49, 'Bài 5', 'b9ca6d2e-6f6a-4588-b384-31d3255bff59', NULL, NULL, 13, 14, '2023-01-15 20:00:06', NULL, '0', 6),
+(50, 'Bài 6', 'd92f4549-6c54-4229-bcc7-c46f8ab96190', NULL, NULL, 15, 16, '2023-01-15 20:00:21', NULL, '0', 6),
+(51, 'Bài 7', '3db6b1fe-59e8-4cad-a5dd-57550d9a57f1', NULL, NULL, 17, 18, '2023-01-15 20:00:33', NULL, '0', 6),
+(52, 'Bài 8', '730f71da-15af-4a35-816b-5a413940bb84', NULL, NULL, 19, 20, '2023-01-15 20:00:50', NULL, '0', 6),
+(53, 'Bài 9', 'ccd1cc87-f888-4d75-b2da-39188ce5e82c', NULL, NULL, 21, 22, '2023-01-15 20:01:01', NULL, '0', 6),
+(54, 'Bài 10', '10c6a24c-fd9c-451b-83fc-8bb7eaffeff3', NULL, NULL, 23, 24, '2023-01-15 20:01:26', NULL, '0', 6);
 
 -- --------------------------------------------------------
 
@@ -331,7 +349,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (54, '2023_01_12_081948_add_level_id_to_affilate_setting', 10),
 (55, '2023_01_12_083330_add_level_id_to_user_table', 11),
 (58, '2023_01_12_110921_create_course_combo_table', 12),
-(59, '2023_01_12_111301_create_combo_course_table', 13);
+(59, '2023_01_12_111301_create_combo_course_table', 13),
+(60, '2023_01_16_014906_add_sort_to_course_table', 14),
+(61, '2023_01_16_063910_add_slug_to_teacher_table', 15),
+(62, '2023_01_16_073002_add_slug_to_combo_table', 16),
+(64, '2023_01_17_073049_create_setting_table', 17);
 
 -- --------------------------------------------------------
 
@@ -375,6 +397,13 @@ CREATE TABLE `order_course_user` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `order_course_user`
+--
+
+INSERT INTO `order_course_user` (`id`, `course_id`, `user_id`, `order_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 5, 2, NULL, NULL, '2023-01-16 02:38:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -489,6 +518,45 @@ CREATE TABLE `question` (
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `setting`
+--
+
+CREATE TABLE `setting` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `meta_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_value` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `setting`
+--
+
+INSERT INTO `setting` (`id`, `meta_key`, `meta_value`) VALUES
+(24, 'logo', 'http://localhost/rpa/public/uploads/images/JstDpFm8gU.png'),
+(25, 'icon', 'http://localhost/rpa/public/uploads/images/OZA4GBSqkN.jpg'),
+(26, 'seo_default', '{\"meta_title\":\"Rpagroup.vn - H\\u1ecdc online c\\u00f9ng chuy\\u00ean gia\",\"meta_description\":\"Rpagroup h\\u1ecdc online v\\u1edbi h\\u01a1n 700 kh\\u00f3a h\\u1ecdc tr\\u1ef1c tuy\\u1ebfn thu\\u1ed9c nhi\\u1ec1u l\\u0129nh v\\u1ef1c nh\\u01b0 k\\u1ef9 n\\u0103ng qu\\u1ea3n tr\\u1ecb, ngo\\u1ea1i ng\\u1eef, t\\u00e0i ch\\u00ednh, b\\u1ea5t \\u0111\\u1ed9ng s\\u1ea3n, b\\u1ea3o hi\\u1ec3m, ch\\u1ee9ng kho\\u00e1n, ti\\u1ebfp th\\u1ecb b\\u00e1n h\\u00e0ng\",\"meta_keyword\":\"Rpa, Rpagroup\",\"robots\":\"0\"}'),
+(27, 'social', '{\"facebook\":\"https:\\/\\/www.facebook.com\\/dainghiagroup\",\"twitter\":\"https:\\/\\/www.twitter.com\\/\",\"youtube\":\"https:\\/\\/www.youtube.com\\/\",\"instagram\":\"https:\\/\\/www.Instagram.com\\/\",\"linkedin\":null,\"zalo\":null,\"fb_id\":\"110984141740834\"}'),
+(28, 'other_social_icon', '[null]'),
+(29, 'other_social_link', '[null]'),
+(30, 'payment_method', '[\"paypal\",\"master_card\",\"visa\",\"jcb\",\"cash\",\"internet-banking\",\"installment\"]'),
+(31, 'payment_icon', '{\"paypal\":null,\"master_card\":null,\"visa\":null,\"jcb\":null,\"cash\":null,\"internet-banking\":null,\"installment\":null}'),
+(32, 'other_payment_icon', '[null]'),
+(33, 'datetime_format', 'd/m/Y'),
+(34, 'website_name', 'Rpagroup.vn - Học online cùng chuyên gia'),
+(35, 'email', 'support@rpagroup.vn'),
+(36, 'phone', '0932 730 394'),
+(37, 'address', '<p>Tầng 4, Tòa C\'land, Số 81 Lê Đức Thọ, P. Mỹ Đình 2, Q. Nam Từ Liêm, Tp. Hà Nội</p>'),
+(38, 'send_customer_contact_to_admin_email', '1'),
+(39, 'contact_captcha', '0'),
+(40, 'contact_required_email', '0'),
+(41, 'contact_required_phone', '1'),
+(42, 'contact_thankyou_link', NULL),
+(43, 'maps', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3686.244368572698!2d103.9651236!3d22.4950129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x36cd139cb873ae31%3A0x33def7866a7c16f1!2zMzYgxJDhurduZyBUcuG6p24gQ8O0biwgQ-G7kWMgTOG6v3UsIFRYLkzDoG8gQ2FpLCBMw6BvIENhaQ!5e0!3m2!1svi!2s!4v1663940152285!5m2!1svi!2s\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>'),
+(44, 'payment_info', '<p>Bạn có thể đến bất kỳ ngân hàng nào ở Việt Nam (hoặc sử dụng Internet Banking) để chuyển tiền theo thông tin bên dưới:</p>\r\n\r\n<ul>\r\n	<li>Số tài khoản:<strong>1903 50585 30017</strong></li>\r\n	<li>Chủ tài khoản:Công ty TNHH Đào Tạo Nguồn Lực Việt</li>\r\n	<li>Ngân hàng:Ngân Hàng Thương Mại Cổ Phần Kỹ Thương Việt Nam (Techcombank) - Chi nhánh Bình Thạnh, Tp.Hồ Chí Minh</li>\r\n	<br />\r\n	<li>Số tài khoản:053 100 259 0569</li>\r\n	<li>Chủ tài khoản:Công ty TNHH Đào Tạo Nguồn Lực Việt</li>\r\n	<li>Ngân hàng:Ngân Hàng Thương Mại Cổ Phần Ngoại Thương Việt Nam (Vietcombank) - Chi nhánh Đông Sài Gòn, Tp.Hồ Chí Minh</li>\r\n</ul>');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `supplier`
 --
 
@@ -590,15 +658,17 @@ CREATE TABLE `teacher` (
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `content` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `teacher`
 --
 
-INSERT INTO `teacher` (`id`, `title`, `position`, `thumbnail`, `description`, `content`, `created_at`, `updated_at`) VALUES
-(2, 'Lê Trọng Nghĩa', 'Giam Doc', 'http://localhost/rpa/public/uploads/images/hNkTAhA92h.jpg', NULL, '<p>Vị trí</p>\r\n\r\n<p>CEO - 1LINE</p>\r\n\r\n<p>Planning Manager - Hung Thinh Agency</p>\r\n\r\n<p>Account Executive - Ureka Media</p>', '2023-01-12 03:00:46', NULL);
+INSERT INTO `teacher` (`id`, `title`, `position`, `thumbnail`, `description`, `content`, `created_at`, `updated_at`, `slug`) VALUES
+(2, 'Lê Trọng Nghĩa', 'Giam Doc', 'http://localhost/rpa/public/uploads/images/hNkTAhA92h.jpg', NULL, '<p>Vị trí</p>\r\n\r\n<p>CEO - 1LINE</p>\r\n\r\n<p>Planning Manager - Hung Thinh Agency</p>\r\n\r\n<p>Account Executive - Ureka Media</p>', '2023-01-12 03:00:46', NULL, NULL),
+(3, 'Đàm Thu Chung', 'NLP Trainer - Master Coach', 'http://localhost/rpa/public/uploads/images/OZA4GBSqkN.jpg', NULL, '<h2>Đàm Thu Chung – Người Truyền Cảm Hứng Cho Những Điều Tốt Đẹp</h2>\r\n\r\n<p>Được xem là người truyền cảm hứng, động lực để tư duy và hành động, nữ doanh nhân Đàm Thu Chung có nhiều lợi thế để trở thành “sứ giả yêu thương”. Đó có thể là tài năng, tâm sáng của một người nhiều năm công tác trong ngành giáo dục, đó còn là vẻ đẹp cả về nội tâm lẫn ngoại hình cực kỳ sắc sảo, quý phái của chị.</p>\r\n\r\n<p>Từ nhỏ, Đàm Thu Chung đặc biệt yêu thích hát, múa, nghệ thuật và thích thể hiện bản thân là người cá tính, khá năng động và yêu đời. Tốt nghiệp cấp 3, chị thi đậu vào trường ĐH Sư phạm Thái nguyên và có hơn 4 năm giảng dạy tại Cao Bằng. Trong khoảng thời gian này, chị học cao học, lấy học vị thạc sĩ và chuyển công tác đến Sở GD&amp;ĐT Cao Bằng.</p>\r\n\r\n<p>Mẹ chị vốn là giáo viên toán học nên cũng ủng hộ chị theo nghề giáo và hoạt động trong ngành giáo dục. Đây chính là động lực để chị nhiều năm liền gắn bó với công tác giảng dạy.</p>\r\n\r\n<p>Tuy nhiên, một sự kiện nhỏ đã diễn ra và nó ảnh hưởng quyết định đến suy nghĩ và cuộc đời của chị sau này. Vô tình nhìn thấy video quay cảnh 2 đứa trẻ đánh nhau, xung quanh có nhiều đứa trẻ con khác nhưng chúng nó không làm gì cả, cầm điện thoại livetream. Chị suy nghĩ cảm tưởngdường như &nbsp;tất cả những gì mình giảng dạy bọn trẻ không tiếp thu, không dùng trong cuộc sống. Giá trị niềm tin của một bộ phận thanh thiếu niên không có. Chính vì vậy Đàm Thu Chung quyết tâm trở thành người truyền động lực.</p>\r\n\r\n<p>Vì thế, nhiều người gọi chị là &nbsp;“Sứ Giả yêu Thương” &nbsp;với mong muốn dùng tình yêu thương của mình để đóng góp nhiều điều tốt đẹp cho cuộc sống. Bởi lẽ một khi tình yêu thương được lan truyền thì cuộc sống mới thêm vạn phần ý nghĩa.</p>\r\n\r\n<p>Nghĩ là làm, chị quyết định xuống Hà Nội học các lớp tư duy, lớp kỹ năng mềm với những người thầy như Mr Why – Phạm Ngọc Anh, Mr Vas… 3 năm làm việc tại thủ đô, chị trở thành giảng viên, người truyền cảm hứng, đã đàotạo cho các doanh nghiệp về tư duy và kỹ năng bán hàng, kỹ năng thuyết trình đỉnh cao, tạo cách trẻ hơn, khỏe hơn đẹp hơn, sử dụng tư duy để hạnh phúc.</p>\r\n\r\n<p>Đầu năm 2018, chị thành lập doanh nghiệp và trở thành PGĐ Công ty TNHH Tư vấn và Đào tạo RPA. Dù mới thành lập nhưng RPA hoạt động độc lập, quyết đoán và đã thực hiện các chương trình: tạo động lực sách, đọc sách, yêu sách dành cho các em học sinh trường Phú Bình, Thái Nguyên; Tạo động lực về sách cho trẻ em ở ở các cơ sở tôn giáo…</p>\r\n\r\n<p><i></i></p>', '2023-01-15 23:42:30', NULL, 'dam-thu-chung');
 
 -- --------------------------------------------------------
 
@@ -661,7 +731,16 @@ CREATE TABLE `upload` (
 INSERT INTO `upload` (`id`, `type`, `title`, `caption`, `url`, `thumb`, `time`, `size`, `disk`, `folder_id`, `folder`, `newtime`, `created_at`, `updated_at`) VALUES
 (1, 'jpg', 'zWaAc8SFaO.jpg', 'zWaAc8SFaO.jpg', 'http://localhost/rpa/public/uploads/images/zWaAc8SFaO.jpg', 'http://localhost/rpa/public/uploads/images/zWaAc8SFaO.jpg', '1673326273', 345184, 'public', '0', NULL, '2023-01-10 04:51:13', NULL, NULL),
 (2, 'jpg', 'hNkTAhA92h.jpg', 'hNkTAhA92h.jpg', 'http://localhost/rpa/public/uploads/images/hNkTAhA92h.jpg', 'http://localhost/rpa/public/uploads/images/hNkTAhA92h.jpg', '1673515976', 49673, 'public', '0', NULL, '2023-01-12 09:32:56', NULL, NULL),
-(3, 'jpg', 'tRpthHPFf2.jpg', 'tRpthHPFf2.jpg', 'http://localhost/rpa/public/uploads/images/tRpthHPFf2.jpg', 'http://localhost/rpa/public/uploads/images/tRpthHPFf2.jpg', '1673516036', 41587, 'public', '0', NULL, '2023-01-12 09:33:56', NULL, NULL);
+(3, 'jpg', 'tRpthHPFf2.jpg', 'tRpthHPFf2.jpg', 'http://localhost/rpa/public/uploads/images/tRpthHPFf2.jpg', 'http://localhost/rpa/public/uploads/images/tRpthHPFf2.jpg', '1673516036', 41587, 'public', '0', NULL, '2023-01-12 09:33:56', NULL, NULL),
+(4, 'jpg', 'OMCRcEehKh.jpg', 'OMCRcEehKh.jpg', 'http://localhost/rpa/public/uploads/images/OMCRcEehKh.jpg', 'http://localhost/rpa/public/uploads/images/OMCRcEehKh.jpg', '1673834621', 39944, 'public', '0', NULL, '2023-01-16 02:03:41', NULL, NULL),
+(5, 'jpg', 'BVm9Zet1oj.jpg', 'BVm9Zet1oj.jpg', 'http://localhost/rpa/public/uploads/images/BVm9Zet1oj.jpg', 'http://localhost/rpa/public/uploads/images/BVm9Zet1oj.jpg', '1673834706', 208370, 'public', '0', NULL, '2023-01-16 02:05:06', NULL, NULL),
+(6, 'png', 'S8dXvKcdTh.png', 'S8dXvKcdTh.png', 'http://localhost/rpa/public/uploads/images/S8dXvKcdTh.png', 'http://localhost/rpa/public/uploads/images/S8dXvKcdTh.png', '1673834885', 180164, 'public', '0', NULL, '2023-01-16 02:08:05', NULL, NULL),
+(7, 'jpg', 'fXBJYmftAi.jpg', 'fXBJYmftAi.jpg', 'http://localhost/rpa/public/uploads/images/fXBJYmftAi.jpg', 'http://localhost/rpa/public/uploads/images/fXBJYmftAi.jpg', '1673834962', 117114, 'public', '0', NULL, '2023-01-16 02:09:22', NULL, NULL),
+(8, 'jpg', 'RMLgvi7Dss.jpg', 'RMLgvi7Dss.jpg', 'http://localhost/rpa/public/uploads/images/RMLgvi7Dss.jpg', 'http://localhost/rpa/public/uploads/images/RMLgvi7Dss.jpg', '1673835001', 83503, 'public', '0', NULL, '2023-01-16 02:10:01', NULL, NULL),
+(9, 'jpg', 'VXbCzzLrIz.jpg', 'VXbCzzLrIz.jpg', 'http://localhost/rpa/public/uploads/images/VXbCzzLrIz.jpg', 'http://localhost/rpa/public/uploads/images/VXbCzzLrIz.jpg', '1673835101', 101015, 'public', '0', NULL, '2023-01-16 02:11:41', NULL, NULL),
+(10, 'jpg', 'DuEQHjjO77.jpg', 'DuEQHjjO77.jpg', 'http://localhost/rpa/public/uploads/images/DuEQHjjO77.jpg', 'http://localhost/rpa/public/uploads/images/DuEQHjjO77.jpg', '1673835724', 258729, 'public', '0', NULL, '2023-01-16 02:22:04', NULL, NULL),
+(11, 'jpg', 'OZA4GBSqkN.jpg', 'OZA4GBSqkN.jpg', 'http://localhost/rpa/public/uploads/images/OZA4GBSqkN.jpg', 'http://localhost/rpa/public/uploads/images/OZA4GBSqkN.jpg', '1673835770', 322623, 'public', '0', NULL, '2023-01-16 02:22:50', NULL, NULL),
+(12, 'png', 'JstDpFm8gU.png', 'JstDpFm8gU.png', 'http://localhost/rpa/public/uploads/images/JstDpFm8gU.png', 'http://localhost/rpa/public/uploads/images/JstDpFm8gU.png', '1673945100', 77495, 'public', '0', NULL, '2023-01-17 08:45:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -867,6 +946,12 @@ ALTER TABLE `question`
   ADD KEY `question_user_id_foreign` (`user_id`);
 
 --
+-- Chỉ mục cho bảng `setting`
+--
+ALTER TABLE `setting`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `supplier`
 --
 ALTER TABLE `supplier`
@@ -977,7 +1062,7 @@ ALTER TABLE `document`
 -- AUTO_INCREMENT cho bảng `lesson`
 --
 ALTER TABLE `lesson`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT cho bảng `level`
@@ -989,7 +1074,7 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT cho bảng `order`
@@ -1001,7 +1086,7 @@ ALTER TABLE `order`
 -- AUTO_INCREMENT cho bảng `order_course_user`
 --
 ALTER TABLE `order_course_user`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `payment_history`
@@ -1040,6 +1125,12 @@ ALTER TABLE `question`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT cho bảng `setting`
+--
+ALTER TABLE `setting`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
 -- AUTO_INCREMENT cho bảng `supplier`
 --
 ALTER TABLE `supplier`
@@ -1061,7 +1152,7 @@ ALTER TABLE `taxonomy_relationship`
 -- AUTO_INCREMENT cho bảng `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `ticket`
@@ -1073,7 +1164,7 @@ ALTER TABLE `ticket`
 -- AUTO_INCREMENT cho bảng `upload`
 --
 ALTER TABLE `upload`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `user`

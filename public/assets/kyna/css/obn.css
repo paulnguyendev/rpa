@@ -74,6 +74,28 @@ a, a:focus, a:hover {
 .header-banner-left .parent-category .title {
     padding-left: 0;
 }
+.cta-open-video.none-video {
+    display: none;
+}
+.checkout .checkout-list-part li {
+    background: var(--color-main)!important;
+}
+.checkout .checkout-triangle-right, .checkout .checkout-triangle-right-last {
+    border-left: 20px solid var(--color-main)!important;
+}
+.checkout .checkout-list-part li:last-child {
+    background: #e4e7eb!important;
+}
+.checkout .checkout-wrap-content h3 {
+    color:var(--color-second)!important;
+}
+.checkout-span a {
+    color: #fff;
+}
+.course-combo__slider-item.grid-container .card-course:first-child .card-info {
+    height: auto;
+    padding-bottom: 0;
+}
 @media screen and (max-width: 767.98px) {
     .header-banner-first .item {
         height: auto;

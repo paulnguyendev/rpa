@@ -49,6 +49,9 @@ class TaxonomyModel extends Model
         if ($options['task'] == 'id') {
             $result = $query->where('id', $params['id'])->first();
         }
+        if ($options['task'] == 'slug') {
+            $result = $query->where('slug', $params['slug'])->first();
+        }
         return $result;
     }
     public function saveItem($params = [], $option = [])
@@ -91,5 +94,13 @@ class TaxonomyModel extends Model
     public function product_ids()
     {
         return $this->belongsToMany(ProductModel::class,'taxonomy_relationship','taxonomy_id','product_id');
+    }
+    public function course_ids()
+    {
+        return $this->belongsToMany(CourseModel::class,'taxonomy_relationship','taxonomy_id','course_id');
+    }
+    public function courseInfo()
+    {
+        return $this->belongsTo(CourseModel::class, 'course_id', 'id');
     }
 }

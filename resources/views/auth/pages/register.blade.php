@@ -2,13 +2,13 @@
     use App\Helpers\User;
 @endphp
 @extends('auth.auth')
-@section('title', 'Đăng Ký Đại Lý / CTV')
+@section('title', 'Đăng Ký Tài Khoản')
 @section('content')
     <form method="POST" autocomplete="off" id="formRegister" data-url="{{ route('auth/postRegister') }}">
         <input type="hidden" name="_token" value="NN2qLcQhx0Cv4lMh5Wl8yaKE7XXEdhqtl2VyI22q">
         <div class="panel panel-body login-form">
             <div class="text-center">
-                <h5 class="content-group">ĐĂNG KÝ ĐẠI LÝ/CTV</h5>
+                <h5 class="content-group">ĐĂNG KÝ TÀI KHOẢN</h5>
             </div>
             <div class="form-group has-feedback">
                 <label for="name">Họ tên <span class="text-danger">(*)</span></label>

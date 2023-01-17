@@ -8,6 +8,14 @@ return [
         'homepage' => '',
         'code' => 'NS',
     ],
+    'bunny' => [
+        'libid' => '87177'
+    ],
+    'format' => [
+        'long_time' => "H:m:s d-m-Y",
+        'short_time' => "d-m-Y",
+        'currency' => "OBN",
+    ],
     'mail' => [
         'from' => 'tinidev.com@gmail.com',
         'brand' => 'NASO.VN',

@@ -27,8 +27,22 @@
                     <div class="form-group">
                         <label>Tên giáo viên (*)
                         </label>
-                        <input class="form-control" data-seo="title" name="title" type="text" value="{{$item['title'] ?? ""}}">
+                        <input class="form-control" data-seo="seo_keyword" data-seo="title" name="title" type="text" value="{{$item['title'] ?? ""}}">
                         <span class="help-block"></span>
+                    </div>
+                    <div id="seoBox">
+                        <div class="form-group-slug">
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <label class="text-capitalize">Đường dẫn (*)</label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" bs-type="slug" bs-slug-from="title"
+                                        data-seo="url" name="slug" value="{{ $item['slug'] ?? '' }}">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Chức vụ (*)

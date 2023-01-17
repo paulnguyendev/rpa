@@ -38,12 +38,11 @@ class HomeController extends Controller
     }
     public function index(Request $request)
     {
-        $products = $this->productModel->listItems([],['task' => 'list_home']);
-        $product_groups =  $this->productGroupModel->listItems([],['task' => 'list_home']);
+        $products = $this->productModel->listItems([], ['task' => 'list_home']);
+        $product_groups =  $this->productGroupModel->listItems([], ['task' => 'list_home']);
         $categories = $this->taxonomyModel::withDepth()->get()->toFlatTree();
-        $suppliers =  $this->supplierModel->listItems([],['task' => 'list']);
+        $suppliers =  $this->supplierModel->listItems([], ['task' => 'list']);
         $templatePart = "{$this->pathViewController}.{$this->controllerName}.";
-        
         return view(
             "{$this->pathViewController}index",
             [
@@ -54,5 +53,54 @@ class HomeController extends Controller
                 'templatePart' => $templatePart,
             ]
         );
+    }
+    public function subBanner(Request $request)
+    {
+        $result = [
+            "status" => [
+                "code" => 200,
+                "message" => "Success"
+            ],
+            "data" => [
+                [
+                    [
+                        "title" => "",
+                        "image_url" => asset('kyna/img/banner1.1.jpg'),
+                        "mobile_image_url" => asset('kyna/img/banner1.1.jpg'),
+                        "link" => "#"
+                    ],
+                    [
+                        "title" => "",
+                        "image_url" => asset('kyna/img/banner1.2.jpg'),
+                        "mobile_image_url" => asset('kyna/img/banner1.2.jpg'),
+                        "link" => "#"
+                    ],
+                ],
+                [
+                    [
+                        "title" => "",
+                        "image_url" => asset('kyna/img/banner1.3.jpg'),
+                        "mobile_image_url" => asset('kyna/img/banner1.3.jpg'),
+                        "link" => "#"
+                    ],
+                    [
+                        "title" => "",
+                        "image_url" =>asset('kyna/img/banner1.4.jpg'),
+                        "mobile_image_url" => asset('kyna/img/banner1.4.jpg'),
+                        "link" => "#"
+                    ]
+                ],
+                [
+                    [
+                        "title" => "",
+                        "image_url" => asset('kyna/img/banner1.5.jpg'),
+                        "mobile_image_url" => asset('kyna/img/banner1.5.jpg'),
+                        "link" => "#"
+                    ],
+                   
+                ]
+            ]
+        ];
+        return $result;
     }
 }

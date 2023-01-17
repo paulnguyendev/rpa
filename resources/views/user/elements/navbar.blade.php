@@ -19,11 +19,11 @@
     </ul>
     <ul class="nav navbar-nav navbar-right text-sm-right pr-sm-20 pl-sm-20">
         
-        <li class="dropdown">
+        {{-- <li class="dropdown">
             <a href="{{route('cart/index')}}"  aria-expanded="false">
                 <i class="icon-cart5"></i> <span class="hiden_1024_1350">Giỏ hàng (<span id="cartTotal">{{Cart::count()}}</span>)</span>
             </a>
-        </li>
+        </li> --}}
         <li><a href="{{ route('user_profile/form') }}"><i class="icon-user"></i> <span class="hiden_1024_1350">Tài
                     khoản</span></a>
         </li>

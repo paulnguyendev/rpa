@@ -8,14 +8,14 @@
 @section('content')
     @include("{$templatePart}headerBanner")
     {{-- @include("{$templatePart}skillCourse") --}}
+    @include("{$templatePart}comboList")
     @include("{$templatePart}exclusiveCourse")
-   
+
     {{-- @include("{$templatePart}freeCourse") --}}
 
     {{-- @include("{$templatePart}hotKeywords") --}}
-    @include("{$templatePart}lectureList")
+    {{-- @include("{$templatePart}lectureList") --}}
     @include("{$templatePart}partner")
-    
 @endsection
 @section('custom_srcipt')
     <script>
@@ -27,4 +27,11 @@
             nextArrow: '<button class="slick-next slide-btn"> > </button>',
         });
     </script>
+@endsection
+@section('custom_style')
+    <style>
+        #exclusiveCourse {
+            padding-bottom: 0!important;
+        }
+    </style>
 @endsection

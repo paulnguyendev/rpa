@@ -7,6 +7,8 @@ use App\Helpers\Obn;
 use App\Helpers\Template\Product;
 use App\Helpers\User;
 use App\Http\Controllers\Controller;
+use App\Models\ComboModel;
+use App\Models\CourseModel;
 use App\Models\OrderModel;
 use App\Models\PaymentHistoryModel;
 #Request
@@ -26,75 +28,83 @@ class CartController extends Controller
     private $pathViewController     = "frontend.pages.cart";
     private $controllerName         = "cart";
     private $model;
+    private $courseModel;
+    private $comboModel;
+    private $taxonomyModel;
+    private $orderModel;
+    private $paymentHistoryModel;
     private $params                 = [];
     function __construct()
     {
         $this->model = new MainModel();
         $this->taxonomyModel = new TaxonomyModel();
+        $this->courseModel = new CourseModel();
+        $this->comboModel = new ComboModel();
         $this->orderModel = new OrderModel();
         $this->paymentHistoryModel = new PaymentHistoryModel();
         View::share('controllerName', $this->controllerName);
     }
     public function add(Request $request)
     {
-        $id = $request->id;
-        $product = $this->model::find($id);
-        if ($product) {
-            $name = isset($product['title']) ? $product['title'] : "";
-            $thumbnail = isset($product['thumbnail']) ? $product['thumbnail'] : "";
-            $thumbnail = Obn::showThumbnail($thumbnail);
-            $number = $request->number;
-            $price = Product::getPriceProduct($product['regular_price'], false);
-            $price = $price ? $price : 0;
-            $supplier = $product->supplier()->first();
-            if ($supplier) {
-                $supplierName = $supplier['name'] ?? "-";
-                $supplierAddress = $supplier['address'] ?? "-";
-                $productLink = ProductLink::getLinkProductDetail2($id);
-                $name = "<div class = 'supplier-name'>{$supplierName} [{$supplierAddress}]</div> 
-                <div class = 'product-name'> <a href = '{$productLink}'>{$name}</a> </div> ";
-            }
-            if (!$number) {
-                $number = 1;
-            }
+        $params = $request->all();
+        $id = $params['pid'] ?? $request->id;
+        $type = $params['type'] ?? "course";
+    
+        if ($type == 'course') {
+            $item = $this->courseModel->getItem(['id' => $id], ['task' => 'id']);
+        } else {
+            $item = $this->comboModel->getItem(['id' => $id], ['task' => 'id']);
+        }
+        $slug = $item['slug'] ?? "";
+
+        #_Check Course In Cart
+        if (!$this->searchCartById($id)) {
             Cart::instance('frontend')->add([
                 'id' => $id,
-                'name' => $name,
-                'qty' => $number,
-                'price' => $price,
+                'name' => $item['title'],
+                'qty' => '1',
+                'price' => $item['price'],
                 'options' => [
-                    'thumbnail' => $thumbnail,
+                    'thumbnail' => $item['thumbnail'],
+                    'type' => $type,
+                    'slug' => $slug,
                 ]
             ]);
         }
+        $number = $request->number;
         $cartData = Cart::instance('frontend')->content();
         $cartTotal = Cart::instance('frontend')->count();
         $content = view('frontend.pages.ajax.cart')->with('')->render();
         $result = [
-            'result' =>true,
+            'result' => true,
             'content' => $content,
-            'totalCount' => 2,
-
+            'totalCount' => $cartTotal,
             'cartData' => $cartData,
-
             'cartTotal' => $cartTotal,
         ];
         return response()->json($result);
     }
     public function index(Request $request)
     {
-        $cartTotal = Cart::instance('frontend')->count();
+        $cart = Cart::instance('frontend');
+        $cartCount = $cart->count();
+        $cartContent = $cart->content();
+        $cartTotal = $cart->total(0) . " đ";
+        $cartSubTotal = $cart->subtotal(0);
         return view(
             "{$this->pathViewController}/index",
             [
                 'cartTotal' => $cartTotal,
+                'cartContent' => $cartContent,
+                'cartCount' => $cartCount,
+                'cartSubTotal' => $cartSubTotal,
             ]
         );
     }
     public function removeAll(Request $request)
     {
         Cart::instance('frontend')->destroy();
-        return Cart::content();
+        return Cart::instance('frontend')->content();
     }
     public function data(Request $request)
     {
@@ -132,6 +142,7 @@ class CartController extends Controller
         $cartSearch = $this->searchCartById($id);
         $rowId = isset($cartSearch['rowId']) ? $cartSearch['rowId'] : $rowId;
         Cart::instance('frontend')->remove($rowId);
+        $params['cart'] = Cart::instance('frontend')->content();
         return $params;
     }
     public function searchCartById($id)
@@ -221,7 +232,6 @@ class CartController extends Controller
             } else {
                 $item['commision'] = 0;
             }
-
             return $item;
         }, $products);
         #_Total Point
@@ -283,10 +293,46 @@ class CartController extends Controller
     }
     public function checkout(Request $request)
     {
-
+        $cart = Cart::instance('frontend');
+        $cartCount = $cart->count();
+        $cartContent = $cart->content();
+        $cartTotal = $cart->total(0) . " đ";
+        $cartSubTotal = $cart->subtotal(0);
         return view(
             "{$this->pathViewController}/checkout",
-            []
+            [
+                'cartTotal' => $cartTotal,
+                'cartCount' => $cartCount,
+                'cartContent' => $cartContent,
+            ]
         );
+    }
+    public function buyNow(Request $request)
+    {
+        $params = $request->all();
+        $id = $params['pid'];
+        $type = $params['type'] ?? "course";
+        if ($type == 'course') {
+            $item = $this->courseModel->getItem(['id' => $id], ['task' => 'id']);
+        } else {
+            $item = $this->comboModel->getItem(['id' => $id], ['task' => 'id']);
+        }
+        $slug = $item['slug'] ?? "";
+        #_Check Course In Cart
+        if (!$this->searchCartById($params['pid'])) {
+            Cart::instance('frontend')->add([
+                'id' => $id,
+                'name' => $item['title'],
+                'qty' => '1',
+                'price' => $item['price'],
+                'options' => [
+                    'thumbnail' => $item['thumbnail'],
+                    'type' => $type,
+                    'slug' => $slug,
+                ]
+            ]);
+        }
+        $params['redirectUrl'] = route('fe_cart/checkout');
+        return $params;
     }
 }

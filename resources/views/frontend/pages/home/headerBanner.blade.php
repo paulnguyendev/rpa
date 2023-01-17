@@ -1,29 +1,29 @@
 @php
     use App\Helpers\Package\CoursePackage;
-   
+    
 @endphp
 <section id="headerBanner" class="header-banner">
     <div class="container">
         <div class="d-flex flex-wrap">
             <div class="header-banner-left">
                 <div class="inner animate-fade-in">
-                    {!!  CoursePackage::showCategory() !!}
-                  
-                   
-               
-               
-                  
-                  
-                
-               
-              
-                   
-                  
-             
-                  
-                 
-                  
-                
+                    {!! CoursePackage::showCategory() !!}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
                 <div class="header-banner-child-category">
                     <div class="inner">
@@ -40,58 +40,64 @@
                 <div class="inner">
                     <div class="header-banner-first header-banner-slider slick__slider--normal animate-fade-in">
                         <div class="inner">
-                            <a target="_blank" href="https://kyna.vn/khoa-hoc-7-buoc-ban-hang-chuyen-nghiep "
-                                class="item">
+                            <a href="javascript:void(0)" class="item">
                                 <div class="inner">
                                     <picture>
-                                        <source media="(min-width: 767px)"
-                                            srcset="https://cdn-skill.kynaenglish.vn/uploads/banners/995/img/image_url-1625585388.png">
+                                        <source media="(min-width: 767px)" srcset="{{ asset('kyna/img/slide1.jpg') }}">
                                         <img width="100%" height="auto" class="img"
-                                            data-lazy="https://cdn-skill.kynaenglish.vn/uploads/banners/995/img/mobile_image_url-1625585389.png"
+                                            data-lazy="{{ asset('kyna/img/slide1.jpg') }}"
                                             alt="7-buoc-ban-hang-chuyen-nghiep ">
                                     </picture>
                                 </div>
                             </a>
-                            <a target="_blank"
-                                href="https://kyna.vn/thuyet-phuc-va-phan-bien-theo-phong-cach-cua-chuyen-gia "
-                                class="item">
+                            <a href="javascript:void(0)" class="item">
                                 <div class="inner">
                                     <picture>
-                                        <source media="(min-width: 767px)"
-                                            srcset="https://cdn-skill.kynaenglish.vn/uploads/banners/1013/img/image_url-1625585336.png">
+                                        <source media="(min-width: 767px)" srcset="{{ asset('kyna/img/slide2.jpg') }}">
                                         <img width="100%" height="auto" class="img"
-                                            data-lazy="https://cdn-skill.kynaenglish.vn/uploads/banners/1013/img/mobile_image_url-1625585341.png"
-                                            alt="thuyet-phuc-va-phan-bien">
+                                            data-lazy="{{ asset('kyna/img/slide1.jpg') }}"
+                                            alt="7-buoc-ban-hang-chuyen-nghiep ">
                                     </picture>
                                 </div>
                             </a>
-                            <a target="_blank" href="https://kyna.vn/tieng-hoa-cho-nguoi-moi-bat-dau "
-                                class="item">
+
+                            <a href="javascript:void(0)" class="item">
                                 <div class="inner">
                                     <picture>
-                                        <source media="(min-width: 767px)"
-                                            srcset="https://cdn-skill.kynaenglish.vn/uploads/banners/1022/img/image_url-1625585277.png">
+                                        <source media="(min-width: 767px)" srcset="{{ asset('kyna/img/slide3.jpg') }}">
                                         <img width="100%" height="auto" class="img"
-                                            data-lazy="https://cdn-skill.kynaenglish.vn/uploads/banners/1022/img/mobile_image_url-1625585278.png"
-                                            alt="tieng-hoa-cho-nguoi-moi-bat-dau ">
+                                            data-lazy="{{ asset('kyna/img/slide1.jpg') }}"
+                                            alt="7-buoc-ban-hang-chuyen-nghiep ">
                                     </picture>
                                 </div>
                             </a>
-                            <a target="_blank" href="https://kyna.vn/bi-quyet-kiem-tien-tu-dau-tu-chung-khoan"
-                                class="item">
+
+                            <a href="javascript:void(0)" class="item">
                                 <div class="inner">
                                     <picture>
-                                        <source media="(min-width: 767px)"
-                                            srcset="https://cdn-skill.kynaenglish.vn/uploads/banners/1027/img/image_url-1625585204.png">
+                                        <source media="(min-width: 767px)" srcset="{{ asset('kyna/img/slide4.jpg') }}">
                                         <img width="100%" height="auto" class="img"
-                                            data-lazy="https://cdn-skill.kynaenglish.vn/uploads/banners/1027/img/mobile_image_url-1625585205.png"
-                                            alt="bi-quyet-kiem-tien-tu-dau-tu-chung-khoan">
+                                            data-lazy="{{ asset('kyna/img/slide4.jpg') }}"
+                                            alt="7-buoc-ban-hang-chuyen-nghiep ">
                                     </picture>
                                 </div>
                             </a>
+                            <a href="javascript:void(0)" class="item">
+                                <div class="inner">
+                                    <picture>
+                                        <source media="(min-width: 767px)" srcset="{{ asset('kyna/img/slide5.jpg') }}">
+                                        <img width="100%" height="auto" class="img"
+                                            data-lazy="{{ asset('kyna/img/slide5.jpg') }}"
+                                            alt="7-buoc-ban-hang-chuyen-nghiep ">
+                                    </picture>
+                                </div>
+                            </a>
+
+
+
                         </div>
                     </div>
-                    <div class="header-banner-second header-banner-slider" data-url="{{url('public/data/sub-hero-banner-ajax.json')}}">
+                    <div class="header-banner-second header-banner-slider" data-url="{{ route('home/subBanner') }}">
                         <div class="inner">
                             <!-- Render js -->
                             <div class="item item-loading">
@@ -113,3 +119,10 @@
         </div>
     </div>
 </section>
+@section('custom_style')
+    <style>
+        .header-banner-second .item img {
+            object-position: top;
+        }
+    </style>
+@endsection

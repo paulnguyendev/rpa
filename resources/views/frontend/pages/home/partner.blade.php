@@ -1,7 +1,7 @@
 <section class="pre-footer animate-fade-in">
     <div class="container">
         <h2 class="heading-section animate-fade-in">
-            Đồng hành cùng NLV Training
+            Đồng hành cùng RPA
         </h2>
         <div class="pre-footer-logo animate-fade-in">
             <div class="item animate-fade-in">

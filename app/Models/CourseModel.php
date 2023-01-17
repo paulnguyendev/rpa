@@ -26,15 +26,15 @@ class CourseModel extends Model
         if ($options['task'] == 'list') {
             if(isset($params['start']) && isset($params['length'])) {
                 if($params['start'] == 0) {
-                    $result = $query->orderBy('id', 'desc')->get();
+                    $result = $query->orderBy('sort', 'asc')->get();
                 }
                 else {
-                    $result = $query->orderBy('id', 'desc')->skip($params['start'])->take($params['length'])->get();
+                    $result = $query->orderBy('sort', 'asc')->skip($params['start'])->take($params['length'])->get();
                 }
                
             }
             else {
-                $result = $query->orderBy('id', 'desc')->get();
+                $result = $query->orderBy('sort', 'asc')->get();
             }
             
         }
@@ -68,6 +68,10 @@ class CourseModel extends Model
         if ($options['task'] == 'id') {
             $result = $query->where('id', $params['id'])->first();
         }
+        if ($options['task'] == 'slug') {
+            $result = $query->where('slug', $params['slug'])->first();
+        }
+       
         return $result;
     }
     public function saveItem($params = [], $option = [])
@@ -98,7 +102,37 @@ class CourseModel extends Model
     {
         return $this->belongsToMany(TaxonomyModel::class,'taxonomy_relationship','course_id','taxonomy_id');
     }
+    public function student()
+    {
+        return $this->hasMany(OrderCourseUserModel::class,'course_id','id');
+    }
+    public function lesson()
+    {
+        return $this->hasMany(LessonModel::class,'course_id','id');
+    }
+    public function totalLesson()
+    {
+        return $this->hasMany(LessonModel::class,'course_id','id')->count();
+    }
+    public function lessonIsTry()
+    {
+        return $this->hasMany(LessonModel::class,'course_id','id')->where('is_try','1')->first();
+    }
+    public function combo()
+    {
+        
+        return $this->hasMany(ComboCourseModel::class,'course_id','id');
+    }
+   
     public function supplier() {
         return $this->belongsTo(SupplierModel::class, 'supplier_id','id' );
     }
+    public function teacher() {
+        return $this->belongsTo(TeacherModel::class, 'teacher_id','id' );
+    }
+    public function level() {
+        return $this->belongsTo(LevelModel::class, 'level_id','id' );
+    }
+    
+   
 }

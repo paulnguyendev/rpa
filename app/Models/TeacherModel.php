@@ -13,12 +13,12 @@ class TeacherModel extends Model
     const UPDATED_AT = 'updated_at';
     protected $fieldSearchAccepted = ['email', 'phone', 'fullname'];
     protected $crudNotAccepted = ['_token', 'data_attributes','id','taxonomy'];
-    protected $fillable = ['title','position','thumbnail','description','content','created_at','updated_at'];
+    protected $fillable = ['title','position','thumbnail','description','content','created_at','updated_at','slug'];
     use HasFactory;
     public function listItems($params = "", $options = "")
     {
         $result = null;
-        $query = $this->select('id', 'title','position','thumbnail','description','content','created_at','updated_at');
+        $query = $this->select('id', 'title','position','thumbnail','description','content','created_at','updated_at','slug');
         if ($options['task'] == 'admin-count-total') {
             $result = $query->where('user_group_id', '3')->count();
         }
@@ -65,12 +65,15 @@ class TeacherModel extends Model
     }
     public function getItem($params = [], $options = [])
     {
-        $query = $this->select('id', 'title','position','thumbnail','description','content','created_at','updated_at');
+        $query = $this->select('id', 'title','position','thumbnail','description','content','created_at','updated_at','slug');
         if ($options['task'] == 'taxonomy') {
             $result = $query->where('taxonomy', $params['taxonomy'])->first();
         }
         if ($options['task'] == 'id') {
             $result = $query->where('id', $params['id'])->first();
+        }
+        if ($options['task'] == 'slug') {
+            $result = $query->where('slug', $params['slug'])->first();
         }
         return $result;
     }
