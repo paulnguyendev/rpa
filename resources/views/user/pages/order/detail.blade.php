@@ -46,7 +46,7 @@
                                                 <div class="media-left" style="padding-right:0px">
                                                     <div>
                                                         <a class="text-default text-semibold">
-                                                            {!! $product['product_title'] !!}
+                                                            {!! $product['name'] !!}
                                                         </a>
                                                     </div>
                                                     <div class="text-muted text-size-small">

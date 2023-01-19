@@ -17,7 +17,7 @@
                 <i class="far fa-search"></i>
             </div>
             <div class="header-cart">
-                <a href="/gio-hang">
+                <a href="{{route('fe_cart/index')}}">
                     <img src="https://cdn-skill.kynaenglish.vn/img/cart/cart.svg" width="24" height="24"
                         alt="Khóa học trực tuyến">
                     <span class="count-number none-item">0</span>

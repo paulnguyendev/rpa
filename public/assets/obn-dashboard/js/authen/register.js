@@ -11,6 +11,10 @@ formRegister.validate({
             minlength: 6,
             required: true,
         },
+        phone: {
+            minlength: 10,
+            required: true,
+        },
         email: {
             email: true,
             required: true,
@@ -23,6 +27,10 @@ formRegister.validate({
         password: {
             minlength: "Mật khẩu ít nhất 6 ký tự",
             required: "Vui lòng nhập mật khẩu",
+        },
+        phone: {
+            minlength: "Số điện thoại ít nhất 10 ký tự",
+            required: "Vui lòng nhập số điện thoại",
         },
         email: {
             email: "Email không hợp lệ.",

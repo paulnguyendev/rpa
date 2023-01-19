@@ -109,6 +109,8 @@ class Product
         return $result;
     }
     public static function getOrderSumary($total = 0,$options = []) {
+       
+        
         $totalAdd = 0;
         $totalMinus = 0;
         $options_add = $options['add'] ?? [];
@@ -123,6 +125,7 @@ class Product
                 $totalMinus += $option;
             }
         }
+        
         $result = $total + $totalAdd - $totalMinus;
         return $result;
     }

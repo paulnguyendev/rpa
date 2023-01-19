@@ -16,12 +16,12 @@ class OrderModel extends Model
     const UPDATED_AT = 'updated_at';
     protected $fieldSearchAccepted = ['email', 'phone', 'fullname'];
     protected $crudNotAccepted = ['_token', 'data_attributes', 'id'];
-    protected $fillable = ['discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission'];
+    protected $fillable = ['discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission','is_affiliate','created_by'];
     use HasFactory;
     public function listItems($params = "", $options = "")
     {
         $result = null;
-        $query = $this->select('id', 'discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission');
+        $query = $this->select('id', 'discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission','is_affiliate','created_by');
         if ($options['task'] == 'admin-count-total') {
             $result = $query->where('user_group_id', '3')->count();
         }
@@ -49,7 +49,7 @@ class OrderModel extends Model
     }
     public function getItem($params = [], $options = [])
     {
-        $query = $this->select('id', 'discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission');
+        $query = $this->select('id', 'discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission','is_affiliate','created_by');
         if ($options['task'] == 'taxonomy') {
             $result = $query->where('taxonomy', $params['taxonomy'])->first();
         }

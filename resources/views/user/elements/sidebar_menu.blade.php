@@ -19,6 +19,12 @@
                 <span>Đơn hàng</span>
             </a>
         </li>
+        <li data-label="Quản Lý Chung">
+            <a href="{{route('user_course/index')}}">
+                <i class="icon-price-tag2"></i>
+                <span>Khu vực học tập</span>
+            </a>
+        </li>
        
         <li data-label="Quản Lý Bài Viết">
             <a href="javascript:void(0)">

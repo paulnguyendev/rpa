@@ -24,6 +24,9 @@ class OrderController extends Controller
     private $pathViewController     = "admin.pages.order";
     private $controllerName         = "admin_order";
     private $model;
+    private $taxonomyModel;
+    private $productMetaModel;
+    private $userModel;
     private $params                 = [];
     function __construct()
     {
@@ -118,7 +121,7 @@ class OrderController extends Controller
         $items = array_map(function ($item) {
             $products = $item['products'] ? json_decode($item['products'], true)  : [];
             $products = array_map(function ($product) {
-                $product['product_name'] = $product['product_title'];
+                $product['product_name'] = $product['name'];
                 return $product;
             }, $products);
             $item['details'] = $products;

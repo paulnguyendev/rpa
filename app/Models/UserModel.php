@@ -15,12 +15,12 @@ class UserModel extends Model
     const UPDATED_AT = 'modified';
     protected $fieldSearchAccepted = ['email', 'phone', 'fullname'];
     protected $crudNotAccepted = ['_token','parent_code','password_confirmation','old_password','status_old','url'];
-    protected $fillable = ['name', 'avatar', 'username', 'password', 'email', 'birthday', 'gender', 'address', 'phone', 'code', 'token','secret','parent_id','role','group_id','status','created_at','aff_number'];
+    protected $fillable = ['name', 'avatar', 'username', 'password', 'email', 'birthday', 'gender', 'address', 'phone', 'code', 'token','secret','parent_id','role','group_id','status','created_at','aff_number','is_affiliate'];
     use HasFactory;
     public function listItems($params = "", $options = "")
     {
         $result = null;
-        $query = $this->select('id', 'name', 'avatar', 'username', 'password', 'email', 'birthday', 'gender', 'address', 'phone', 'code', 'token','secret','parent_id','role','group_id','status','created_at','aff_number');
+        $query = $this->select('id', 'name', 'avatar', 'username', 'password', 'email', 'birthday', 'gender', 'address', 'phone', 'code', 'token','secret','parent_id','role','group_id','status','created_at','aff_number','is_affiliate');
         if($options['task'] == 'admin-count-total') {
             $result = $query->where('user_group_id','3')->count();
         }
@@ -35,22 +35,19 @@ class UserModel extends Model
                 else {
                     $result = $query->where('role','user')->orderBy('id', 'desc')->skip($params['start'])->take($params['length'])->get();
                 }
-               
             }
             else {
                 $result = $query->where('role','user')->orderBy('id', 'desc')->get();
             }
-            
         }
         if ($options['task'] == 'search') {
             $result = $query->where('name', 'LIKE', "%{$params['name']}%")->orderBy('id', 'desc')->get();
-           
         }
         return $result;
     }
     public function getItem($params = [], $options = [])
     {
-        $query = $this->select('id', 'name', 'avatar', 'username', 'password', 'email', 'birthday', 'gender', 'address', 'phone', 'code', 'token','secret','parent_id','role','group_id','status','created_at','aff_number');
+        $query = $this->select('id', 'name', 'avatar', 'username', 'password', 'email', 'birthday', 'gender', 'address', 'phone', 'code', 'token','secret','parent_id','role','group_id','status','created_at','aff_number','is_affiliate');
         if ($options['task'] == 'user-login') {
             $result = $query->where('username', $params['username'])->where('password', md5($params['password']))->first();
         }
@@ -69,13 +66,16 @@ class UserModel extends Model
         if ($options['task'] == 'email') {
             $result = $query->where('email', $params['email'])->first();
         }
+        if ($options['task'] == 'phone') {
+            $result = $query->where('phone', $params['phone'])->first();
+        }
         if ($options['task'] == 'username') {
             $result = $query->where('username', $params['username'])->first();
         }
+        if ($options['task'] == 'root') {
+            $result = $query->where('role', 'root')->first();
+        }
         if ($options['task'] == 'id') {
-            echo '<pre>';
-            print_r($params);
-            echo '</pre>';
             $result = $query->where('id', $params['user_id'])->first();
         }
         if ($options['task'] == 'token') {
@@ -126,5 +126,9 @@ class UserModel extends Model
     public function ticket()
     {
         return $this->hasMany(TicketModel::class, 'user_id', 'id');
+    }
+    public function courseOrder()
+    {
+        return $this->hasMany(OrderCourseUserModel::class, 'user_id', 'id');
     }
 }

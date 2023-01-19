@@ -25,7 +25,7 @@
         <!-- Block data for track course viewed -->
         <div id="loadReviewUrl" hidden>/course/default/load-review?course_id=152</div>
         <div id="course-detail" class="course-detail">
-
+           
             <div class="cd-top-banner have-bg opt-1" style="background-image: url('{{ $item['thumbnail'] }}');">
                 <div class="container">
                     <div class="course-detail--left">
@@ -535,9 +535,10 @@
                                         </svg>
                                     </button>
                                 </div>
+                               
                                 <div id="youtube_video_wrapper">
                                     <!-- Copy & Pasted from YouTube -->
-                                    <iframe width="560" height="349" src=" {!! $item['video_intro'] ?? '' !!}"
+                                    <iframe width="560" height="349" src=" {{$item['video_intro'] ?? ""}}"
                                         allow="autoplay" frameborder="0" allowfullscreen></iframe>
                                 </div>
                                 <div class="label-wrap">
@@ -645,11 +646,11 @@
                 $('#youtube_video_wrapper').show();
                 let src = $('#youtube_video_wrapper > iframe').attr('src');
                 let isRel = src.search('rel=0');
-                if(isRel > 0) {
-                    src += '&autoplay=1&loop=1';
-                } else {
-                    src += '?autoplay=1&loop=1';
-                }
+                // if(isRel > 0) {
+                //     src += '&autoplay=1&loop=1';
+                // } else {
+                //     src += '?autoplay=1&loop=1';
+                // }
                 $('#youtube_video_wrapper > iframe').attr('src', src);
             });
         });

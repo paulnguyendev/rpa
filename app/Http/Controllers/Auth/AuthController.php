@@ -86,6 +86,11 @@ class AuthController extends Controller
         if ($checkUsername) {
             $error['username'] = "Đã tồn tại Tên đăng nhập trên hệ thống";
         }
+         // Check số điện thoại tồn tại
+         $checkPhone = $this->model->getItem($params, ['task' => 'phone']);
+         if ($checkPhone) {
+             $error['phone'] = "Đã tồn tại số điện thoại trên hệ thống";
+         }
         if (empty($error)) {
             // Check parent id
             $userCode = $this->model->getItem($params, ['task' => 'code']);

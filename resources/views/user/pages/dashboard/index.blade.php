@@ -35,7 +35,7 @@
         </div>
         <div class="col-sm-12 col-md-4">
             <div class="panel panel-body">
-                <a class="media no-margin" href="{{ route('user_order/customer') }}">
+                <a class="media no-margin" href="{{ route('user_course/index') }}">
                     <div class="media-left media-middle">
                         <i class="icon-price-tag2 icon-3x text-indigo-400"></i>
                     </div>
@@ -76,10 +76,10 @@
                         <strong>Email:</strong>
                         <span>{{ $userInfo['email'] ?? '-' }}</span>
                     </p>
-                    <p>
+                    {{-- <p>
                         <strong>Loại tài khoản:</strong>
                         {!! User::getGroupName($userInfo['id']) !!}
-                    </p>
+                    </p> --}}
                     <p>
                         <strong>Link đăng ký:</strong>
                         <span><a target="_blank" href="{{ route('fe_aff/register',['code' => $userInfo['code']]) }}">{{ route('fe_aff/register',['code' => $userInfo['code']]) }}</a></span>

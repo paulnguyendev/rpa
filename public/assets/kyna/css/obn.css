@@ -96,6 +96,30 @@ a, a:focus, a:hover {
     height: auto;
     padding-bottom: 0;
 }
+.page-order {
+    padding: 60px 0;
+}
+.user_course .navbar-bottom {
+    display: none;
+}
+
+.user_course .header-search {
+    display: none;
+}
+
+.user_course .nav-item-cart {
+    display: none;
+}
+
+.user_course .navbar-top {
+    margin-bottom: 0;
+}
+#my-course {
+    padding: 60px 0;
+}
+.user_course #k-footer {
+    display: none;
+}
 @media screen and (max-width: 767.98px) {
     .header-banner-first .item {
         height: auto;

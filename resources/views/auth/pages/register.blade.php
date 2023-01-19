@@ -31,6 +31,11 @@
                     autocomplete="false">
             </div>
             <div class="form-group has-feedback">
+                <label for="phone">Số điện thoại <span class="text-danger">(*)</span></label>
+                <input type="tel" id="phone" name="phone" class="form-control" placeholder="Nhập số điện thoại của bạn"
+                    autocomplete="false">
+            </div>
+            <div class="form-group has-feedback">
                 <label for="parent_code">Mã giới thiệu </label>
                 <input type="text" id="parent_code" name="parent_code" class="form-control"
                     placeholder="Nhập mã giới thiệu của bạn" autocomplete="false" value="{{User::getAffInfo('aff_user_code') ?? ""}}">

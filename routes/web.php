@@ -65,9 +65,11 @@ Route::prefix($prefix)->group(function () {
             Route::get('/removeAll', 'removeAll')->name($routeName . '/removeAll');
             Route::get('/test', 'test')->name($routeName . '/test');
             Route::post('/order', 'order')->name($routeName . '/order');
+            Route::post('/orderTest', 'orderTest')->name($routeName . '/orderTest');
             Route::post('/buyNow', 'buyNow')->name($routeName . '/buyNow');
             Route::get('/thanh-toan', 'checkout')->name($routeName . '/checkout');
-            Route::get('/order_success/{code?}', 'order_success')->name($routeName . '/order_success');
+            Route::get('/removeCookie', 'removeCookie')->name($routeName . '/removeCookie');
+            Route::get('/order-success/{code?}', 'order_success')->name($routeName . '/order_success');
         });
     });
     Route::prefix('product')->group(function () {
@@ -190,7 +192,7 @@ Route::middleware('access.userDashboard')->prefix($prefix)->group(function () {
         $routeName = "user_course";
         Route::controller(UserCourseController::class)->group(function () use ($routeName) {
             Route::get('/', 'index')->name($routeName . '/index');
-            Route::get('/detail/{id?}', 'detail')->name($routeName . '/detail');
+            Route::get('/detail/{slug?}/{lesson_id?}', 'detail')->name($routeName . '/detail');
             Route::get('/form/{id?}', 'form')->name($routeName . '/form');
             Route::get('/dataList', 'dataList')->name($routeName . '/dataList');
             Route::post('/save', 'save')->name($routeName . '/save');

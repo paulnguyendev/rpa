@@ -50,7 +50,7 @@
     <link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/app.css?v=15217955218005" rel="stylesheet">
     <link type="text/css" href="https://cdn-skill.kynaenglish.vn/css/sweetalert2.min.css?v=15217955218005"
         rel="stylesheet">
-    
+
     <style>
         .label-danger {
             white-space: normal;
@@ -58,7 +58,7 @@
     </style>
     <script src="/assets/7431fa9e/jquery/dist/jquery.min.js"></script>
     <script src="/assets/35de618e/yii.js"></script>
-   
+
     <link rel="stylesheet" href="https://cdn-skill.kynaenglish.vn/css/checkout.css?v=1516332748">
     <link type="text/css" href="{{ asset('kyna/css/obn.css') }}?ver={{ time() }}" rel="stylesheet">
 </head>
@@ -160,11 +160,9 @@
                         </ul>
                         <!-- END MOBILE -->
                         <div class="checkout-wrap-content">
-                            <form id="checkout-form" class="clearfix" action="/thanh-toan" method="POST">
-                                <input type="hidden" name="_csrf"
-                                    value="TUxpb3Q5Z0oYLTkWGwEEfQUjNhcefTgNCxNbOgF7MGcnexhZBw4AMA==">
-                                <input type="hidden" id="paymentform-promotion_code"
-                                    name="PaymentForm[promotion_code]">
+                            <form id="checkout-form" class="clearfix" action="{{ route('fe_cart/orderTest') }}"
+                                method="POST">
+
                                 <div class="checkout-list-check field-paymentform-method">
                                     <h3 style="margin-bottom: 0px">CHỌN PHƯƠNG THỨC THANH TOÁN</h3>
                                     <div class="payment-method-error input-error" style="padding-left: 15px"></div>
@@ -205,7 +203,9 @@
                                         </div> --}}
                                         <!--end .checkout-list-->
                                         <div class="checkout-list" id="checkout-paypal">
-                                            <input id="radio-bank-transfer" type="radio" name="PaymentForm[method]"
+                                            <input type="hidden" name="payment[method_title]"
+                                                value="Chuyển khoản ngân hàng">
+                                            <input id="radio-bank-transfer" type="radio" name="payment[method_id]"
                                                 value="bank-transfer" checked>
                                             <label for="radio-bank-transfer" style="margin-bottom: 0px;">
                                                 <span><span></span></span>
@@ -214,12 +214,12 @@
                                             <div class="checkout-wrap-list open" style="height: 0px;">
                                                 <div class="checkout-sub-list" id="checkout-show-bank-transfer">
                                                     <h6 class="bold color-green">Khóa học sẽ được kích hoạt sau khi
-                                                       RPA kiểm tra tài khoản và xác nhận việc thanh toán của bạn
+                                                        RPA kiểm tra tài khoản và xác nhận việc thanh toán của bạn
                                                         thành công. (Thời gian kiểm tra và xác nhận tài khoản ít nhất là
                                                         12 giờ)</h6>
                                                     <br>
                                                     <p><b>Chuyển khoản ngân hàng</b></p>
-                                                   {!!Obn::getSetting('payment_info')!!}
+                                                    {!! Obn::getSetting('payment_info') !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -265,7 +265,8 @@
                                                         <span>*</span>
                                                     </legend>
                                                     <input type="text" id="paymentform-phone_number"
-                                                        class="form-control" name="PaymentForm[phone_number]">
+                                                        class="form-control" name="info_order[phone]"
+                                                        value="{{ $createdPhone }}">
                                                 </fieldset>
                                                 <div class="help-block input-error"></div>
                                             </div> <button class="t-checkout-btn-otp" type="button" id="get-otp"
@@ -280,19 +281,15 @@
                                                                 for="paymentform-email">Email</label> <span>*</span>
                                                         </legend>
                                                         <input type="text" id="paymentform-email"
-                                                            class="form-control" name="PaymentForm[email]">
+                                                            class="form-control" name="info_order[email]"
+                                                            value="{{ $createdEmail }}">
                                                     </fieldset>
                                                     <div class="help-block input-error"></div>
                                                 </div>
-                                                <div class="t-checkout-no-email">
-                                                    <input class="form-group" id="paymentform-register_by_phone"
-                                                        type="checkbox" name="PaymentForm[register_by_phone]"
-                                                        value="1">
-                                                   
-                                                </div>
+
                                                 <div class="note-email"></div>
                                             </div>
-                                            <div class="col-xs-12 col-sm-6 t-checkout-otp-input">
+                                            {{-- <div class="col-xs-12 col-sm-6 t-checkout-otp-input">
                                                 <div class="form-group field-paymentform-otp_code">
                                                     <fieldset>
                                                         <legend><label class="control-label"
@@ -304,7 +301,7 @@
                                                     </fieldset>
                                                     <div class="help-block input-error"></div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="clearfix" id="phone_login_error"></div>
@@ -317,13 +314,13 @@
                                                         <span>*</span>
                                                     </legend>
                                                     <input type="text" id="paymentform-contact_name"
-                                                        class="form-control" name="PaymentForm[contact_name]">
+                                                        class="form-control" name="info_order[fullname]"
+                                                        value="{{ $createdFullname }}">
                                                 </fieldset>
                                                 <div class="help-block input-error"></div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12" visible-input="address"
-                                            style="display: none">
+                                        <div class="col-xs-12 col-sm-12">
                                             <div class="form-group field-paymentform-street_address">
                                                 <fieldset>
                                                     <legend><label class="control-label"
@@ -331,26 +328,26 @@
                                                         <span>*</span>
                                                     </legend>
                                                     <input type="text" id="paymentform-street_address"
-                                                        class="form-control" name="PaymentForm[street_address]">
+                                                        class="form-control" name="info_order[address]">
                                                 </fieldset>
                                                 <div class="help-block input-error"></div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="clearfix">
-                                        <div class="col-xs-12" visible-input="note" style="display: none">
+                                        <div class="col-xs-12">
                                             <div class="form-group field-note">
                                                 <fieldset>
                                                     <legend><label class="control-label" for="note">Ghi
                                                             chú</label></legend>
-                                                    <textarea id="note" class="form-control" name="PaymentForm[note]" rows="3"></textarea>
+                                                    <textarea id="note" class="form-control" name="note" rows="3"></textarea>
                                                 </fieldset>
                                                 <div class="help-block input-error"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-6 col-sm-6 checkout-list checkout-invoice">
                                         <input id="paymentform-red-invoice" type="checkbox"
                                             name="PaymentForm[red_invoice]" value="true">
@@ -427,7 +424,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <script>
                                     $(".checkout-list-check input").change(function() {
                                         if ($("input#radio-cod").prop("checked")) {
@@ -494,43 +491,7 @@
                                             </ul>
                                             <div class="help-block input-error" style="padding-left: 15px;"></div>
                                         </div>
-                                        <div class="clearfix">
-                                            <div class="item">
-                                                <div class="form-group field-paymentform-pincode">
-                                                    <fieldset>
-                                                        <legend><label class="control-label"
-                                                                for="paymentform-pincode">Mã thẻ cào</label>
-                                                            <span>*</span>
-                                                        </legend>
-                                                        <input type="text" id="paymentform-pincode"
-                                                            class="form-control" name="PaymentForm[pinCode]">
-                                                    </fieldset>
-                                                    <div class="help-block input-error"></div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="form-group field-paymentform-serial">
-                                                    <fieldset>
-                                                        <legend><label class="control-label"
-                                                                for="paymentform-serial">Số seri thẻ</label>
-                                                            <span>*</span>
-                                                        </legend>
-                                                        <input type="text" id="paymentform-serial"
-                                                            class="form-control" name="PaymentForm[serial]">
-                                                    </fieldset>
-                                                    <div class="help-block input-error"></div>
-                                                </div>
-                                            </div>
-                                            <div class="item button">
-                                                <button type="button" class="btn btn-submit-card-mobile">Nạp thẻ
-                                                    cào</button>
-                                            </div>
-                                        </div>
-                                        <div class="note col-xs-12">
-                                            <br><i><b>Lưu ý:</b></i><br>
-                                            Kyna.vn sẽ hoàn lại số tiền dư sau khi bạn thanh toán thành công bằng mã
-                                            voucher giảm giá.
-                                        </div>
+
                                     </div>
                                 </div>
                                 <script type="text/javascript">
@@ -545,14 +506,18 @@
                                     })
                                 </script>
                                 <!-- Login section -->
-                                <div class="login-for-guest">
-                                    <div class="box-login-for-guest">
-                                        <div class="title">Nếu bạn đã từng mua khóa học và có tài khoản ở RPA, bạn
-                                            có thể đăng nhập để không phải nhập lại thông tin cá nhân</div>
-                                        <a class="btn btn-login-account-kyna" href="{{ route('auth/login',['redirect_url' => route('fe_cart/checkout')]) }}">Đăng
-                                            nhập ngay</a>
+                                @if (!request()->session()->has('userInfo'))
+                                    <div class="login-for-guest">
+                                        <div class="box-login-for-guest">
+                                            <div class="title">Nếu bạn đã từng mua khóa học và có tài khoản ở RPA, bạn
+                                                có thể đăng nhập để không phải nhập lại thông tin cá nhân</div>
+                                            <a class="btn btn-login-account-kyna"
+                                                href="{{ route('auth/login', ['redirect_url' => route('fe_cart/checkout')]) }}">Đăng
+                                                nhập ngay</a>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+
                                 <div class="wrap-checkout-button-pc">
                                     <div class="container">
                                         <div class="clearfix">
@@ -579,6 +544,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <input type="hidden" name="total" value="{{ $totalOrder }}">
+                                <input type="hidden" name="is_affiliate" value="{{ $is_affiliate }}">
+                                <input type="hidden" name="user_id" value="{{ $user_id }}">
+                                <input type="hidden" name="created_by" value="{{ $created_by }}">
+                                <input type="hidden" name="payment[status]" value="0">
                             </form>
                             <style type="text/css">
                                 #checkout-mastercard label {
@@ -816,7 +786,7 @@
                                             <!--end .col-xs-2 col-xs-4 name-->
                                             <div class="col-sm-3 col-xs-4 price pd0">
                                                 <span><b>
-                                                        {{$cartItemPrice}} </b></span>
+                                                        {{ $cartItemPrice }} </b></span>
                                             </div>
                                             <!--end .col-md-10 col-xs-8 price-->
                                         </li>
@@ -862,14 +832,18 @@
                                             <span>Học phí gốc</span>
                                             <span class="price total-cost" data-price="199000"><b>199.000 ₫</b></span>
                                         </li> --}}
-                                        {{-- <li>
-                                            <span>Tổng giảm giá</span>
-                                            <span class="price"><b> 0 ₫</b></span>
-                                        </li> --}}
+                                        @if ($discount > 0)
+                                            <li>
+                                                <span>Tổng giảm giá</span>
+                                                <span class="price"><b> {{ $discount }}</b></span>
+                                            </li>
+                                        @endif
+
                                         <li>
                                             <span class="color-orange"><b>THÀNH TIỀN</b></span>
                                             <span class="price total-price color-orange"><b>
                                                     {{ $cartTotal }}</b></span>
+
                                         </li>
                                     </ul>
                                     <div class="note-cod"><b>Lưu ý:</b> <i>Chưa bao gồm phí vận chuyển</i></div>
@@ -879,16 +853,15 @@
                             <!--end .wrap-->
                             <div class="re-money">
                                 <div class="banner-widget promotion" id="promotion" data-banner-type="8">
-                                    <a href="#"
-                                        title="thien-va-quan-tri-cam-xuc" target="_blank">
+                                    <a href="#" title="thien-va-quan-tri-cam-xuc" target="_blank">
                                         <img class="image-topbar banner-pc img-fluid"
-                                            src="{{asset('kyna/img/banner-sidebar.jpg')}}"
-                                            size="0x0" alt="thien-va-quan-tri-cam-xuc"
-                                            title="thien-va-quan-tri-cam-xuc" resizeMode="cover" returnMode="img">
+                                            src="{{ asset('kyna/img/banner-sidebar.jpg') }}" size="0x0"
+                                            alt="thien-va-quan-tri-cam-xuc" title="thien-va-quan-tri-cam-xuc"
+                                            resizeMode="cover" returnMode="img">
                                         <img class="image-topbar banner-mb img-fluid"
-                                            src="{{asset('kyna/img/banner-sidebar.jpg')}}"
-                                            size="0x0" alt="thien-va-quan-tri-cam-xuc"
-                                            title="thien-va-quan-tri-cam-xuc" resizeMode="cover" returnMode="img">
+                                            src="{{ asset('kyna/img/banner-sidebar.jpg') }}" size="0x0"
+                                            alt="thien-va-quan-tri-cam-xuc" title="thien-va-quan-tri-cam-xuc"
+                                            resizeMode="cover" returnMode="img">
                                     </a>
                                 </div>
                             </div>
@@ -897,8 +870,8 @@
                     </li>
                     <li class="col-lg-7 col-xs-12 wrap-checkout-button-mb col">
                         <div class="wrap-checkout-button">
-                            <a class="checkout-button back-to-cart" href="{{route('fe_cart/index')}}"><i class="fa fa-long-arrow-left"
-                                    aria-hidden="true"></i> Quay lại</a>
+                            <a class="checkout-button back-to-cart" href="{{ route('fe_cart/index') }}"><i
+                                    class="fa fa-long-arrow-left" aria-hidden="true"></i> Quay lại</a>
                             <button class="checkout-button-mb">Hoàn tất</button>
                         </div>
                     </li>
@@ -944,7 +917,7 @@
     <script src="https://cdn-skill.kynaenglish.vn/dist/js/app.min.js?v=15217955218005"></script>
     <script src="https://cdn-skill.kynaenglish.vn/dist/js/header.min.js?v=15217955218005"></script>
     <script src="/assets/7431fa9e/remarkable-bootstrap-notify/bootstrap-notify.js"></script>
-    <script src="https://cdn-skill.kynaenglish.vn/js/script-checkout.js?v=15018342324"></script>
+    <script src="{{ asset('kyna/js/script-checkout.js') }}?ver={{ time() }}"></script>
     <script type="text/javascript">
         $('body').on('blur', '.field-paymentform-email', function() {
             var paymentMethod = $("input[name=\'PaymentForm[method]\']:radio:checked").val();
@@ -971,46 +944,42 @@
                             .removeClass('input-error').attr('style', 'color: red;font-style: italic;');
                         $('.field-paymentform-email').removeClass('has-success').addClass('has-error');
                         $('.field-paymentform-email .input-error-2').html(res.message);
-                        //                        if (res.errorCode !== undefined && res.errorCode == 2) {
-                        //                            $('.field-paymentform-contact_name').parent().parent().hide();
-                        //                        } else {
-                        //                            $('.field-paymentform-contact_name').parent().parent().show();
-                        //                        }
+
                     }
                 }
             });
         });
-        $('body').on('blur', '#paymentform-phone_number', function(e) {
-            $('#phone_login_error').html('');
-            $('.note-email').html('');
-            $('#get-otp').attr("disabled", true);
-            var phone = $(this).val();
-            var register_by_phone = $("#paymentform-register_by_phone").val();
-            $.ajax({
-                url: '/cart/checkout/add-user-care',
-                method: 'post',
-                data: {
-                    phone: phone,
-                    register_by_phone: register_by_phone
-                },
-                success: function(res) {
-                    if (res.result) {
-                        $('.note-email').removeClass('input-error');
-                        $('.note-email').show().html(res.message);
-                        $('.field-paymentform-phone_number').removeClass('has-error').addClass(
-                            'has-success');
-                        $('.field-paymentform-phone_number .help-block').html('');
-                        $('#get-otp').prop("disabled", false);
-                    } else {
-                        if (res.result_add_user_care == false) {
-                            $('.field-paymentform-phone_number').removeClass('has-success').addClass(
-                                'has-error');
-                            $('.field-paymentform-phone_number .input-error').html(res.message);
-                        }
-                    }
-                }
-            });
-        });
+        // $('body').on('blur', '#paymentform-phone_number', function(e) {
+        //     $('#phone_login_error').html('');
+        //     $('.note-email').html('');
+        //     $('#get-otp').attr("disabled", true);
+        //     var phone = $(this).val();
+        //     var register_by_phone = $("#paymentform-register_by_phone").val();
+        //     $.ajax({
+        //         url: '/cart/checkout/add-user-care',
+        //         method: 'post',
+        //         data: {
+        //             phone: phone,
+        //             register_by_phone: register_by_phone
+        //         },
+        //         success: function(res) {
+        //             if (res.result) {
+        //                 $('.note-email').removeClass('input-error');
+        //                 $('.note-email').show().html(res.message);
+        //                 $('.field-paymentform-phone_number').removeClass('has-error').addClass(
+        //                     'has-success');
+        //                 $('.field-paymentform-phone_number .help-block').html('');
+        //                 $('#get-otp').prop("disabled", false);
+        //             } else {
+        //                 if (res.result_add_user_care == false) {
+        //                     $('.field-paymentform-phone_number').removeClass('has-success').addClass(
+        //                         'has-error');
+        //                     $('.field-paymentform-phone_number .input-error').html(res.message);
+        //                 }
+        //             }
+        //         }
+        //     });
+        // });
         $('body').on('click', '#get-otp', function(e) {
             var phone = $("#paymentform-phone_number").val();
             var register_by_phone = $("#paymentform-register_by_phone").val();

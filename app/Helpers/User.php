@@ -44,6 +44,17 @@ class User
         }
         return $result;
     }
+    public static function getRootInfo($key = '') {
+        $model = new UserModel();
+        $root = $model->getItem([],['task' => 'root']);
+        if($key && isset($root[$key])) {
+            return $root[$key];
+        }
+        else {
+            return $root;
+        }
+       
+    }
     public static function getGroupName($user_id)
     {
         $group_id = self::getInfo($user_id, 'group_id');

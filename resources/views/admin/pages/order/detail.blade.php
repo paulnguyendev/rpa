@@ -24,6 +24,12 @@
                     <i class="fa fa-ban" aria-hidden="true"></i> Hủy đơn hàng </button>
             </a>
         </li>
+        <li>
+            <a style="padding:5px 0px 5px 5px">
+                <button class="btn bg-primary heading-btn" id="active_course" type="button">
+                    <i class="icon-checkmark" aria-hidden="true"></i> Kích hoạt khóa học </button>
+            </a>
+        </li>
     @endif
     <li>
         <a style="padding:5px 0px 5px 5px" class="remove_item" href="{{ route('admin_order/delete', ['id' => $id]) }}"
@@ -85,7 +91,7 @@
                                                 <div class="media-left" style="padding-right:0px">
                                                     <div>
                                                         <a class="text-default text-semibold">
-                                                            {!! $product['product_title'] !!}
+                                                            {!! $product['name'] !!}
                                                         </a>
                                                     </div>
                                                     <div class="text-muted text-size-small">
@@ -558,7 +564,7 @@
                                             <tr>
                                                 <td class="order-product-name" data-quantity="1">
                                                     <div class="media-left" style="padding-right:0px">
-                                                        {{ $product['product_name'] ?? '-' }}
+                                                        {{ $product['name'] ?? '-' }}
                                                         <div class="text-muted text-size-small">
                                                         </div>
                                                     </div>
@@ -919,6 +925,9 @@
                     $('select[id=service_shipping]').val('custom').trigger('change');
                 }
             }
+            $("#active_course").click(function() {
+                alert("213");
+            })
         });
     </script>
 @endsection

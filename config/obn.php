@@ -18,13 +18,13 @@ return [
     ],
     'mail' => [
         'from' => 'tinidev.com@gmail.com',
-        'brand' => 'NASO.VN',
+        'brand' => 'RPAGROUP.VN',
         'subject' => [
             'register_user' => 'Thông Tin Xác Thực Tài Khoản',
         ],
     ],
     'brand' => [
-        'color_main' => "#e85e1e",
+        'color_main' => "#0d1c62",
 
     ],
     'status' => [

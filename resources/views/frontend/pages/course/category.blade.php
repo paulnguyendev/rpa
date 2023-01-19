@@ -19,9 +19,9 @@
                     </a>
                     <meta itemprop='position' content='1'>
                 </li>
-                <li><a href="/danh-sach-khoa-hoc">Danh sách khóa học</a></li>
+                <li><a href="#">Danh sách khóa học</a></li>
                 <li itemprop='itemListElement' itemscope itemtype='http://schema.org/ListItem' class='active'>
-                    <span itemprop='name'>Sales - CSKH</span>
+                    <span itemprop='name'>{{$item['name']}}</span>
                     <meta itemprop='url' content='https://skills.kynaenglish.vn/danh-sach-khoa-hoc/sales-cskh'>
                     <meta itemprop='position' content='2'>
                 </li>
@@ -34,7 +34,7 @@
             @if (Obn::checkDevice() == 'mobile')
                 @section('body_class', 'mobile')
                 {{-- Mobile --}}
-                <div class="t-wrap-sort-mobile">
+                {{-- <div class="t-wrap-sort-mobile">
                     <div class="container">
                         <div class="t-wrap-btn">
                             <a href="javascript:" class="btn-listing-filter" id="t-btn-listing-filter">
@@ -122,11 +122,11 @@
                                 nhật</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             @else
             @section('body_class', 'desktop')
             <!-- Desktop -->
-            <div class="container">
+            {{-- <div class="container">
                 <div class="t-wrap-sort">
                     <div class="t-left-sort">
                         <a href="javascript:" class="btn-listing-filter"><img
@@ -160,7 +160,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- End Desktop -->
         @endif
     </form>

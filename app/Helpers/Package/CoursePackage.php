@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Helpers\Package;
-
+use App\Models\CourseModel;
 use App\Models\TaxonomyModel;
-
 class CoursePackage
 {
     private static $taxnomyModel;
@@ -13,7 +11,6 @@ class CoursePackage
         $items = $model->whereNull('parent_id')->get();
         return $items;
     }
-
     public static function showCategory($device = 'desktop')
     {
         $xhtml = null;
@@ -24,7 +21,6 @@ class CoursePackage
         href='%s'
         data-child-category='%s'>
         <div class='parent-category'>
-            
             <div class='title'>%s</div>
             %s
         </div>
@@ -32,7 +28,6 @@ class CoursePackage
         foreach ($items as $item) {
             $id = $item->id;
             $childs = $model->defaultOrder()->descendantsOf($id);
-
             $xhtml .= self::categoryItem($item, $device);
         }
         return $xhtml;
@@ -49,19 +44,16 @@ class CoursePackage
             return $item;
         }, $childCategory);
         $childCategory = count($childCategory) > 0 ? json_encode($childCategory) : "";
-
         $childIcon = $childCategory ? '<div class="child-icon"><i class="fas fa-caret-right"></i></div>' : "";
         $isChild = $childCategory ? 'true' : "false";
         $slug = $item->slug ?? "";
         $categoryLink =  self::categoryLink($slug);
-
         if ($device == 'desktop') {
             $xhtml = sprintf(
                 "<a class='item'
         href='%s'
         data-child-category='%s'>
         <div class='parent-category'>
-            
             <div class='title'>%s</div>
             %s
         </div>
@@ -85,10 +77,8 @@ class CoursePackage
                 $childCategory,
                 $name,
                 $childIcon,
-
             );
         }
-
         return $xhtml;
     }
     public static function categoryLink($slug)
@@ -101,5 +91,11 @@ class CoursePackage
         $iframeUrl = "https://iframe.mediadelivery.net";
         $result = "{$iframeUrl}/embed/{$libid}/{$videoId}?autoplay={$autoplay}";
         return $result;
+    }
+    public static function getFirstLesson($course_id) {
+        $courseModel = new CourseModel();
+        $course = $courseModel::find($course_id);
+        $lesson = $course->lesson()->first();
+        return $lesson;
     }
 }

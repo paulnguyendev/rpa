@@ -13,7 +13,7 @@
 <meta name="cart_url" content="{{route('fe_cart/index')}}">
 <meta name="user-id" content="{{User::getAffInfo()}}" />
 <meta name="csrf-token" content="eGV1NE5FdUstBCVNIX0WfDAKKkwkASoMPjpHYTsHImYSUgQCPXISMQ==">
-<title>RPA - Web Demo</title>
+<title>@yield('title','RPA - Web Demo')</title>
 <meta name="keywords" content="Kyna.vn, kina, Kyna, lớp đào tạo trực tuyến, khóa học online">
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 <link rel="icon" href="/favo_ico.png">

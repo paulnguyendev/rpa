@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\FrontEnd;
-
 use App\Helpers\Link\ProductLink;
 use App\Helpers\Obn;
+use App\Helpers\Package\AffiliatePackage;
 use App\Helpers\Template\Product;
 use App\Helpers\User;
 use App\Http\Controllers\Controller;
@@ -22,6 +21,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Mail;
 // use App\Mail\NewUserMail;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Response;
 #Helper
 class CartController extends Controller
 {
@@ -49,14 +50,12 @@ class CartController extends Controller
         $params = $request->all();
         $id = $params['pid'] ?? $request->id;
         $type = $params['type'] ?? "course";
-    
         if ($type == 'course') {
             $item = $this->courseModel->getItem(['id' => $id], ['task' => 'id']);
         } else {
             $item = $this->comboModel->getItem(['id' => $id], ['task' => 'id']);
         }
         $slug = $item['slug'] ?? "";
-
         #_Check Course In Cart
         if (!$this->searchCartById($id)) {
             Cart::instance('frontend')->add([
@@ -296,14 +295,48 @@ class CartController extends Controller
         $cart = Cart::instance('frontend');
         $cartCount = $cart->count();
         $cartContent = $cart->content();
-        $cartTotal = $cart->total(0) . " đ";
+        $cartTotal = $cart->total(0);
+        $cartTotalNumber = $cart->total(0, "", "");
         $cartSubTotal = $cart->subtotal(0);
+        #_Check affiliate
+        $is_login = $request->session()->has('userInfo') ? 1 : 0;
+        $aff_user_id = User::getAffInfo('aff_user_id');
+        $is_affiliate = $aff_user_id ? 1 : 0;
+        $root_id = User::getRootInfo('id');
+        $user_id = $is_affiliate ? $aff_user_id : $root_id;
+        $discountPercent = 20;
+     
+        if($is_login == 1) {
+            $discountNumber = round($cartTotalNumber * $discountPercent / 100);
+            $is_affiliate = User::getInfo('','is_affiliate');
+            $total = $is_affiliate == '1' ? $cartTotalNumber : Product::getOrderSumary($cartTotalNumber, ['minus' => [$discountNumber]]);
+            $discount  = $is_affiliate == '1' ? 0 : Obn::showPrice($discountNumber);
+        }
+        else {
+            $discount = 0;
+            $total = $cartTotalNumber;
+        }
+        $totalShow = Obn::showPrice($total);
+        $createdInfo = $request->session()->has('userInfo') ? User::getInfo() : [];
+        $created_by = isset($createdInfo['id']) ? $createdInfo['id'] : "";
+        $createdFullname = isset($createdInfo['name']) ? $createdInfo['name'] : "";
+        $createdEmail = isset($createdInfo['email']) ? $createdInfo['email'] : "";
+        $createdPhone = isset($createdInfo['phone']) ? $createdInfo['phone'] : "";
+        #_Test
         return view(
             "{$this->pathViewController}/checkout",
             [
-                'cartTotal' => $cartTotal,
+                'cartTotal' => $totalShow,
                 'cartCount' => $cartCount,
                 'cartContent' => $cartContent,
+                'discount' => $discount,
+                'totalOrder' => $total,
+                'is_affiliate' => $is_affiliate,
+                'user_id' => $user_id,
+                'created_by' => $created_by,
+                'createdFullname' => $createdFullname,
+                'createdEmail' => $createdEmail,
+                'createdPhone' => $createdPhone,
             ]
         );
     }
@@ -334,5 +367,96 @@ class CartController extends Controller
         }
         $params['redirectUrl'] = route('fe_cart/checkout');
         return $params;
+    }
+    public function orderTest(Request $request)
+    {
+        $errors = [];
+        $params = $request->all();
+        $result = false;
+        $info_order = isset($params['info_order']) ? $params['info_order'] : [];
+        $phone = isset($info_order['phone']) && !empty($info_order['phone']) ? $info_order['phone'] : "";
+        $email = isset($info_order['email']) && !empty($info_order['email']) ? $info_order['email'] : "";
+        $fullname = isset($info_order['fullname']) && !empty($info_order['fullname']) ? $info_order['fullname'] : "";
+        $address = isset($info_order['address']) && !empty($info_order['address']) ? $info_order['address'] : "";
+        $orders = $this->orderModel->listItems([],['task' => 'list'])->toArray();
+        $params['orders'] = $orders;
+        $order_info_order_phone = [];
+        $phones = [];
+        $emails = [];
+        foreach ($orders as $order) {
+            $order_info_order = isset($order['info_order']) ? json_decode($order['info_order'],true) : [];
+            $phones[] = isset($order_info_order['phone']) ? $order_info_order['phone'] : "";
+            $emails[] = isset($order_info_order['email']) ? $order_info_order['email'] : "";
+        }
+        if (!$phone) {
+            $errors['paymentform-phone_number'] = "Chưa nhập số điện thoại";
+        }
+        else {
+            if(in_array($phone,$phones) && !$request->session()->has('userInfo')) {
+                $errors['paymentform-phone_number'] = "Số điện thoại đã tồn tại trên hệ thống";
+            }
+        }
+        if (!$email) {
+            $errors['paymentform-email'] = "Chưa nhập email";
+        }
+        else {
+            if(in_array($email,$emails) && !$request->session()->has('userInfo')) {
+                $errors['paymentform-email'] = "Email đã tồn tại trên hệ thống";
+            }
+        }
+        if (!$fullname) {
+            $errors['paymentform-contact_name'] = "Chưa nhập Họ tên";
+        }
+        if (!$address) {
+            $errors['paymentform-street_address'] = "Chưa nhập địa chỉ";
+        }
+        $cart = Cart::instance('frontend');
+        $cartContent = $cart->content()->toArray();
+        $user_id = $params['user_id'];
+        $products = array_map(function ($item) use ($user_id) {
+            $commisionDirect = AffiliatePackage::getCommissionDirect($user_id);
+            $price = $item['price'] ?? 0;
+            $commision = round($price * $commisionDirect / 100);
+            $item['commision'] = $commision;
+            $item['quantity'] = $item['qty'];
+            $item['thumbnail'] = isset($item['options']['thumbnail']) ? $item['options']['thumbnail'] : "";
+            $item['type'] = isset($item['options']['type']) ? $item['options']['type'] : "";
+            return $item;
+        }, $cartContent);
+        $total = $cart->total(0);
+        $subtotal = $cart->subtotal(0, '', '');
+        $code = config('obn.prefix.code') . Obn::generateUniqueCode();
+        $status = config('obn.status.setting.payment');
+        #_Total commission
+        $total_commission = 0;
+        foreach ($products as $item) {
+            $total_commission += $item['commision'];
+        }
+        $params['products'] = $products;
+        $params['subtotal']  =  $subtotal;
+        $params['code']  =  $code;
+        $params['status']  =  $status;
+        $params['total_commission']  =  $total_commission;
+        $params['discount']  =  0;
+        $params['products'] = json_encode($params['products']);
+        $params['info_order'] = json_encode($params['info_order']);
+        $params['payment'] = json_encode($params['payment']);
+        $params['created_at'] = date('Y-m-d H:i:s');
+        if (empty($errors)) {
+            $order_id = $this->orderModel->saveItem($params, ['task' => 'add-item']);
+            $result = true;
+            Cart::instance('frontend')->destroy();
+        }
+        $params['errors'] = $errors;
+        $params['result'] = $result;
+        $params['redirectUrl'] = route('fe_cart/order_success',['code' => $code]);
+        return $params;
+    }
+    public function removeCookie(Request $request)
+    {
+        if (Cookie::has('aff_user_id')) {
+            $cookie = Cookie::forget('aff_user_id');
+            return Response::make('cookie has bee deleted')->withCookie($cookie);
+        }
     }
 }
