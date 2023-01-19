@@ -1,7 +1,6 @@
 @php
     use App\Helpers\User;
     $userInfo = User::getInfo();
-    
 @endphp
 @extends('user.main')
 @section('content')
@@ -19,7 +18,6 @@
                 </a>
             </div>
         </div>
-       
         <div class="col-sm-12 col-md-4">
             <div class="panel panel-body">
                 <a class="media no-margin" href="{{ route('user_order/index') }}">
@@ -48,59 +46,59 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="{{$is_affiliate == 1 ? "col-lg-6" : "col-lg-12" }} ">
             <div class="panel panel-body">
                 <div class="dashboard-slide">
                     <div class="dashboard-slide-item">
-                        <img src="{{ asset('kyna/img/slide1.jpg') }}" alt="Dashboard slide 1"
-                            class="img-responsive">
+                        <img src="{{ asset('kyna/img/slide1.jpg') }}" alt="Dashboard slide 1" class="img-responsive">
                     </div>
                     <div class="dashboard-slide-item">
-                        <img src="{{ asset('kyna/img/slide2.jpg') }}" alt="Dashboard slide 1"
-                            class="img-responsive">
+                        <img src="{{ asset('kyna/img/slide2.jpg') }}" alt="Dashboard slide 1" class="img-responsive">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
-            <div class="panel">
-                <div class="panel-heading pb-0">
-                    <h6 class="panel-title">Thông tin thành viên</h6>
-                </div>
-                <div class=" panel-body panel-user-dashboard">
-                    <p>
-                        <strong>Họ tên:</strong>
-                        <span>{{ $userInfo['name'] ?? '-' }}</span>
-                    </p>
-                    <p>
-                        <strong>Email:</strong>
-                        <span>{{ $userInfo['email'] ?? '-' }}</span>
-                    </p>
-                    {{-- <p>
+        @if ($is_affiliate == 1)
+            <div class="col-lg-6">
+                <div class="panel">
+                    <div class="panel-heading pb-0">
+                        <h6 class="panel-title">Thông tin thành viên</h6>
+                    </div>
+                    <div class=" panel-body panel-user-dashboard">
+                        <p>
+                            <strong>Họ tên:</strong>
+                            <span>{{ $userInfo['name'] ?? '-' }}</span>
+                        </p>
+                        <p>
+                            <strong>Email:</strong>
+                            <span>{{ $userInfo['email'] ?? '-' }}</span>
+                        </p>
+                        {{-- <p>
                         <strong>Loại tài khoản:</strong>
                         {!! User::getGroupName($userInfo['id']) !!}
                     </p> --}}
-                    <p>
-                        <strong>Link đăng ký:</strong>
-                        <span><a target="_blank" href="{{ route('fe_aff/register',['code' => $userInfo['code']]) }}">{{ route('fe_aff/register',['code' => $userInfo['code']]) }}</a></span>
-                        <span><a data-href="{{ route('fe_aff/register',['code' => $userInfo['code']]) }}" class="btn btn-success btn-xs copy-affiliate-url">Copy</a></span>
-                    </p>
-                    <p>
-                        <strong>Link mua hàng:</strong>
-                        <span><a target="_blank" href="{{ route('fe_aff/index',['code' => $userInfo['code']]) }}">{{ route('fe_aff/index',['code' => $userInfo['code']]) }}</a></span>
-                        <span><a data-href="{{ route('fe_aff/index',['code' => $userInfo['code']]) }}" class="btn btn-success btn-xs copy-affiliate-url">Copy</a></span>
-                    </p>
-                 
-                    <p>
-                        <strong>Số lượt nhấp chuột vào liên kết giới thiệu:</strong>
-                        <span>{{$userInfo['aff_number'] ?? 0}}</span>
-                    </p>
-
+                        <p>
+                            <strong>Link đăng ký:</strong>
+                            <span><a target="_blank"
+                                    href="{{ route('fe_aff/register', ['code' => $userInfo['code']]) }}">{{ route('fe_aff/register', ['code' => $userInfo['code']]) }}</a></span>
+                            <span><a data-href="{{ route('fe_aff/register', ['code' => $userInfo['code']]) }}"
+                                    class="btn btn-success btn-xs copy-affiliate-url">Copy</a></span>
+                        </p>
+                        <p>
+                            <strong>Link mua hàng:</strong>
+                            <span><a target="_blank"
+                                    href="{{ route('fe_aff/index', ['code' => $userInfo['code']]) }}">{{ route('fe_aff/index', ['code' => $userInfo['code']]) }}</a></span>
+                            <span><a data-href="{{ route('fe_aff/index', ['code' => $userInfo['code']]) }}"
+                                    class="btn btn-success btn-xs copy-affiliate-url">Copy</a></span>
+                        </p>
+                        <p>
+                            <strong>Số lượt nhấp chuột vào liên kết giới thiệu:</strong>
+                            <span>{{ $userInfo['aff_number'] ?? 0 }}</span>
+                        </p>
+                    </div>
                 </div>
             </div>
-
-
-        </div>
+        @endif
         {{-- <div class="col-lg-12">
             <div class="panel panel-flat panel-order-dashboard">
                 <div class="panel-heading">
@@ -153,7 +151,6 @@
                 orderable: false,
                 searchable: false
             },
-
             {
                 data: null,
                 render: function(data) {
@@ -218,8 +215,6 @@
         $(document).on('click', '.copy-affiliate-url', function(e) {
             e.preventDefault();
             let copyText = $(this).data('href');
-            
-            
             let tempElement = document.createElement('input');
             tempElement.setAttribute('value', copyText);
             document.body.appendChild(tempElement);

@@ -128,18 +128,18 @@
             </li>
 
 
-            <li>
+            {{-- <li>
                 <a href="#">
                     <span>Yêu cầu rút tiền</span>
                 </a>
-            </li>
+            </li> --}}
 
 
-            <li>
+            {{-- <li>
                 <a href="#">
                     <span>Cấu hình</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </li>
     <li data-label="Tài khoản">

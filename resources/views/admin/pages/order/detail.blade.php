@@ -1,5 +1,4 @@
 @php
-    
     use App\Helpers\Obn;
 @endphp
 @extends('admin.admin')
@@ -24,11 +23,13 @@
                     <i class="fa fa-ban" aria-hidden="true"></i> Hủy đơn hàng </button>
             </a>
         </li>
+    @endif
+    @if ($item['is_course_active'] != 1)
         <li>
-            <a style="padding:5px 0px 5px 5px">
-                <button class="btn bg-primary heading-btn" id="active_course" type="button">
-                    <i class="icon-checkmark" aria-hidden="true"></i> Kích hoạt khóa học </button>
-            </a>
+            <div style="padding:5px 0px 5px 5px">
+                <a class="btn btn-primary" href="{{ route('admin_order/activeCourse', ['code' => $item['code']]) }}"> <i
+                        class="icon-checkmark" aria-hidden="true"></i> Kích hoạt khóa học</a>
+            </div>
         </li>
     @endif
     <li>
@@ -306,7 +307,6 @@
             <div id="buyer" class="modal fade">
                 <form method="POST" action="{{ route('admin_order/saveInfo', ['type' => 'order', 'id' => $id]) }}"
                     accept-charset="UTF-8" id="buyer-form" enctype="multipart/form-data">
-
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -343,7 +343,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label>Địa chỉ
                                     </label>
@@ -447,7 +446,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label>Địa chỉ
                                     </label>
@@ -569,11 +567,10 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="text-right">{{ $quantity }} x {{$price}}</td>
-                                                <td class="text-right">{{$subTotal}}</td>
+                                                <td class="text-right">{{ $quantity }} x {{ $price }}</td>
+                                                <td class="text-right">{{ $subTotal }}</td>
                                             </tr>
                                         @endforeach
-                                      
                                         <tr>
                                             <td class="text-right" colspan="2">Thành tiền</td>
                                             <td class="text-right">{{ number_format($item['total']) . ' đ' ?? 0 }}</td>
@@ -831,7 +828,6 @@
                     let html = '<form id="form_shippingfee_' + data.id +
                         '" class="wb_ajax_submit" method="POST" action="' + data.url + '">' +
                         '<input type="hidden" name="_token" value="2Z0qF0FZBRj817VTRkUjPEnCBaTR2guKBRMbgavd">' +
-
                         '<div class="form-group">' +
                         '  <label>Phí ship</label>' +
                         '  <input type="number" class="form-control" min="0" value="' + data.shippingfee +
@@ -852,7 +848,6 @@
                     let html = '<form id="form_discount_' + data.id +
                         '" class="wb_ajax_submit" method="POST" action="' + data.url + '">' +
                         '<input type="hidden" name="_token" value="2Z0qF0FZBRj817VTRkUjPEnCBaTR2guKBRMbgavd">' +
-
                         '<div class="form-group">' +
                         '  <label>Thêm giảm giá (đ)</label>' +
                         '  <input type="number" class="form-control" min="1" value="1" name="discount" onClick="this.select();">' +
@@ -898,9 +893,7 @@
             $(document).on('submit', '.wb_ajax_submit', function(e) {
                 e.preventDefault();
                 $(this).find('button').click();
-
             });
-
         })(jQuery)
     </script>
     <script src="{{ asset('obn-dashboard/js/core/shipping.js') }}?ver={{ time() }}"></script>
@@ -925,9 +918,6 @@
                     $('select[id=service_shipping]').val('custom').trigger('change');
                 }
             }
-            $("#active_course").click(function() {
-                alert("213");
-            })
         });
     </script>
 @endsection

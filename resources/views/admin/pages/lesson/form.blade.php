@@ -188,6 +188,24 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
+                        <h6 class="panel-title">Video</h6>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse" class=""></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="">Video ID</label>
+                            <input type="text" class="form-control" name="video" value="{{ $item['video'] ?? ' ' }}">
+                            {{-- <input type="file" name="video" id="videoInput" class="hide" data-url="{{route('admin_bunny/uploadVideo')}}">
+                            <button class="btn btn-default" id="btnUploadVideo" type="button" >Tải video</button> --}}
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
                         <h6 class="panel-title">Nội dung</h6>
                         <div class="heading-elements">
                             <ul class="icons-list">
@@ -210,24 +228,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h6 class="panel-title">Video</h6>
-                        <div class="heading-elements">
-                            <ul class="icons-list">
-                                <li><a data-action="collapse" class=""></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label for="">Video ID</label>
-                            <input type="text" class="form-control" name="video" value="{{ $item['video'] ?? ' ' }}">
-                            {{-- <input type="file" name="video" id="videoInput" class="hide" data-url="{{route('admin_bunny/uploadVideo')}}">
-                            <button class="btn btn-default" id="btnUploadVideo" type="button" >Tải video</button> --}}
-                        </div>
-                    </div>
-                </div>
+              
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-3">

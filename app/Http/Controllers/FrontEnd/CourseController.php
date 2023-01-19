@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers\FrontEnd;
+use App\Helpers\Package\CoursePackage;
+use App\Helpers\User;
 use App\Http\Controllers\Controller;
 use App\Models\ComboModel;
 use App\Models\ProductMetaModel;
@@ -8,6 +10,7 @@ use App\Models\ProductMetaModel;
 use App\Models\CourseModel as MainModel;
 use App\Models\SupplierModel;
 use App\Models\TaxonomyModel;
+use App\Models\UserModel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -25,6 +28,7 @@ class CourseController extends Controller
     private $productMetaModel;
     private $supplierModel;
     private $comboModel;
+    private $userModel;
     private $params                 = [];
     function __construct()
     {
@@ -33,17 +37,21 @@ class CourseController extends Controller
         $this->productMetaModel = new ProductMetaModel();
         $this->supplierModel = new SupplierModel();
         $this->comboModel = new ComboModel();
+        $this->userModel = new UserModel();
         View::share('controllerName', $this->controllerName);
     }
     public function detail(Request $request)
     {
         $slug = $request->slug;
-        $item = $this->model->getItem(['slug' => $slug],['task' => 'slug']);
+        $item = $this->model->getItem(['slug' => $slug], ['task' => 'slug']);
         $teacher = [];
         $level = [];
         $relatedCourses = [];
         $totalLesson = 0;
-        if($item) {
+        $is_login = $request->session()->has('userInfo') ? 1 : 0;
+        $checkCourse = 0;
+        $lesson_id = null;
+        if ($item) {
             $id = $item['id'];
             $teacher = $item->teacher()->first();
             $level = $item->level()->first();
@@ -51,7 +59,20 @@ class CourseController extends Controller
             $combo = $item->combo()->with('comboInfo')->with('courseInfo')->get()->toArray();
             $taxonomy = $item->taxonomy()->first();
             $lessonCount = $item->totalLesson();
-            $relatedCourses = $taxonomy->course_ids()->where('course_id','!=',$id)->get();
+            $relatedCourses = $taxonomy->course_ids()->where('course_id', '!=', $id)->get();
+            #_Check đăng nhập hiển thị vào lớp
+            $user_id = $request->session()->has('userInfo') ? User::getInfo('','id') : "";
+            if($user_id) {
+                $user = $this->userModel::find($user_id);
+                $myCourses = $user->courseOrder()->with('courseInfo')->get()->toArray();
+                if (count($myCourses) > 0) {
+                    $myCourses_ids = array_column($myCourses, 'course_id');
+                    $checkCourse = in_array($id, $myCourses_ids) ? 1 : 0;
+                }
+                $firstLesson = CoursePackage::getFirstLesson($item['id']);
+                $lesson_id = $firstLesson['id'] ?? "";
+            }
+           
             return view(
                 "{$this->pathViewController}/detail",
                 [
@@ -62,10 +83,11 @@ class CourseController extends Controller
                     'combo' => $combo,
                     'relatedCourses' => $relatedCourses,
                     'lessonCount' => $lessonCount,
+                    'checkCourse' => $checkCourse,
+                    'lesson_id' => $lesson_id,
                 ]
             );
-        }
-        else {
+        } else {
             return redirect(route('home/index'));
         }
         // $item = $this->model::find($id);
@@ -83,19 +105,50 @@ class CourseController extends Controller
     public function category(Request $request)
     {
         $slug = $request->slug;
-        $item = $this->taxonomyModel->getItem(['slug' => $slug],['task' => 'slug']);
+        $q = $request->q;
+      
         $childs = [];
         $coursesList = [];
         $courses = null;
         $coursesTotal = 0;
-        if($item) {
-            $id = $item['id'];
-            $childs = $item::defaultOrder()->descendantsOf($id);
-            $courses = $item->course_ids();
-            
-            $coursesList = $courses->get();
-            $coursesTotal = $courses->count();
-           
+        if (!$q) {
+            if($slug == 'all') {
+                $item['name']  = "tại RPA";
+                $coursesList = $this->model->listItems([] , ['task' => 'list']);
+                $coursesTotal = count($coursesList);
+                return view(
+                    "{$this->pathViewController}/category",
+                    [
+                        'item' => $item,
+                        'childs' => $childs,
+                        'coursesList' => $coursesList,
+                        'coursesTotal' => $coursesTotal,
+                    ]
+                );
+            }
+            $item = $this->taxonomyModel->getItem(['slug' => $slug], ['task' => 'slug']);
+            if ($item) {
+                $id = $item['id'];
+                $childs = $item::defaultOrder()->descendantsOf($id);
+                $courses = $item->course_ids();
+                $coursesList = $courses->get();
+                $coursesTotal = $courses->count();
+                return view(
+                    "{$this->pathViewController}/category",
+                    [
+                        'item' => $item,
+                        'childs' => $childs,
+                        'coursesList' => $coursesList,
+                        'coursesTotal' => $coursesTotal,
+                    ]
+                );
+            } else {
+                return redirect(route('home/index'));
+            }
+        } else {
+            $coursesList = $this->model->listItems(['searchText' => $q], ['task' => 'liveSearch']);
+            $coursesTotal = count($coursesList);
+            $item['name'] = "Từ khóa:  " . $q;
             return view(
                 "{$this->pathViewController}/category",
                 [
@@ -106,21 +159,6 @@ class CourseController extends Controller
                 ]
             );
         }
-        else {
-            return redirect(route('home/index'));
-        }
-        $id = 0;
-        $item = $this->taxonomyModel::find($id);
-        $items = $item->product_ids()->get();
-        $total = $item->product_ids()->count();
-        return view(
-            "{$this->pathViewController}/category",
-            [
-                'items' => $items,
-                'item' => $item,
-                'total' => $total,
-            ]
-        );
     }
     public function supplier(Request $request)
     {
@@ -141,8 +179,8 @@ class CourseController extends Controller
     {
         $items = [];
         $type = $request->type;
-        $items = ($type == 'combo') ? $this->comboModel->listItems([],['task' => 'list']) : $this->model->listItems([],['task' => 'list']);
-        $data = ( $type  == 'combo') ? view('frontend.pages.ajax.comboCourse')->with('items', $items)->render()  : view('frontend.pages.ajax.wowCourse')->with('items', $items)->render();
+        $items = ($type == 'combo') ? $this->comboModel->listItems([], ['task' => 'list']) : $this->model->listItems([], ['task' => 'list']);
+        $data = ($type  == 'combo') ? view('frontend.pages.ajax.comboCourse')->with('items', $items)->render()  : view('frontend.pages.ajax.wowCourse')->with('items', $items)->render();
         return response()->json([
             'status' => [
                 'code' => 200,
@@ -150,5 +188,22 @@ class CourseController extends Controller
             ],
             'data' => $data,
         ]);
+    }
+    public function search(Request $request)
+    {
+        $searchText = $request->searchText;
+        $data = $this->model->listItems(['searchText' => $searchText], ['task' => 'liveSearch'])->toArray();
+        $data = array_map(function ($item) {
+            $item['name'] = $item['title'] ?? "-";
+            $item['highlight_name'] = $item['title'] ?? "-";
+            $item['teacher_name'] = "Test teacher";
+            $item['highlight_teacher_name'] = "Test teacher";
+            $item['url'] = route('fe_course/detail',['slug' => $item['slug']]);
+            return $item;
+        }, $data);
+        $result = [
+            "data" => $data
+        ];
+        return $result;
     }
 }

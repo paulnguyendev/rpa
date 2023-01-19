@@ -16,12 +16,12 @@ class OrderModel extends Model
     const UPDATED_AT = 'updated_at';
     protected $fieldSearchAccepted = ['email', 'phone', 'fullname'];
     protected $crudNotAccepted = ['_token', 'data_attributes', 'id'];
-    protected $fillable = ['discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission','is_affiliate','created_by'];
+    protected $fillable = ['discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission','is_affiliate','created_by','is_course_active'];
     use HasFactory;
     public function listItems($params = "", $options = "")
     {
         $result = null;
-        $query = $this->select('id', 'discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission','is_affiliate','created_by');
+        $query = $this->select('id', 'discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission','is_affiliate','created_by','is_course_active');
         if ($options['task'] == 'admin-count-total') {
             $result = $query->where('user_group_id', '3')->count();
         }
@@ -30,6 +30,9 @@ class OrderModel extends Model
         }
         if ($options['task'] == 'user_id') {
             $result = $query->where('user_id', $params['user_id'])->orderBy('id', 'desc')->get();
+        }
+        if ($options['task'] == 'created_by') {
+            $result = $query->where('created_by', $params['user_id'])->orderBy('id', 'desc')->get();
         }
         if ($options['task'] == 'status') {
             $result = $query->where('status', $params['status'])->orderBy('id', 'desc')->get();
@@ -49,7 +52,7 @@ class OrderModel extends Model
     }
     public function getItem($params = [], $options = [])
     {
-        $query = $this->select('id', 'discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission','is_affiliate','created_by');
+        $query = $this->select('id', 'discount', 'info_order', 'info_shipping', 'note', 'payment', 'products', 'shipping', 'subtotal', 'total', 'total_weight', 'user_id', 'created_at','code','status','total_point','total_commission','is_affiliate','created_by','is_course_active');
         if ($options['task'] == 'taxonomy') {
             $result = $query->where('taxonomy', $params['taxonomy'])->first();
         }

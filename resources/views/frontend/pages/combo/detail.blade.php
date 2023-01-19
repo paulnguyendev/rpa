@@ -64,6 +64,108 @@
                             </div>
                         </div>
                     </section>
+                    <section class="course-general related-course__wrapper">
+                        <h5 class="title">Khóa học trong Combo <span style="color: #ff7818;"></span></h5>
+                        <div class="course-related-horizontal__slider slick__slider--normal "
+                            data-slick-class="course-related-horizontal" data-slick-type="course-detail"
+                            data-number-card="3" data-see-more-link="">
+                            @foreach ($courses as $relatedCourse)
+                                @php
+                                    $totalLesson = $relatedCourse->totalLesson();
+                                    $relatedTeacher = $relatedCourse->teacher()->first();
+                                    
+                                @endphp
+                                <div class="card-course " data-toggle="popover" data-trigger="hover" data-id="376"
+                                    data-upload-date="19/06/2021" data-duration="4 giờ" data-user-enroll="1074"
+                                    data-promo-text="" data-is-best-seller="" data-status-item="1"
+                                    data-course-item-free="">
+                                    <div class="card-inner">
+                                        <a href="{{ route('fe_course/detail', ['slug' => $relatedCourse['slug']]) }}"
+                                            class="card-link">
+                                            <div class="card-header">
+                                                <img src="{{ Obn::showThumbnail($relatedCourse['thumbnail']) }}"
+                                                    alt="course-image">
+                                                <div class="card-header__badget card-vertical">
+                                                    <span class="card-header__badget-item">
+                                                        <i class="fal fa-play-circle"></i>
+                                                        22 </span>
+                                                    <span class="card-header__badget-item"><i
+                                                            class="fal fa-star"></i>5</span>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="card-info">
+                                                    <h5 class="heading-card__main">
+                                                        {{ $relatedCourse['title'] ?? '-' }} </h5>
+                                                    <div class="card-body__badget card-horizontal">
+                                                        <span class="card-body__badget-item">
+                                                            <img src="https://cdn-skill.kynaenglish.vn/img/duration.svg"
+                                                                alt="Kyna" width="18px"
+                                                                height="18px">{{ $relatedCourse['time'] ?? 0 }} giờ
+                                                        </span>
+                                                        <span class="card-body__badget-item">
+                                                            <img src="https://cdn-skill.kynaenglish.vn/img/book.svg"
+                                                                alt="Kyna" width="18px"
+                                                                height="18px">{{ $totalLesson }} bài học
+                                                        </span>
+                                                    </div>
+                                                    <div class="info-card-wrap card-vertical">
+                                                        <div class="info-card-avatar">
+                                                            <img data-src="{{ Obn::showThumbnail($relatedTeacher['thumbnail']) }}"
+                                                                src="{{ Obn::showThumbnail($relatedTeacher['thumbnail']) }}"
+                                                                class="img-lazy" alt="ThS Trương Anh Tú">
+                                                        </div>
+                                                        <div class="info-card-title">
+                                                            <span class="info-card">
+                                                                <i class="fas fa-user-tie"></i>
+                                                                {{ $relatedTeacher['title'] ?? '-' }} </span>
+                                                            <span class="info-card">
+                                                                <i class="fas fa-briefcase"></i>
+                                                                {{ $relatedTeacher['position'] ?? '-' }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-rating card-horizontal">
+                                                    <span class="card-rating-item">
+                                                        <span class="number">5</span>
+                                                        <img class="course-rating__icon tablet"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                        <img class="course-rating__icon"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                        <img class="course-rating__icon"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                        <img class="course-rating__icon"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                        <img class="course-rating__icon"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                        <img class="course-rating__icon tablet"
+                                                            src="https://cdn-skill.kynaenglish.vn/img/star-fill.svg"
+                                                            alt="Kyna - Star">
+                                                    </span>
+                                                </div>
+                                                <div class="pricing-card">
+
+                                                    <span
+                                                        class="course-pricing">{{ Obn::showPrice($relatedCourse['price']) }}</u>
+                                                    </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+
+
+                        </div>
+                        <!--    <a class="cta-all-lecturer-course" href="/danh-sach-khoa-hoc">Xem thêm</a>-->
+                    </section>
                   
                 </div>
                 <div class="course-detail--right">

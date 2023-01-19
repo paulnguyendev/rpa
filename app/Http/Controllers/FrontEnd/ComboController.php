@@ -38,6 +38,8 @@ class ComboController extends Controller
     {
         $slug = $request->slug;
         $item = $this->model->getItem(['slug' => $slug], ['task' => 'slug']);
+        $courses = $item->courseList()->get();
+        
         $teacher = [];
         $level = [];
         if ($item) {
@@ -45,6 +47,7 @@ class ComboController extends Controller
                 "{$this->pathViewController}/detail",
                 [
                     'item' => $item,
+                    'courses' => $courses,
                 ]
             );
         } else {

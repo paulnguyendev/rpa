@@ -36,12 +36,12 @@
         <div class="info">
             <h4 class="title">Thông tin RPA</h4>
             <ul>
-                <li><a href="#">Danh sách khóa học</a></li>
-                <li><a href="#">Câu hỏi thường gặp</a></li>
-                <li><a href="#">Cách thanh toán học
+                <li><a href="{{route('home/index')}}">Danh sách khóa học</a></li>
+                <li><a href="{{route('home/index')}}">Câu hỏi thường gặp</a></li>
+                <li><a href="{{route('home/index')}}">Cách thanh toán học
                         phí</a>
                 </li>
-                <li><a href="#" target="_blank">Thông tin hữu ích</a></li>
+                <li><a href="{{route('home/index')}}" target="_blank">Thông tin hữu ích</a></li>
             </ul>
             <!--end .top-->
         </div>
@@ -49,10 +49,10 @@
         <div class="about ">
             <h4 class="text-transform title">Về RPA</h4>
             <ul>
-                <li><a href="#" class="hover-color-green">Quy chế hoạt động
+                <li><a href="{{route('home/index')}}" class="hover-color-green">Quy chế hoạt động
                         Sàn
                         GDTMĐT</a></li>
-                <li><a href="#" class="hover-color-green">Đào tạo doanh nghiệp</a></li>
+                <li><a href="{{route('home/index')}}" class="hover-color-green">Đào tạo doanh nghiệp</a></li>
             </ul>
             <!--end .top-->
         </div>

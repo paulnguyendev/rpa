@@ -35,13 +35,15 @@ class DashboardController extends Controller
         $totalOrder = $user->order()->count();
         #_Total Order Success
         $totalOrderSuccess = $user->order()->where('status','complete')->count();
-    
+        $is_affiliate = $user['is_affiliate'] ?? 0;
+       
         return view(
             "{$this->pathViewController}/index",
             [
                 'totalIncome' => $totalIncome,
                 'totalOrder' => $totalOrder,
                 'totalOrderSuccess' => $totalOrderSuccess,
+                'is_affiliate' => $is_affiliate,
             ]
         );
     }

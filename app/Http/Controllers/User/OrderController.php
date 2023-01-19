@@ -45,7 +45,7 @@ class OrderController extends Controller
     {
         $result = [];
         $user_id = User::getInfo('', 'id');
-        $items = $this->model->listItems(['user_id' => $user_id], ['task' => 'user_id']);
+        $items = $this->model->listItems(['user_id' => $user_id], ['task' => 'created_by']);
         $total = count($items);
         $items = $total > 0 ? $items->toArray() : [];
         $items =  array_map(function ($item) {

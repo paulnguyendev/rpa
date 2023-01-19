@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="https://static.loveitopcdn.com/backend/dist/css/style.css?id=fca89b87486ea1f07891">
 <link media="all" type="text/css" rel="stylesheet"
     href="https://static.loveitopcdn.com/backend/css/custom_new.css?v=1.0.2">
+    <link rel="stylesheet" href="{{ asset('obn-dashboard/css/obn.css') }}?ver={{ time() }}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://static.loveitopcdn.com/backend/dist/js/loading.js?id=7e97bd818d6bd28c3dc8"></script>
 <style>

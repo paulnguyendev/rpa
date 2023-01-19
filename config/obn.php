@@ -21,6 +21,8 @@ return [
         'brand' => 'RPAGROUP.VN',
         'subject' => [
             'register_user' => 'Thông Tin Xác Thực Tài Khoản',
+            'create_user' => 'Thông Tin Tài Khoản Đăng Nhập',
+            'create_course' => 'Thông báo thêm khóa học thành công!',
         ],
     ],
     'brand' => [

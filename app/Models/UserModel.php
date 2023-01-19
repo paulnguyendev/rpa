@@ -91,6 +91,7 @@ class UserModel extends Model
             return $result;
         }
         if($option['task'] == 'edit-item') {
+          
             if(isset($params['image'])) {
                 $image = $params['image'];
                 $params['image'] = Str::random('10') .  "." . $params['image']->clientExtension();
@@ -121,7 +122,7 @@ class UserModel extends Model
     }
     public function order()
     {
-        return $this->hasMany(OrderModel::class, 'user_id', 'id');
+        return $this->hasMany(OrderModel::class, 'created_by', 'id');
     }
     public function ticket()
     {

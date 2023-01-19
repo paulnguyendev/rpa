@@ -31,10 +31,10 @@
                                 </a>
                             </div>
                         </div>
-                        <form id="search-form" action="/danh-sach-khoa-hoc" method="get">
+                        <form id="search-form" action="{{route('fe_course/category',['slug' => 'tim-kiem'])}}" method="get">
                             <div class="input-group">
                                 <label hidden for="live-search-bar">Tìm kiếm</label>
-                                <input id="live-search-bar" name="q" type="text"
+                                <input id="live-search-bar" data-url="{{route('fe_course/search')}}" data-url-category = "{{route('fe_course/category')}}" name="q" type="text"
                                     class="form-control live-search-bar" placeholder="Nhập tên khóa học/giảng viên"
                                     autocomplete="off">
                                 <button class="search-button" type="submit" aria-label="search">
@@ -81,6 +81,12 @@
                                         <div class="dropdown-menu">
                                             <ul class="dropdown-menu-list" id="user-action"
                                                 aria-labelledby="user-options">
+                                                <li class="dropdown-item">
+                                                    <a href="{{route('user/index')}}">
+                                                        <i class="fas fa-list-alt"></i>
+                                                       Quản lý chung
+                                                    </a>
+                                                </li>
                                                 <li class="dropdown-item">
                                                     <a href="{{route('user_course/index')}}">
                                                         <i class="fas fa-list-alt"></i>
@@ -160,7 +166,7 @@
                                                 </a>
                                             </div>
                                             <div class="nav-item">
-                                                <a href="/danh-sach-khoa-hoc" class="nav-link">
+                                                <a href="{{route('fe_course/category',['slug' => 'all'])}}" class="nav-link">
                                                     <i class="far fa-books"></i>Tất cả khóa học
                                                 </a>
                                             </div>

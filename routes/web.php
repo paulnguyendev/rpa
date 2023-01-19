@@ -87,6 +87,7 @@ Route::prefix($prefix)->group(function () {
             Route::get('/category/{slug?}', 'category')->name($routeName . '/category');
             Route::get('/supplier/{id?}', 'supplier')->name($routeName . '/supplier');
             Route::get('/ajax/listCourse', 'listCourse')->name($routeName . '/listCourse');
+            Route::get('/ajax/search', 'search')->name($routeName . '/search');
         });
     });
     Route::prefix('giang-vien')->group(function () {
@@ -360,8 +361,10 @@ Route::middleware('access.adminDashboard')->prefix($prefix)->group(function () {
             Route::get('/index', 'index')->name($routeName . '/index');
             Route::get('/detail/{id?}', 'detail')->name($routeName . '/detail');
             Route::get('/form', 'form')->name($routeName . '/form');
+            Route::get('/activeCourse/{code?}', 'activeCourse')->name($routeName . '/activeCourse');
             Route::delete('/delete/{id?}', 'delete')->name($routeName . '/delete');
             Route::post('/save/{id?}', 'save')->name($routeName . '/save');
+            Route::post('/saveActiveCourse', 'saveActiveCourse')->name($routeName . '/saveActiveCourse');
             Route::post('/saveInfo/{type?}/{id?}', 'saveInfo')->name($routeName . '/saveInfo');
             Route::delete('/destroyMulti', 'destroyMulti')->name($routeName . '/destroyMulti');
             Route::get('/dataList', 'dataList')->name($routeName . '/dataList');

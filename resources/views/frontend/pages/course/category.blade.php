@@ -13,13 +13,13 @@
             <ul class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
                 <li itemprop='itemListElement' itemscope itemtype='http://schema.org/ListItem'>
                     <a itemscope itemtype='http://schema.org/Thing' itemprop='item' id='https://skills.kynaenglish.vn/'
-                        href='https://skills.kynaenglish.vn/'>
+                        href='{{route('home/index')}}'>
                         <span itemprop='name'>Trang chủ</span>
                         <meta itemprop='url' content=https://skills.kynaenglish.vn />
                     </a>
                     <meta itemprop='position' content='1'>
                 </li>
-                <li><a href="#">Danh sách khóa học</a></li>
+                <li><a href="{{route('fe_course/category')}}">Danh sách khóa học</a></li>
                 <li itemprop='itemListElement' itemscope itemtype='http://schema.org/ListItem' class='active'>
                     <span itemprop='name'>{{$item['name']}}</span>
                     <meta itemprop='url' content='https://skills.kynaenglish.vn/danh-sach-khoa-hoc/sales-cskh'>

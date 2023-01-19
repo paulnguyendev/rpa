@@ -25,7 +25,7 @@
         <!-- Block data for track course viewed -->
         <div id="loadReviewUrl" hidden>/course/default/load-review?course_id=152</div>
         <div id="course-detail" class="course-detail">
-           
+
             <div class="cd-top-banner have-bg opt-1" style="background-image: url('{{ $item['thumbnail'] }}');">
                 <div class="container">
                     <div class="course-detail--left">
@@ -38,8 +38,8 @@
                             <div class="gv-right">
                                 <h2 class="gv-name">{{ $teacher['title'] ?? '' }} </h2>
                                 <h4 class="gv-title">{{ $teacher['position'] ?? '' }} </h4>
-                                <a class="gv-btn-view-more"
-                                    href="{{ route('fe_teacher/detail', ['slug' => $teacher['slug']]) }}">Xem thêm</a>
+                                {{-- <a class="gv-btn-view-more"
+                                    href="{{ route('fe_teacher/detail', ['slug' => $teacher['slug']]) }}">Xem thêm</a> --}}
                             </div>
                         </div>
                         <ul class="crs-short-info">
@@ -535,10 +535,10 @@
                                         </svg>
                                     </button>
                                 </div>
-                               
+
                                 <div id="youtube_video_wrapper">
                                     <!-- Copy & Pasted from YouTube -->
-                                    <iframe width="560" height="349" src=" {{$item['video_intro'] ?? ""}}"
+                                    <iframe width="560" height="349" src=" {{ $item['video_intro'] ?? '' }}"
                                         allow="autoplay" frameborder="0" allowfullscreen></iframe>
                                 </div>
                                 <div class="label-wrap">
@@ -663,25 +663,37 @@
                             </span>
                         </div>
                         <div class="crs-btn">
-                            <a class="btn-buy-now dang-ky-hoc crs-btn-buy" href="#" action="AddToCart"
-                                data-ga="event" data-url="{{ route('fe_cart/buyNow') }}" data-pid="{{ $item['id'] }}"
-                                style="background-color: rgba(251, 106, 2); color: #FFFFFF" category="CourseDetail"
-                                label="Bí quyết mua bán bất động sản thành công"><b>Mua ngay</b></a>
-                            @if (Obn::searchCartById($item['id']))
-                                <a id="btn-goto-cart" href="{{route('fe_cart/index')}}" class="go-to-cart dang-ky-hoc crs-btn-add"
-                                    style="background-color: transparent; color: #FFFFFF; border-color: #FFFFFF">Xem
-                                    giỏ hàng</b></a>
+                            @if ($checkCourse == 1)
+                                <a class="btn-goLesson dang-ky-hoc crs-btn-add" href="{{ route('user_course/detail',['slug' => $item['slug'] ?? "",'lesson_id' => $lesson_id]) }}" action="AddToCart"
+                                    data-url="{{ route('user_course/detail') }}"
+                                    data-pid="{{ $item['id'] }}"
+                                    style="background-color: rgba(251, 106, 2); color: #FFFFFF" category="CourseDetail"><b>Vào lớp</b></a>
                             @else
-                                <a id="btn-add-to-cart" class="go-to-cart add-to-cart dang-ky-hoc crs-btn-add"
-                                    href="{{ route('fe_cart/add', ['id' => $item['id']]) }}" action="AddToCart"
-                                    data-ga="event" data-pid="{{ $item['id'] }}"
-                                    style="background-color:transparent; color: #FFFFFF; border-color: #FFFFFF"
-                                    category="CourseDetail" label="Bí quyết mua bán bất động sản thành công"><b
-                                        class=''>Thêm vào giỏ hàng</b></a> <a id="btn-goto-cart" href="{{ route('fe_cart/add', ['id' => $item['id']]) }}"
-                                    class="go-to-cart dang-ky-hoc crs-btn-add"
-                                    style="display: none;background-color: transparent; color: #FFFFFF; border-color: #FFFFFF">Xem
-                                    giỏ hàng</b></a>
+                                <a class="btn-buy-now dang-ky-hoc crs-btn-buy" href="#" action="AddToCart"
+                                    data-ga="event" data-url="{{ route('fe_cart/buyNow') }}"
+                                    data-pid="{{ $item['id'] }}"
+                                    style="background-color: rgba(251, 106, 2); color: #FFFFFF" category="CourseDetail"
+                                    label="Bí quyết mua bán bất động sản thành công"><b>Mua ngay</b></a>
+                                @if (Obn::searchCartById($item['id']))
+                                    <a id="btn-goto-cart" href="{{ route('fe_cart/index') }}"
+                                        class="go-to-cart dang-ky-hoc crs-btn-add"
+                                        style="background-color: transparent; color: #FFFFFF; border-color: #FFFFFF">Xem
+                                        giỏ hàng</b></a>
+                                @else
+                                    <a id="btn-add-to-cart" class="go-to-cart add-to-cart dang-ky-hoc crs-btn-add"
+                                        href="{{ route('fe_cart/add', ['id' => $item['id']]) }}" action="AddToCart"
+                                        data-ga="event" data-pid="{{ $item['id'] }}"
+                                        style="background-color:transparent; color: #FFFFFF; border-color: #FFFFFF"
+                                        category="CourseDetail" label="Bí quyết mua bán bất động sản thành công"><b
+                                            class=''>Thêm vào giỏ hàng</b></a> <a id="btn-goto-cart"
+                                        href="{{ route('fe_cart/add', ['id' => $item['id']]) }}"
+                                        class="go-to-cart dang-ky-hoc crs-btn-add"
+                                        style="display: none;background-color: transparent; color: #FFFFFF; border-color: #FFFFFF">Xem
+                                        giỏ hàng</b></a>
+                                @endif
                             @endif
+
+
 
                         </div>
                     </div>

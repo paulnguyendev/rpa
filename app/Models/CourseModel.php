@@ -51,6 +51,10 @@ class CourseModel extends Model
             $result = $query->where('title', 'LIKE', "%{$params['title']}%")->orderBy('id', 'desc')->get();
            
         }
+        if ($options['task'] == 'liveSearch') {
+            $result = $query->where('title', 'LIKE', "%{$params['searchText']}%")->orderBy('id', 'desc')->get();
+           
+        }
         if ($options['task'] == 'taxonomy_paginate') {
             $result = $query->where('taxonomy', $params['taxonomy'])->orderBy('id', 'desc')->paginate(10);
         }

@@ -114,4 +114,8 @@ class ComboModel extends Model
     {
         return $this->belongsTo(CourseModel::class, 'course_id', 'id');
     }
+    public function courseList()
+    {
+        return $this->belongsToMany(CourseModel::class,'combo_course','combo_id','course_id');
+    }
 }

@@ -51,7 +51,7 @@
 <script src="https://cdn-skill.kynaenglish.vn/src/js/popup-get-user-info.js"></script>
 <script src="{{asset('kyna/js/add-to-cart.js')}}?ver={{time()}}"></script>
 <script src="https://cdn-skill.kynaenglish.vn/src/js/jquery-ui.js"></script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/autocomplete.js?v=1"></script>
+<script src="{{asset('kyna/js/autocomplete.js')}}?ver={{time()}}"></script>
 <script src="https://cdn-skill.kynaenglish.vn/js/video/videojs.min.js?v=15217955218005"></script>
 <script src="https://cdn-skill.kynaenglish.vn/js/video/videojs-http-streaming.min.js?v=15217955218005"></script>
 <script src="https://cdn-skill.kynaenglish.vn/js/video/videojs-playlist.min.js?v=15217955218005"></script>

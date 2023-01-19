@@ -155,7 +155,7 @@ class AuthController extends Controller
         return response()->json($params);
     }
     public function logout(Request $request) {
-        $request->session()->flush();
+        $request->session()->forget('userInfo');
         return redirect(route('auth/login'));
     }
 }
