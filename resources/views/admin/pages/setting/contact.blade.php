@@ -27,6 +27,12 @@
                 <span class="help-block"></span>
             </div>
             <div class="form-group text-editor">
+                <label class="">Văn phòng</label>
+                <small class="help-block no-margin"></small>
+                <textarea class="form-control ckeditor-full ckeditor" id="wbcke_259146635" name="office" cols="50" rows="10">{{Obn::getSetting('office')}}</textarea>
+                <span class="help-block"></span>
+            </div>
+            <div class="form-group text-editor">
                 <label class="">Thông tin thanh toán</label>
                 <small class="help-block no-margin"></small>
                 <textarea class="form-control ckeditor-full ckeditor" id="wbcke_25914663412" name="payment_info" cols="50" rows="10">{{Obn::getSetting('payment_info')}}</textarea>

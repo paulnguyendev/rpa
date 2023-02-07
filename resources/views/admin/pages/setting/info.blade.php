@@ -119,55 +119,33 @@ enctype="multipart/form-data"><input name="_token" type="hidden" value="bK2pH6Le
         Index, Follow
     </div>
 </fieldset>
+@php
+$social = Obn::getSetting('social');
+$social = json_decode($social,true);
 
+@endphp
 <fieldset id="settings-social" class="content-group">
     <legend class="text-bold">Liên kết mạng xã hội</legend>
     <div class="form-group">
         <label>Facebook
         </label>
         <input class="form-control" name="social[facebook]" type="text"
-            value="https://www.facebook.com/dainghiagroup">
+            value="{{$social['facebook'] ?? ""}}">
         <span class="help-block"></span>
     </div>
-    <div class="form-group">
-        <label>Twitter
-        </label>
-        <input class="form-control" name="social[twitter]" type="text" value="https://www.twitter.com/">
-        <span class="help-block"></span>
-    </div>
+    
     <div class="form-group">
         <label>Youtube
         </label>
-        <input class="form-control" name="social[youtube]" type="text" value="https://www.youtube.com/">
+        <input class="form-control" name="social[youtube]" type="text" value="{{$social['youtube'] ?? ""}}">
         <span class="help-block"></span>
     </div>
-    <div class="form-group">
-        <label>Instagram
-        </label>
-        <input class="form-control" name="social[instagram]" type="text"
-            value="https://www.Instagram.com/">
-        <span class="help-block"></span>
-    </div>
-    <div class="form-group">
-        <label>Linkedin
-        </label>
-        <input class="form-control" name="social[linkedin]" type="text" value="">
-        <span class="help-block"></span>
-    </div>
-    <div class="form-group">
-        <label>Zalo OA
-        </label>
-        <input class="form-control" name="social[zalo]" type="text" value="">
-        <span class="help-block"></span>
-    </div>
-    <div class="form-group">
-        <label>Facebook ID
-        </label>
-        <input class="form-control" name="social[fb_id]" type="text" value="110984141740834">
-        <span class="help-block"></span>
-    </div>
+    
+ 
+   
+   
 
-    <p>Mạng xã hội khác</p>
+    {{-- <p>Mạng xã hội khác</p>
     <div class="form-group row">
         <div class="col-sm-5">
             <input class="form-control" name="other_social_icon[]" value="" type="text"
@@ -181,7 +159,7 @@ enctype="multipart/form-data"><input name="_token" type="hidden" value="bK2pH6Le
             <a id="new-icon-social" href="javascript:void(0)" title="Thêm dòng mới"
                 style="font-size: 18px"><i class="fa fa-plus-circle" style="margin-top: 5px"></i></a>
         </div>
-    </div>
+    </div> --}}
 
     <div id="area-new-social"></div>
 </fieldset>

@@ -132,6 +132,27 @@ a, a:focus, a:hover {
 #free-course .card-course .card-body {
     height: auto;
 }
+body:not(.mobile) .header-banner-right {
+    flex: inherit;
+    max-width: 100%;
+}
+.header-banner-first .item img {object-position: top;}
+.header-banner-first .item {
+    height: 500px;
+}
+.navbar-bottom .nav-item-box {
+    justify-content: start;
+    margin:0;
+}
+.free-course__slider  .slick-track {
+    width: 100%!important;
+}
+.header-banner-second .item  {
+    height: 220px;
+}
+.header-banner-second .item img {
+    height: 100%;
+}
 @media screen and (max-width: 767.98px) {
     .header-banner-first .item {
         height: auto;

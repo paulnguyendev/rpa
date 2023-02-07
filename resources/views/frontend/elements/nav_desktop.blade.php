@@ -1,6 +1,7 @@
 @php
     use App\Helpers\Package\CoursePackage;
     use App\Helpers\User;
+    use App\Helpers\Obn;
 @endphp
 <nav id="navDesktop" class="navbar navbar-light header-wrap">
     <div class="container">
@@ -10,19 +11,19 @@
                     <div class="navbar-brand logo">
                         <h1>
                             <a href="{{ route('home/index') }}">
-                                <img width="148" height="auto" src="{{ asset('kyna/img/logo.png') }}"
+                                <img width="148" height="auto" src="{{Obn::getSetting('logo')}}"
                                     alt="Khóa học online nâng cao kỹ năng cùng các chuyên gia đầu ngành"
                                     class="img-fluid" /></a>
                         </h1>
                     </div>
                     <div class="form-inline header-search">
                         <div class="row-menu-bar-mobile hidden-sm-up">
-                            <div class="k-menu-list-course col-xs-8">
+                            {{-- <div class="k-menu-list-course col-xs-8">
                                 <a class="nav-link" href="#" data-offpage="#nav-mobile">
                                     <i class="icon icon-bars"></i>
                                     <span>Danh mục khóa học</span>
                                 </a>
-                            </div>
+                            </div> --}}
                             <div class="k-button-search-course col-xs-4">
                                 <a id="k-button-search-course-mb" class="nav-link" href="#"
                                     data-offpage="#nav-mobile-search">
@@ -131,7 +132,7 @@
                                         </div>
                                     </div>
                                     <div class="navbar-bottom">
-                                        <div class="nav-item nav-item-category  nav-item-active-js ">
+                                        {{-- <div class="nav-item nav-item-category  nav-item-active-js ">
                                             <div class="nav-link">
                                                 <i class="far fa-bars"></i>DANH MỤC KHÓA HỌC
                                             </div>
@@ -153,7 +154,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="nav-item-box">
                                             {{-- <div class="nav-item nav-item-course" data-toggle="user-seen-course-header">
                         <a class="nav-link" href="#">

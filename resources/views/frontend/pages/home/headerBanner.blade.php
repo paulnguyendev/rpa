@@ -4,38 +4,8 @@
 @endphp
 <section id="headerBanner" class="header-banner">
     <div class="container">
-        <div class="d-flex flex-wrap">
-            <div class="header-banner-left">
-                <div class="inner animate-fade-in">
-                    {!! CoursePackage::showCategory() !!}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </div>
-                <div class="header-banner-child-category">
-                    <div class="inner">
-                        <!--  Render by js  -->
-                    </div>
-                </div>
-                <div class="header-banner-course">
-                    <div class="inner">
-                        <!--  Render by js  -->
-                    </div>
-                </div>
-            </div>
+        <div class="d-flex1 flex-wrap1">
+          
             <div class="header-banner-right">
                 <div class="inner">
                     <div class="header-banner-first header-banner-slider slick__slider--normal animate-fade-in">
