@@ -12,6 +12,7 @@
     $('.mobilefooterbar .close').click(function() {
         $('.mobilefooterbar').hide();
     });
+
     function setCookie(name, value, expiredDay) {
         var expired = "";
         if (expiredDay !== null) {
@@ -21,6 +22,7 @@
         }
         document.cookie = name + "=" + value + ";" + expired + ";path=/";
     }
+
     function getCookie(name) {
         var name = name + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -48,35 +50,56 @@
         }
     });
 </script>
-<script src="{{asset('kyna')}}/js/popup-get-user-info.js"></script>
-<script src="{{asset('kyna/js/add-to-cart.js')}}?ver={{time()}}"></script>
-<script src="{{asset('kyna')}}/js/jquery-ui.js"></script>
-<script src="{{asset('kyna/js/autocomplete.js')}}?ver={{time()}}"></script>
-<script src="{{asset('kyna')}}/js/videojs.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/videojs-http-streaming.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/videojs-playlist.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/slick.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/jquery.lazy.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/jquery.lazy.plugins.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/sweetalert2.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/app.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna/js/header.min.js')}}?ver={{time()}}"></script>
-<script src="{{asset('kyna/js/home-page.min.js')}}?ver={{time()}}"></script>
+@php
+    $currentRoute = Route::currentRouteName();
+@endphp
+<script src="{{ asset('kyna') }}/js/popup-get-user-info.js"></script>
+<script src="{{ asset('kyna/js/add-to-cart.js') }}?ver={{ time() }}"></script>
+<script src="{{ asset('kyna') }}/js/jquery-ui.js"></script>
+<script src="{{ asset('kyna/js/autocomplete.js') }}?ver={{ time() }}"></script>
+
+<script src="{{ asset('kyna') }}/js/slick.min.js?v=15217955218005"></script>
+<script src="{{ asset('kyna') }}/js/jquery.lazy.min.js?v=15217955218005"></script>
+<script src="{{ asset('kyna') }}/js/jquery.lazy.plugins.min.js?v=15217955218005"></script>
+<script src="{{ asset('kyna') }}/js/sweetalert2.min.js?v=15217955218005"></script>
+<script src="{{ asset('kyna') }}/js/app.min.js?v=15217955218005"></script>
+
+@if ($currentRoute == 'home/index')
+    <script src="{{ asset('kyna') }}/js/videojs.min.js?v=15217955218005"></script>
+    <script src="{{ asset('kyna') }}/js/videojs-http-streaming.min.js?v=15217955218005"></script>
+    <script src="{{ asset('kyna') }}/js/videojs-playlist.min.js?v=15217955218005"></script>
+    <script src="{{ asset('kyna/js/home-page.min.js') }}?ver={{ time() }}"></script>
+    <script src="{{ asset('kyna/js/header.min.js') }}?ver={{ time() }}"></script>
+    <script src="{{ asset('kyna') }}/js/course-card.js?v=15217955218005"></script>
+@endif
+@if ($currentRoute == 'fe_course/detail')
+    <script>
+        $(".cta-open-video").click(function(e) {
+            e.preventDefault();
+            var t = $(this).attr("data-source");
+
+            $("#video-modal").modal("show");
+            $(".video-preview__wrapper iframe").attr("src", t);
+        })
+    </script>
+@endif
 {{-- Course --}}
 {{-- <script src="{{asset('kyna/js/course-detail.min.js')}}?ver={{time()}}"></script> --}}
-<script src="{{asset('kyna')}}/js/course-card.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/select2.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/tether.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/bootstrap.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/offpage.js?version=1562727393"></script>
-<script src="{{asset('kyna')}}/js/main.js?v=1568114107"></script>
-<script src="{{asset('kyna')}}/js/details.js?v=1562727393"></script>
-<script src="{{asset('kyna')}}/js/ajax-caller.js?v=31073107"></script>
-<script src="{{asset('kyna')}}/js/firebase.min.js?v=1"></script>
-<script src="{{asset('kyna')}}/js/push-notification-main.min.js?v=1"></script>
-<script src="{{asset('kyna')}}/js/jquery.validate.min.js?v=15217955218005"></script>
-<script src="{{asset('kyna')}}/js/bootstrap-notify.js"></script>
-<script src="{{asset('kyna')}}/js/yii.activeForm.js"></script>
+
+
+
+<script src="{{ asset('kyna') }}/js/select2.min.js?v=15217955218005"></script>
+<script src="{{ asset('kyna') }}/js/tether.min.js?v=15217955218005"></script>
+<script src="{{ asset('kyna') }}/js/bootstrap.min.js?v=15217955218005"></script>
+<script src="{{ asset('kyna') }}/js/offpage.js?version=1562727393"></script>
+<script src="{{ asset('kyna') }}/js/main.js?v=1568114107"></script>
+<script src="{{ asset('kyna') }}/js/details.js?v=1562727393"></script>
+<script src="{{ asset('kyna') }}/js/ajax-caller.js?v=31073107"></script>
+<script src="{{ asset('kyna') }}/js/firebase.min.js?v=1"></script>
+<script src="{{ asset('kyna') }}/js/push-notification-main.min.js?v=1"></script>
+<script src="{{ asset('kyna') }}/js/jquery.validate.min.js?v=15217955218005"></script>
+<script src="{{ asset('kyna') }}/js/bootstrap-notify.js"></script>
+<script src="{{ asset('kyna') }}/js/yii.activeForm.js"></script>
 <script type="text/javascript">
     ;
     (function($) {
