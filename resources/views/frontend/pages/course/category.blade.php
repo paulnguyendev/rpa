@@ -165,7 +165,7 @@
         @endif
     </form>
     <div id="k-listing" class="container k-height-header">
-        <div class="col-lg-3 col-xs-12 k-listing-sidebar" id="offpage-listing-sidebar">
+        {{-- <div class="col-lg-3 col-xs-12 k-listing-sidebar" id="offpage-listing-sidebar">
             <header>
                 <div class="k-header-offpage-menu">
                     <img src="https://cdn-skill.kynaenglish.vn/img/logo/Kynavnraftlogo.svg" alt="Kyna.vn"
@@ -198,9 +198,9 @@
                 </div>
                 <!--end k-category-->
             </section>
-        </div>
+        </div> --}}
         <!--end .k-listing-sidebar-->
-        <div class="col-lg-9 col-xs-12 k-listing-content">
+        <div class="col-lg-12 col-xs-12 k-listing-content">
             <!-- start hot courses-->
             <!-- end hot courses -->
             <div>
@@ -250,7 +250,7 @@
                                 $link = route('fe_course/detail', ['slug' => $slug]);
                                 $student = $course->student()->count();
                             @endphp
-                            <li class="col-xl-4 col-md-6 col-xs-12 k-box-card" data-key="0">
+                            <li class="col-xl-3 col-md-6 col-xs-12 k-box-card" data-key="0">
 
                                 <div class="k-box-card-wrap clearfix" data-id="1954" data-course-type="1">
                                     <div class="img">
