@@ -67,13 +67,13 @@ class HomeController extends Controller
                         "title" => "",
                         "image_url" => asset('kyna/img/banner1.1.jpg'),
                         "mobile_image_url" => asset('kyna/img/banner1.1.jpg'),
-                        "link" => "#"
+                        "link" => route('home/index')
                     ],
                     [
                         "title" => "",
                         "image_url" => asset('kyna/img/banner1.2.jpg'),
                         "mobile_image_url" => asset('kyna/img/banner1.2.jpg'),
-                        "link" => "#"
+                        "link" => route('home/index')
                     ],
                 ],
                 [
@@ -81,13 +81,13 @@ class HomeController extends Controller
                         "title" => "",
                         "image_url" => asset('kyna/img/banner1.3.jpg'),
                         "mobile_image_url" => asset('kyna/img/banner1.3.jpg'),
-                        "link" => "#"
+                        "link" => route('home/index')
                     ],
                     [
                         "title" => "",
                         "image_url" =>asset('kyna/img/banner1.4.jpg'),
                         "mobile_image_url" => asset('kyna/img/banner1.4.jpg'),
-                        "link" => "#"
+                        "link" => route('home/index')
                     ]
                 ],
                 [
@@ -95,7 +95,7 @@ class HomeController extends Controller
                         "title" => "",
                         "image_url" => asset('kyna/img/banner1.5.jpg'),
                         "mobile_image_url" => asset('kyna/img/banner1.5.jpg'),
-                        "link" => "#"
+                        "link" => route('home/index')
                     ],
                    
                 ]

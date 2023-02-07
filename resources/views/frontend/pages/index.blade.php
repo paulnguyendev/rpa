@@ -11,11 +11,11 @@
     @include("{$templatePart}comboList")
     @include("{$templatePart}exclusiveCourse")
 
-    {{-- @include("{$templatePart}freeCourse") --}}
+    @include("{$templatePart}freeCourse")
 
     {{-- @include("{$templatePart}hotKeywords") --}}
     {{-- @include("{$templatePart}lectureList") --}}
-    @include("{$templatePart}partner")
+    {{-- @include("{$templatePart}partner") --}}
 @endsection
 @section('custom_srcipt')
     <script>

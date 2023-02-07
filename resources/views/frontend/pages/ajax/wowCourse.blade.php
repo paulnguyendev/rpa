@@ -2,9 +2,11 @@
     use App\Helpers\Obn;
     use App\Helpers\Package\CoursePackage;
 @endphp
-<h2 class="heading-section">Khóa học tại RPA</h2>
-<h5 class="paragraph">Trải nghiệm học tập mới với các khóa học chất lượng cao được lựa chọn bởi đội ngũ chuyên gia của
-    RPA.</h5>
+<h2 class="heading-section">{{$title}}</h2>
+@if ($desc)
+<h5 class="paragraph">{{$desc}}</h5>
+@endif
+
 <div class="course-exclusive__slider">
     <div class="course-exclusive__slider-item grid-container">
         @if (count($items) > 0)

@@ -15,12 +15,12 @@ class LessonModel extends Model
     const UPDATED_AT = 'updated_at';
     protected $fieldSearchAccepted = ['email', 'phone', 'fullname'];
     protected $crudNotAccepted = ['_token', 'data_attributes', 'id','redirect'];
-    protected $fillable = ['title', 'video', 'content', 'parent_id', '_lft', '_rgt', 'created_at', 'updated_at','is_try','course_id'];
+    protected $fillable = ['title', 'video', 'content', 'parent_id', '_lft', '_rgt', 'created_at', 'updated_at','is_try','course_id','video_youtube'];
     use HasFactory;
     public function listItems($params = "", $options = "")
     {
         $result = null;
-        $query = $this->select('id', 'title', 'video', 'content', 'parent_id', '_lft', '_rgt', 'created_at', 'updated_at','is_try','course_id');
+        $query = $this->select('id', 'title', 'video', 'content', 'parent_id', '_lft', '_rgt', 'created_at', 'updated_at','is_try','course_id','video_youtube');
         if ($options['task'] == 'admin-count-total') {
             $result = $query->where('user_group_id', '3')->count();
         }
@@ -59,7 +59,7 @@ class LessonModel extends Model
     }
     public function getItem($params = [], $options = [])
     {
-        $query = $this->select('id', 'title', 'video', 'content', 'parent_id', '_lft', '_rgt', 'created_at', 'updated_at','is_try','course_id');
+        $query = $this->select('id', 'title', 'video', 'content', 'parent_id', '_lft', '_rgt', 'created_at', 'updated_at','is_try','course_id','video_youtube');
         if ($options['task'] == 'taxonomy') {
             $result = $query->where('taxonomy', $params['taxonomy'])->first();
         }

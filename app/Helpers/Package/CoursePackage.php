@@ -1,5 +1,7 @@
 <?php
 namespace App\Helpers\Package;
+
+use App\Helpers\Obn;
 use App\Models\CourseModel;
 use App\Models\TaxonomyModel;
 class CoursePackage
@@ -85,11 +87,12 @@ class CoursePackage
     {
         return route('fe_course/category', ['slug' => $slug]);
     }
-    public static function videoLink($videoId, $autoplay = 'true')
+    public static function videoLink($videoId, $autoplay = 'true', $is_youtube = 0)
     {
+        
         $libid = config('obn.bunny.libid');
         $iframeUrl = "https://iframe.mediadelivery.net";
-        $result = "{$iframeUrl}/embed/{$libid}/{$videoId}?autoplay={$autoplay}";
+        $result = $is_youtube == 1 ? Obn::getYoutubeEmbedUrl($videoId) :  "{$iframeUrl}/embed/{$libid}/{$videoId}?autoplay={$autoplay}";
         return $result;
     }
     public static function getFirstLesson($course_id) {

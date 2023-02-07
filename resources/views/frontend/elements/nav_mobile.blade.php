@@ -44,7 +44,7 @@
     <!-- Menu Search Mobile -->
     <div id="nav-mobile-search" class="nav-mobile-search">
         <div class="inner">
-            <form id="search-form" action="/danh-sach-khoa-hoc" method="get">
+            <form id="search-form" action="{{route('fe_course/category',['slug' => 'tim-kiem'])}}" method="get">
                 <div class="input-group">
                     <input id="m-live-search-bar" name="q" type="text"
                         class="form-control live-search-bar" placeholder="Nhập tên khóa học/giảng viên">

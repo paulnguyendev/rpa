@@ -38,8 +38,8 @@
 </style>
 <script>
     var _token = 'NN2qLcQhx0Cv4lMh5Wl8yaKE7XXEdhqtl2VyI22q';
-    var base_domain = 'http://localhost/rpa';
-    var assets_url = 'http://localhost/rpa/public';
+    var base_domain = 'http://localhost/rpa2';
+    var assets_url = 'http://localhost/rpa2/public';
     var cke_conf_path = assets_url + '/backend/plugins/ckeditor';
     var default_currency = 'đ';
     var default_weight_unit = "kg";

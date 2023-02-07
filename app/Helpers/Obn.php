@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Helpers;
+
 use App\Models\SettingModel;
 use App\Models\UserModel;
 use Jenssegers\Agent\Agent;
 use Gloudemans\Shoppingcart\Facades\Cart;
+
 class Obn
 {
     public static function generateUniqueCode()
@@ -81,14 +84,14 @@ class Obn
         $item = $model->getItem(['meta_key' => $meta_key], ['task' => 'meta_key']);
         $result = $item ? $item['meta_value'] : "";
         // $result = self::json_validate($result);
-     
+
         return $result;
     }
     public static function json_validate($string)
     {
-        
+
         // decode the JSON data
-       
+
         // switch and check possible JSON errors
         switch (json_last_error()) {
             case JSON_ERROR_NONE:
@@ -127,19 +130,28 @@ class Obn
         }
         if ($error !== '') {
             // throw the Exception or exit // or whatever :)
-            $result = json_decode($string,true);
-           
-        }
-        else {
-          
+            $result = json_decode($string, true);
+        } else {
+
             $result = $string;
-           
-           
-            
         }
         return $result;
-      
+
         // everything is OK
-        
+
+    }
+    public static function getYoutubeEmbedUrl($url)
+    {
+        $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+        $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+
+        if (preg_match($longUrlRegex, $url, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+
+        if (preg_match($shortUrlRegex, $url, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+        return 'https://www.youtube.com/embed/' . $youtube_id;
     }
 }

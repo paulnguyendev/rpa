@@ -4,10 +4,10 @@
 @endphp
 @extends('frontend.main')
 @section('body_class', 'user_course course_detail')
-@section('title',$current_lesson['title'] ?? "-")
+@section('title', $current_lesson['title'] ?? '-')
 @section('content')
     <section id="course-detail">
-        
+
         <div class="row">
             <div class="col-md-4">
                 <div class="course-sidebar">
@@ -104,7 +104,8 @@
                 <div class="course-content">
                     <div class="course-content-head">
                         <div class="course-logo">
-                            <a href="{{route('home/index')}}"><img src="{{ Obn::get_logo() }}" alt="" class="img-fluid"></a>
+                            <a href="{{ route('home/index') }}"><img src="{{ Obn::get_logo() }}" alt=""
+                                    class="img-fluid"></a>
                         </div>
                         <div class="cousre-btn-back">
                             <a href="{{ route('user_course/index') }}">Trở về Khu vực học tập</a>
@@ -112,15 +113,20 @@
                     </div>
                     <div class="course-content-detail">
                         <div class="course-video">
-                            <div style="position: relative; padding-top: 56.25%;"><iframe
-                                    src="{{CoursePackage::videoLink($current_lesson['video'] ?? "",'false')}}"
+                            @php
+                            $videoEmbedUrl =  $current_lesson['video'] ? CoursePackage::videoLink($current_lesson['video'] ?? '', 'false') : Obn::getYoutubeEmbedUrl($current_lesson['video_youtube']);
+                            @endphp
+                            <div style="position: relative; padding-top: 56.25%;">
+
+                                <iframe src="{{ $videoEmbedUrl }}"
                                     loading="lazy"
                                     style="border: none; position: absolute; top: 0; height: 100%; width: 100%;"
                                     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                                    allowfullscreen="true"></iframe></div>
+                                    allowfullscreen="true"></iframe>
+                            </div>
                         </div>
                         <div class="course-content-inner">
-                           {!! $current_lesson['content'] ?? "Nội dung đang cập nhật..." !!}
+                            {!! $current_lesson['content'] ?? 'Nội dung đang cập nhật...' !!}
                         </div>
                     </div>
                 </div>
@@ -232,6 +238,37 @@
 
         .active .syllabus__section {
             background: rgb(236, 239, 255);
+        }
+
+        @media screen and (max-width: 767.98px) {
+            .course-content-head {
+                flex-wrap: wrap;
+                display: none;
+            }
+
+            .course-sidebar {
+                position: inherit;
+                width: 100%;
+                padding: 15px;
+            }
+
+            section#course-detail .row {
+                display: flex;
+                flex-direction: column;
+            }
+
+            section#course-detail .row>*:last-child {
+                order: 1;
+            }
+
+            section#course-detail .row>*:first-child {
+                order: 2;
+            }
+
+            .course-content-detail {
+                padding: 30px;
+                background: none;
+            }
         }
     </style>
 @endsection

@@ -202,6 +202,11 @@
                             {{-- <input type="file" name="video" id="videoInput" class="hide" data-url="{{route('admin_bunny/uploadVideo')}}">
                             <button class="btn btn-default" id="btnUploadVideo" type="button" >Tải video</button> --}}
                         </div>
+                        <div class="form-group">
+                            <label for="">Video Youtube ( Dành cho khóa học free )</label>
+                            <input type="text" class="form-control" name="video_youtube" value="{{ $item['video_youtube'] ?? ' ' }}">
+                            
+                        </div>
                     </div>
                 </div>
                 <div class="panel panel-default">

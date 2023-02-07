@@ -25,7 +25,6 @@
         <!-- Block data for track course viewed -->
         <div id="loadReviewUrl" hidden>/course/default/load-review?course_id=152</div>
         <div id="course-detail" class="course-detail">
-
             <div class="cd-top-banner have-bg opt-1" style="background-image: url('{{ $item['thumbnail'] }}');">
                 <div class="container">
                     <div class="course-detail--left">
@@ -133,10 +132,8 @@
                                         </a>
                                     </div>
                                 @endforeach
-
                             </div>
                         @endif
-
                     </section>
                     <section id="courseDetailContent"></section>
                     <div class="course-general syllabus__wrapper">
@@ -154,7 +151,8 @@
                                         $childs = $lesson->descendantsOf($lesson_id);
                                         $isTry = $lesson['is_try'] ?? 0;
                                         $tryVideoId = $lesson['video'] ?? '';
-                                        $tryVideoUrl = CoursePackage::videoLink($tryVideoId);
+                                        $tryVideoUrl = $tryVideoId ? CoursePackage::videoLink($tryVideoId) : CoursePackage::videoLink($lesson['video_youtube'],true,1);
+                                       
                                     @endphp
                                     <div class="syllabus-item">
                                         @if (count($childs) > 0)
@@ -190,8 +188,8 @@
                                                                 </picture>
                                                             </span>
                                                             <span class="syllabus__section--title">
-                                                                <a href="#"
-                                                                    class="cta-open-video syllabus__section--title-video"
+                                                                <a
+                                                                    class=" syllabus__section--title-video"
                                                                     data-source="https://vod.kynaenglish.com/kyna/_definst_/1/5/2/152_Lesson_Bai01_mp4itNTaY2ru34BEjkqOk49q65G7HzELc83FVXPUZho3lZHFj7tEcC4iILqqk5bwdfc9d13cirgEr.mp4/playlist.m3u8?v=397">
                                                                     {{ $child['title'] ?? '-' }}
                                                                 </a></span>
@@ -202,7 +200,6 @@
                                                                     Học thử
                                                                 </a>
                                                             @endif
-
                                                             <!-- Next week -->
                                                         </div>
                                                     @endforeach
@@ -225,8 +222,8 @@
                                                             </picture>
                                                         </span>
                                                         <span class="syllabus__section--title">
-                                                            <a href="#"
-                                                                class="cta-open-video syllabus__section--title-video"
+                                                            <a 
+                                                                class=" syllabus__section--title-video"
                                                                 data-source="https://vod.kynaenglish.com/kyna/_definst_/1/5/2/152_Lesson_Bai01_mp4itNTaY2ru34BEjkqOk49q65G7HzELc83FVXPUZho3lZHFj7tEcC4iILqqk5bwdfc9d13cirgEr.mp4/playlist.m3u8?v=397">
                                                                 {{ $lesson_title }}
                                                             </a></span>
@@ -237,7 +234,6 @@
                                                                 Học thử
                                                             </a>
                                                         @endif
-
                                                         <!-- Next week -->
                                                     </div>
                                                 </div>
@@ -419,7 +415,6 @@
                                 @php
                                     $totalLesson = $relatedCourse->totalLesson();
                                     $relatedTeacher = $relatedCourse->teacher()->first();
-                                    
                                 @endphp
                                 <div class="card-course " data-toggle="popover" data-trigger="hover" data-id="376"
                                     data-upload-date="19/06/2021" data-duration="4 giờ" data-user-enroll="1074"
@@ -496,7 +491,6 @@
                                                     </span>
                                                 </div>
                                                 <div class="pricing-card">
-
                                                     <span
                                                         class="course-pricing">{{ Obn::showPrice($relatedCourse['price']) }}</u>
                                                     </span>
@@ -507,8 +501,6 @@
                                     </div>
                                 </div>
                             @endforeach
-
-
                         </div>
                         <!--    <a class="cta-all-lecturer-course" href="/danh-sach-khoa-hoc">Xem thêm</a>-->
                     </section>
@@ -535,7 +527,6 @@
                                         </svg>
                                     </button>
                                 </div>
-
                                 <div id="youtube_video_wrapper">
                                     <!-- Copy & Pasted from YouTube -->
                                     <iframe width="560" height="349" src=" {{ $item['video_intro'] ?? '' }}"
@@ -562,19 +553,15 @@
                                 #youtube_video_wrapper {
                                     display: none;
                                 }
-
                                 #play_video {
                                     margin-top: -25px;
                                 }
-
                                 #play_video>img {
                                     width: 100%;
                                 }
-
                                 .cursor-pointer {
                                     cursor: pointer;
                                 }
-
                                 .ytp-button {
                                     border: none;
                                     background-color: transparent;
@@ -586,12 +573,10 @@
                                     cursor: default;
                                     line-height: inherit;
                                 }
-
                                 .ytp-button:focus,
                                 .ytp-button {
                                     outline: 0;
                                 }
-
                                 .ytp-large-play-button {
                                     position: absolute;
                                     left: 50%;
@@ -604,22 +589,18 @@
                                     -webkit-transition: opacity .25s cubic-bezier(0.0, 0.0, 0.2, 1);
                                     transition: opacity .25s cubic-bezier(0.0, 0.0, 0.2, 1);
                                 }
-
                                 .ytp-small-mode .ytp-large-play-button {
                                     width: 42px;
                                     height: 30px;
                                     margin-left: -21px;
                                     margin-top: -15px;
                                 }
-
                                 .ytp-button:not([aria-disabled=true]):not([disabled]):not([aria-hidden=true]) {
                                     cursor: pointer;
                                 }
-
                                 .html5-video-player svg {
                                     pointer-events: none;
                                 }
-
                                 .ytp-large-play-button-bg {
                                     -moz-transition: fill .1s cubic-bezier(0.4, 0.0, 1, 1), fill-opacity .1s cubic-bezier(0.4, 0.0, 1, 1);
                                     -webkit-transition: fill .1s cubic-bezier(0.4, 0.0, 1, 1), fill-opacity .1s cubic-bezier(0.4, 0.0, 1, 1);
@@ -627,7 +608,6 @@
                                     fill: #1f1f1f;
                                     fill-opacity: .81;
                                 }
-
                                 .videoWrapper:hover .ytp-large-play-button-bg {
                                     -moz-transition: fill .1s cubic-bezier(0.0, 0.0, 0.2, 1), fill-opacity .1s cubic-bezier(0.0, 0.0, 0.2, 1);
                                     -webkit-transition: fill .1s cubic-bezier(0.0, 0.0, 0.2, 1), fill-opacity .1s cubic-bezier(0.0, 0.0, 0.2, 1);
@@ -692,9 +672,6 @@
                                         giỏ hàng</b></a>
                                 @endif
                             @endif
-
-
-
                         </div>
                     </div>
                     <div class="crs-sticky-info opt-1">
@@ -725,9 +702,6 @@
                                     </span>
                                     <p>{{ $lessonCount }} bài học</p>
                                 </li>
-
-
-
                             </ul>
                         </div>
                     </div>
@@ -741,7 +715,6 @@
         .zopim {
             display: none !important;
         }
-
         #k-wrap-feedback {
             display: none !important;
         }

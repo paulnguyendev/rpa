@@ -42,6 +42,7 @@
         @if (count($items) > 0)
             @foreach ($items as $item)
                 @php
+					$totalCourse = $item->courseList()->count();
                     $id = $item['id'];
                     $thumbnail = Obn::showThumbnail($item['thumbnail'] ?? '');
                     $price = Obn::showPrice($item['price']) ?? 'Liên hệ';
@@ -73,16 +74,16 @@
                         <!--end .view-price-->
                         <div class="view-price-mb">
                             <div class="student">
-                                <div class="number">6</div>
+                                <div class="number">0</div>
                                 <div class="text">học viên</div>
                             </div>
                             <div class="time">
-                                <div class="number">3</div>
-                                <div class="text">giờ</div>
+                                <div class="number">{{$totalCourse ?? 0}}</div>
+                                <div class="text">khóa học</div>
                             </div>
                             <div class="price">
                                 <div class="label-price">
-                                    <div class="first">199.000đ</div>
+                                    <div class="first">{{$price}}</div>
                                 </div>
                             </div>
                         </div>

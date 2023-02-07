@@ -120,8 +120,23 @@ a, a:focus, a:hover {
 .user_course #k-footer {
     display: none;
 }
+#free-course .card-course .heading-card__main {
+    min-height: auto;
+    margin-bottom: 20px;
+}
+
+#free-course .card-course .card-info {
+    display: block;
+}
+
+#free-course .card-course .card-body {
+    height: auto;
+}
 @media screen and (max-width: 767.98px) {
     .header-banner-first .item {
         height: auto;
     }
+	.syllabus__section--video {
+		display:flex;
+	}
 }

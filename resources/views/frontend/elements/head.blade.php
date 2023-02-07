@@ -27,11 +27,11 @@
 <meta name="robots" content="index,follow">
 <meta property="fb:app_id" content="191634267692814">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Kyna.vn - Học online cùng chuyên gia">
+<meta property="og:title" content="RPAGROUP.VN - Học online cùng chuyên gia">
 <meta property="og:description"
-    content="Kyna học online với hơn 700 khóa học trực tuyến thuộc nhiều lĩnh vực như kỹ năng quản trị, ngoại ngữ, tài chính, bất động sản, bảo hiểm, chứng khoán, tiếp thị bán hàng">
-<meta property="og:image" content="https://skills.kynaenglish.vn/img/kyna-power-by-vietnamworks.png">
-<meta property="og:url" content="https://kyna.vn">
+    content="RPAGROUP.VN học online với hơn 700 khóa học trực tuyến thuộc nhiều lĩnh vực như kỹ năng quản trị, ngoại ngữ, tài chính, bất động sản, bảo hiểm, chứng khoán, tiếp thị bán hàng">
+<meta property="og:image" content="https://rpagroup.vn/public/assets/kyna/img/slide4.jpg">
+<meta property="og:url" content="{{route('home/index')}}">
 <link href="https://skills.kynaenglish.vn/" rel="canonical">
 <link type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;900&amp;display=swap"
     rel="stylesheet">

@@ -24,6 +24,14 @@ class CourseModel extends Model
         }
       
         if ($options['task'] == 'list') {
+            if(isset($params['is_free'])) {
+                if($params['is_free'] == 0) {
+                    $query = $query->where('price','!=',0);
+                }
+                else {
+                    $query = $query->where('price',0);
+                }
+            }
             if(isset($params['start']) && isset($params['length'])) {
                 if($params['start'] == 0) {
                     $result = $query->orderBy('sort', 'asc')->get();
@@ -36,7 +44,7 @@ class CourseModel extends Model
             else {
                 $result = $query->orderBy('sort', 'asc')->get();
             }
-            
+           
         }
         if ($options['task'] == 'list-in-cart') {
             if(isset($params['ids'])) {

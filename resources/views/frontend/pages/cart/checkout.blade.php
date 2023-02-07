@@ -853,7 +853,7 @@
                             <!--end .wrap-->
                             <div class="re-money">
                                 <div class="banner-widget promotion" id="promotion" data-banner-type="8">
-                                    <a href="#" title="thien-va-quan-tri-cam-xuc" target="_blank">
+                                    <a href="{{route('home/index')}}" title="thien-va-quan-tri-cam-xuc" target="_blank">
                                         <img class="image-topbar banner-pc img-fluid"
                                             src="{{ asset('kyna/img/banner-sidebar.jpg') }}" size="0x0"
                                             alt="thien-va-quan-tri-cam-xuc" title="thien-va-quan-tri-cam-xuc"

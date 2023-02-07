@@ -179,14 +179,20 @@ class CourseController extends Controller
     {
         $items = [];
         $type = $request->type;
-        $items = ($type == 'combo') ? $this->comboModel->listItems([], ['task' => 'list']) : $this->model->listItems([], ['task' => 'list']);
-        $data = ($type  == 'combo') ? view('frontend.pages.ajax.comboCourse')->with('items', $items)->render()  : view('frontend.pages.ajax.wowCourse')->with('items', $items)->render();
+        $is_free = $request->is_free ?? 0;
+        $sliderClass = $is_free == 0 ? "course-exclusive__slider"  : "free-course__slider";
+        $title  = $is_free == 0 ? "Khóa học tại RPA"  : "Khóa học 0đ";
+        $desc = $is_free == 0 ? "Trải nghiệm học tập mới với các khóa học chất lượng cao được lựa chọn bởi đội ngũ chuyên gia của RPA."  : "";
+        $items = ($type == 'combo') ? $this->comboModel->listItems([], ['task' => 'list']) : $this->model->listItems(['is_free' => $is_free], ['task' => 'list']);
+        $data = ($type  == 'combo') ? view('frontend.pages.ajax.comboCourse')->with('items', $items)->render()  : view('frontend.pages.ajax.wowCourse')->with(['items' => $items,'title' => $title,'desc' => $desc,'sliderClass' => $sliderClass])->render();
+        $data = ($is_free  == 0 ) ? $data  : view('frontend.pages.ajax.freeCourse')->with(['items' => $items,'title' => $title,'desc' => $desc])->render();
         return response()->json([
             'status' => [
                 'code' => 200,
                 'message' => "Success"
             ],
             'data' => $data,
+            'total' => count($items)
         ]);
     }
     public function search(Request $request)

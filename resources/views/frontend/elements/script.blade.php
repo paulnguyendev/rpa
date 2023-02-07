@@ -63,7 +63,7 @@
 <script src="{{asset('kyna/js/header.min.js')}}?ver={{time()}}"></script>
 <script src="{{asset('kyna/js/home-page.min.js')}}?ver={{time()}}"></script>
 {{-- Course --}}
-<script src="{{asset('kyna/js/course-detail.min.js')}}?ver={{time()}}"></script>
+{{-- <script src="{{asset('kyna/js/course-detail.min.js')}}?ver={{time()}}"></script> --}}
 <script src="https://cdn-skill.kynaenglish.vn/js/widget/course-card.js?v=15217955218005"></script>
 <script src="https://cdn-skill.kynaenglish.vn/src/js/select2.min.js?v=15217955218005"></script>
 <script src="https://cdn-skill.kynaenglish.vn/src/js/tether.min.js?v=15217955218005"></script>
