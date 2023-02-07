@@ -14,12 +14,12 @@
             </ul>
             <!--end .bottom-->
             <div class="social">
-                <a href="https://www.facebook.com/kyna.vn" target="_blank">
+                <a href="https://www.facebook.com/DamthuchungRPA99" target="_blank">
                     <img class="img-lazy" data-src="https://cdn-skill.kynaenglish.vn/img/fb_icon_footer.png"
                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                         alt="facebook" width="44" height="44">
                 </a>
-                <a href="https://www.youtube.com/user/kynavn" target="_blank" style="margin:0 5px">
+                <a href="#" target="_blank" style="margin:0 5px">
                     <img class="img-lazy" data-src="https://cdn-skill.kynaenglish.vn/img/youtube_icon_footer.png"
                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                         alt="youtube" width="44" height="44">

@@ -48,35 +48,35 @@
         }
     });
 </script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/popup-get-user-info.js"></script>
+<script src="{{asset('kyna')}}/js/popup-get-user-info.js"></script>
 <script src="{{asset('kyna/js/add-to-cart.js')}}?ver={{time()}}"></script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/jquery-ui.js"></script>
+<script src="{{asset('kyna')}}/js/jquery-ui.js"></script>
 <script src="{{asset('kyna/js/autocomplete.js')}}?ver={{time()}}"></script>
-<script src="https://cdn-skill.kynaenglish.vn/js/video/videojs.min.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/js/video/videojs-http-streaming.min.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/js/video/videojs-playlist.min.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/js/slick/slick.min.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/js/jquery.lazy.min.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/js/jquery.lazy.plugins.min.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/js/sweetalert2.min.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/dist/js/app.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/videojs.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/videojs-http-streaming.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/videojs-playlist.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/slick.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/jquery.lazy.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/jquery.lazy.plugins.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/sweetalert2.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/app.min.js?v=15217955218005"></script>
 <script src="{{asset('kyna/js/header.min.js')}}?ver={{time()}}"></script>
 <script src="{{asset('kyna/js/home-page.min.js')}}?ver={{time()}}"></script>
 {{-- Course --}}
 {{-- <script src="{{asset('kyna/js/course-detail.min.js')}}?ver={{time()}}"></script> --}}
-<script src="https://cdn-skill.kynaenglish.vn/js/widget/course-card.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/select2.min.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/tether.min.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/bootstrap.min.js?v=15217955218005"></script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/offpage.js?version=1562727393"></script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/main.js?v=1568114107"></script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/details.js?v=1562727393"></script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/ajax-caller.js?v=31073107"></script>
-<script src="https://cdn-skill.kynaenglish.vn/js/push-notification/firebase.min.js?v=1"></script>
-<script src="https://cdn-skill.kynaenglish.vn/js/push-notification/push-notification-main.min.js?v=1"></script>
-<script src="https://cdn-skill.kynaenglish.vn/src/js/jquery.validate.min.js?v=15217955218005"></script>
-<script src="/assets/7431fa9e/remarkable-bootstrap-notify/bootstrap-notify.js"></script>
-<script src="/assets/35de618e/yii.activeForm.js"></script>
+<script src="{{asset('kyna')}}/js/course-card.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/select2.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/tether.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/bootstrap.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/offpage.js?version=1562727393"></script>
+<script src="{{asset('kyna')}}/js/main.js?v=1568114107"></script>
+<script src="{{asset('kyna')}}/js/details.js?v=1562727393"></script>
+<script src="{{asset('kyna')}}/js/ajax-caller.js?v=31073107"></script>
+<script src="{{asset('kyna')}}/js/firebase.min.js?v=1"></script>
+<script src="{{asset('kyna')}}/js/push-notification-main.min.js?v=1"></script>
+<script src="{{asset('kyna')}}/js/jquery.validate.min.js?v=15217955218005"></script>
+<script src="{{asset('kyna')}}/js/bootstrap-notify.js"></script>
+<script src="{{asset('kyna')}}/js/yii.activeForm.js"></script>
 <script type="text/javascript">
     ;
     (function($) {
